@@ -61,7 +61,7 @@ Verify on the image before cloning:
 
 ```bash
 sudo cat /etc/sudoers.d/ece387-students
-sudo -l -U a27-m0
+sudo -l -U m3a
 ```
 
 Expect `apt`, `apt-get`, `dpkg`, `pip`, `pip3`, `shutdown`, `reboot` — and nothing else.
@@ -255,7 +255,7 @@ EOF
 
 No new extension can be installed at all, so there is no blocklist to keep current. The cost: every legitimate extension request comes to you and is handled by re-imaging or Ansible.
 
-> **Extensions live in `~/.vscode/extensions`, which is on NFS.** If you pre-install into the image, they land on the *master's local disk* under the build account and students will not see them. Either install them into `/etc/skel/.vscode/extensions` on the login server so new accounts inherit them, or push them into the existing 62 home directories with a loop. Verify this before cloning — it is the step most likely to be missed.
+> **Extensions live in `~/.vscode/extensions`, which is on NFS.** If you pre-install into the image, they land on the *master's local disk* under the build account and students will not see them. Either install them into `/etc/skel/.vscode/extensions` on the login server so new accounts inherit them, or push them into the existing 34 home directories with a loop. Verify this before cloning — it is the step most likely to be missed.
 
 ### 5c. Disable telemetry and remote sign-in
 
@@ -403,6 +403,8 @@ Enable the receiver on `ece387server` (`imtcp` in `/etc/rsyslog.conf`) and open 
 sudo ufw allow from 10.99.1.0/24 to any port 514 proto tcp
 ```
 
+> On `phoenix`, use `192.168.0.151` as the log destination and `192.168.0.0/24` as the subnet. That firewall already allows the whole subnet, so the `ufw` rule adds nothing there.
+
 ---
 
 ## 8. Verification before cloning
@@ -411,7 +413,7 @@ Run every check on the source image. A mistake here propagates to all 14 machine
 
 ```bash
 # 1. Students cannot escalate — expect NO apt, pip, dpkg, or systemctl
-sudo -l -U a27-m0
+sudo -l -U m3a
 
 # 2. Immutable flags set
 lsattr /etc/hosts /etc/sudoers.d/ece387-students \

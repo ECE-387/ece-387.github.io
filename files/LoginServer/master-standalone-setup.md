@@ -111,17 +111,45 @@ cd ~/master_ws && colcon build --symlink-install
 Set up ROS environment variables and setup scripts within the `~/.bashrc` file. Open the `~/.bashrc` file with your favorite command line editor and add the following to the bottom:
 
 ```bash
-source /opt/ros/jazzy/setup.bash
-source ~/master_ws/install/setup.bash
-source /usr/share/colcon_cd/function/colcon_cd.sh
-export ROS_DOMAIN_ID=0  # For master0 and robot0
-export _colcon_cd_root=/opt/ros/jazzy/
-export TURTLEBOT3_MODEL=burger
-export LDS_MODEL=LDS-01 # replace with LDS-02 if using new LIDAR
-source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-```
+alias gedit='gnome-text-editor'
 
-> The old `source /usr/share/gazebo/setup.sh` line from Gazebo Classic is no longer needed — Gazebo Harmonic is sourced automatically through the `ros_gz` packages installed above.
+# Launch the TurtleBot3 bringup on the robot over SSH.
+alias bringup='ssh pi@192.168.50.1 '\''ros2 launch turtlebot3_bringup robot.launch.py'\'
+
+# Shortcut to SSH into the robot.
+alias ssh_robot='ssh pi@192.168.50.1'
+
+# Build the workspace, passing through any colcon arguments
+function ccbuild() {
+    cd ~/master_ws && colcon build --symlink-install "$@"
+    source ~/master_ws/install/setup.bash
+}
+
+# Export the function so it is available in subshells
+export -f ccbuild
+
+# Source the ROS2 Jazzy environment so ros2 commands are available
+source /opt/ros/jazzy/setup.bash
+
+# Source the student's own workspace if it has been built
+# The "2>/dev/null || true" suppresses the error if the workspace doesn't exist yet
+source ~/master_ws/install/setup.bash 2>/dev/null || true
+
+export TURTLEBOT3_MODEL=burger
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+
+# colcon helpers
+source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=/opt/ros/jazzy/
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+
+# ROS_DOMAIN_ID separates ROS2 traffic between different robot pairs.
+# It MUST match the value set on the robot, which equals the robot number
+# (robot7 -> 7). A mismatch means the master sees no topics at all, and there
+# is no error message. Change this to your robot's number.
+export ROS_DOMAIN_ID=99
+export LDS_MODEL=LDS-02 # replace with LDS-03 if using new LIDAR
+```
 
 Any time you make changes to your `~/.bashrc` file you must source it:
 
@@ -162,27 +190,85 @@ source ~/.bashrc
     $ sudo make dkms_install
     ```
 
-    If you don't have permission try to execute:
+    If `make dkms_install` reports a permission error, do **not** `chmod 777`
+    the source tree -- that does not fix the build and leaves it
+    world-writable. The usual causes are a leftover half-finished DKMS build or
+    cloning into a directory root cannot read:
+
     ```bash
-    $ chmod 777 rtl8812au
+    # Inspect and clear any previous build, then retry from your home directory
+    sudo dkms status
+    sudo dkms remove rtl8812au/5.6.4.2 --all   # match the version from dkms status
+    cd ~ && rm -rf rtl8812au
+    git clone https://github.com/aircrack-ng/rtl8812au.git
+    cd rtl8812au && sudo make dkms_install
     ```
 
 ### PIP
 
-For all users:
+Ubuntu 24.04 enforces [PEP 668](https://peps.python.org/pep-0668/), which blocks pip from writing into the system Python. A plain `sudo pip install <package>` fails with an `externally-managed-environment` error.
+
+The protection exists so that pip cannot break Python packages other apt-managed applications depend on. A master runs ROS 2 and nothing else, and is re-imaged rather than repaired, so installing system-wide is acceptable here. Use `--break-system-packages` to say so explicitly:
+
 ```bash
-sudo pip install "pydantic<2"   # pip3 install pydantic
-sudo pip install dlib
-sudo pip install imutils
-sudo pip install pupil-apriltags
+sudo pip install --break-system-packages "pydantic<2"
+sudo pip install --break-system-packages imutils
+sudo pip install --break-system-packages pupil-apriltags
 ```
 
-```{note}
-The `dlib` package will take quite a while to install.
+`dlib` is handled separately -- see below.
+
+(building-a-dlib-wheel)=
+#### Building a dlib Wheel
+
+**Why not just `pip install dlib`?** Because dlib is a C++ library. PyPI ships it only as a source distribution, so `pip install dlib` downloads the source and invokes the compiler, which takes 30-60 minutes on a NUC and needs cmake, a full build toolchain, and a few GB of RAM.
+
+A **wheel** (`.whl`) is a zip archive of the *already-compiled* result. Building one once and installing it everywhere else turns a 45-minute compile into a 5-second unzip. The reasons this is worth doing:
+
+- **Time.** Fourteen masters at 45 minutes each is over ten hours of compiling. One build plus thirteen copies is under an hour.
+- **Reproducibility.** Every machine gets a bit-identical binary. Compiling separately on each machine invites subtle differences from compiler versions or detected CPU features -- the kind that produce a lab that works at one bench and not another.
+- **Re-imaging.** Machines get wiped. Keeping the wheel means a rebuild costs seconds instead of another 45-minute compile.
+- **No build tools at install time.** Only the machine that builds the wheel needs cmake and the toolchain.
+
+**Step 1 -- build the wheel (once, on one master):**
+
+```bash
+# Build dependencies, needed only on this machine
+sudo apt install -y build-essential cmake python3-dev
+
+pip install --break-system-packages wheel
+pip download dlib
+python3 -m pip wheel dlib-*.tar.gz
 ```
+
+This produces a file such as `dlib-20.0.0-cp312-cp312-linux_x86_64.whl`.
+
+> **The filename is a compatibility contract, and it must match the target machine.** `cp312` means CPython 3.12 and `linux_x86_64` means 64-bit Intel/AMD. A wheel built on a robot is tagged `linux_aarch64` and **will not install on a master** -- pip will reject it, or worse, ignore it and fall back to compiling. Build one wheel per architecture: one for the masters, one for the robots.
+
+**Step 2 -- keep the wheel somewhere durable.** Not the machine that built it, which will eventually be re-imaged. The login server works, or the course git repo if you do not mind the file size:
+
+```bash
+scp dlib-*.whl stanbaek@ece387server:/srv/ece387/wheels/x86_64/
+```
+
+**Step 3 -- install on any master:**
+
+```bash
+sudo pip install --break-system-packages ~/dlib-*.whl
+```
+
+Verify:
+
+```bash
+python3 -c "import dlib; print(dlib.__version__)"
+```
+
+> The robots use a virtual environment instead (see [Robot Setup](RobotSetupJazzy.md)) because that setup already exists and works. There is no need to make the two match.
 
 For each user:
+
 ```bash
 sudo adduser $USER video
 ```
+
 Then, reboot the system.

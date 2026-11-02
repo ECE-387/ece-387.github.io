@@ -14,7 +14,7 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
 
 - The lab has a bank of master computers (e.g., 14 NUCs) and students do not own or sit at the same machine every session.
 - A student should be able to sit down at *any* master, log in with their own credentials, and immediately have their `.bashrc`, SSH keys, and ROS workspace available — without re-cloning or re-configuring anything.
-- You want to manage 20–30 student accounts centrally: create them once, reset a forgotten password in one command, and push a `.bashrc` update to every account at once (see [Maintenance](#3-maintenance)). The shell environment is instructor-owned — every account runs an identical, known-good `.bashrc`, so "it works on my machine" never enters a debugging session.
+- You want to manage about 30 student accounts centrally: create them once, reset a forgotten password in one command, and push a `.bashrc` update to every account at once (see [Maintenance](#3-maintenance)). The shell environment is instructor-owned — every account runs an identical, known-good `.bashrc`, so "it works on my machine" never enters a debugging session.
 - You need some isolation between students who share the same physical hardware (restricted sudo, separate home directories, no ability to read another student's files).
 
 **When a login server is overkill:**
@@ -22,7 +22,7 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
 - Students each have their own laptop or a personal workstation they always use. In that case there is nothing to "roam" between — a local Ubuntu account already gives each student a persistent home directory, and centralized authentication just adds an extra server to install, patch, and keep running (plus a single point of failure if it goes down). Use [Master Setup - Standalone](MasterSetupJazzy.md) instead — it sets up the same ROS 2 environment with a normal local account and no LDAP/NFS dependency.
 - You only have a handful of machines and can simply assign one student (or a fixed pair) per machine for the term.
 
-**The trade-off:** a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in [Master (Client) Setup](login-client.md) with SSSD credential caching and soft NFS mounts). For ECE 387's AFA lab — a fixed set of 14 dedicated NUCs used by a rotating roster of ~30 students across sections — that trade-off is worth it.
+**The trade-off:** a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in [Master (Client) Setup](login-client.md) with SSSD credential caching and soft NFS mounts). For ECE 387's AFA lab — a fixed set of 14 dedicated NUCs used by a rotating roster of 34 student accounts across sections — that trade-off is worth it.
 
 ## Architecture Overview
 
@@ -64,7 +64,7 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
 
 Assign static IPs on your lab's network before starting. All machines must be on the same subnet so they can reach each other.
 
-**Lab network:** WiFi router at `10.99.1.1`, SSID `ece387`, subnet `10.99.1.0/24`.
+**Lab network:** WiFi router at `10.99.1.1`, SSID `ECE387`, subnet `10.99.1.0/24`.
 
 | Host | Hostname | IP |
 |------|----------|----|
@@ -74,7 +74,40 @@ Assign static IPs on your lab's network before starting. All machines must be on
 | ... | ... | ... |
 | Master 14 | `master14` | `10.99.1.114` |
 
-> The login server IP (`10.99.1.50`) is the AFA lab address, reachable over the `ece387` WiFi network at `10.99.1.1`. Master IPs above (`10.99.1.101`–`150`) are a suggested continuation of that range — adjust if you assign them differently. This guide uses the domain `ece387.local`.
+> The login server IP (`10.99.1.50`) is the AFA lab address, reachable over the `ECE387` WiFi network at `10.99.1.1`. Master IPs above (`10.99.1.101`–`150`) are a suggested continuation of that range — adjust if you assign them differently. This guide uses the domain `ece387.local`.
+
+### Second Server (`phoenix`)
+
+There are two near-identical login servers, both NUC9i7QNX1. The commands in this guide show the lab server. When building `phoenix`, substitute the values below; everything else, including the LDAP domain, accounts, and UIDs, is the same.
+
+| Setting | Lab server | `phoenix` |
+|---------|------------|-----------|
+| Hostname | `ece387server` | `phoenix` |
+| IP | `10.99.1.50` | `192.168.0.151` |
+| Gateway | `10.99.1.1` | `192.168.0.1` |
+| Subnet (NFS export, firewall) | `10.99.1.0/24` | `192.168.0.0/24` |
+| Interface | Ethernet | Wi-Fi (`wlp4s0`) |
+
+`phoenix` uses Wi-Fi, so its static address goes under `wifis:` and keeps the existing `access-points:` block:
+
+```yaml
+network:
+  version: 2
+  wifis:
+    wlp4s0:
+      dhcp4: false
+      addresses: [192.168.0.151/24]
+      routes:
+        - to: default
+          via: 192.168.0.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+      access-points:
+        "YOUR_SSID":
+          password: "YOUR_WIFI_PASSWORD"
+```
+
+> Changing the IP drops any SSH session connected to the old address. Do it last, and reserve the address on the router so DHCP does not hand it to another device.
 
 ---
 
@@ -118,7 +151,7 @@ network:
       addresses: [10.99.1.50/24]
       routes:
         - to: default
-          via: 10.99.1.1          # WiFi router IP (ece387only)
+          via: 10.99.1.1          # WiFi router IP
       nameservers:
         addresses: [8.8.8.8, 8.8.4.4]
 ```
@@ -153,7 +186,7 @@ sudo hostnamectl set-hostname ece387server
 sudo nano /etc/hosts
 ```
 
-The file should contain:
+Replace the installer's `127.0.1.1` line with the server's real address, and leave the rest of the file alone, including the IPv6 lines:
 
 ```
 127.0.0.1   localhost
@@ -207,6 +240,21 @@ sudo systemctl status slapd
 ldapsearch -x -H ldap://localhost -b "dc=ece387,dc=local" -D "cn=admin,dc=ece387,dc=local" -W
 ```
 
+> **Scripting the install.** To skip the prompts, set the answers before installing. This replaces both the prompts above and `dpkg-reconfigure`:
+>
+> ```bash
+> sudo debconf-set-selections << 'EOF'
+> slapd slapd/no_configuration boolean false
+> slapd slapd/domain string ece387.local
+> slapd shared/organization string ECE387
+> slapd slapd/password1 password LdapAdmin387!
+> slapd slapd/password2 password LdapAdmin387!
+> slapd slapd/purge_database boolean false
+> slapd slapd/move_old_database boolean true
+> EOF
+> sudo DEBIAN_FRONTEND=noninteractive apt-get install -y slapd ldap-utils ldapscripts
+> ```
+
 ### 1.4 Create LDAP Structure
 
 LDAP organizes entries in a tree. Before adding users, you need to create the "folders" (called organizational units, or `ou`) that hold them. This is like creating directories before putting files inside.
@@ -243,14 +291,14 @@ ldapadd -x -H ldap://localhost \
 
 ### 1.5 Create Student Accounts
 
-Student IDs follow two series this term: `a27-m0` through `a27-m30` (31 accounts) and `a27-t0` through `a27-t30` (31 accounts) — 62 accounts total. The script below:
+Student IDs follow two series this term: `m3a` through `m3p` plus `m3z` (17 accounts) and `m4a` through `m4p` plus `m4z` (17 accounts) — 34 accounts total. The script below:
 
 1. Generates a hashed password for all accounts
-2. Builds a single LDIF file with all 62 user entries
+2. Builds a single LDIF file with all 34 user entries
 3. Creates each student's home directory on the server, populated with the `/etc/skel` defaults (the course `.bashrc` is applied in 1.6)
 4. Adds all accounts to LDAP in one command
 
-UID numbers are split into two non-overlapping ranges so the two series never collide: `m` series uses `20000`–`20030`, `t` series uses `21000`–`21030`.
+UID numbers are split into two non-overlapping ranges so the two series never collide: `m3` starts at `20000` and `m4` at `21000`. Each account is offset by its letter (`a` = 0, `z` = 25), so `m3a` is `20000`, `m3z` is `20025`, and `q`–`y` stay free for later additions.
 
 ```bash
 cat > ~/Documents/ece387/create_students.sh << 'EOF'
@@ -261,26 +309,29 @@ set -e
 # --- Configuration ---
 LDAP_ADMIN_DN="cn=admin,dc=ece387,dc=local"
 LDAP_ADMIN_PW="LdapAdmin387!"    # your LDAP admin password
-INITIAL_PW="TempPass2024!"        # students change this on first login
+INITIAL_PW="dfec3141"             # shared by all accounts until changed
 LDIF=~/Documents/ece387/students.ldif
 
 # Generate a single password hash to reuse for all accounts.
 # slappasswd hashes the password in a format OpenLDAP understands ({SSHA}...).
 HASH=$(slappasswd -s "$INITIAL_PW")
 
-# Clear the LDIF file if it already exists from a previous run
+# Clear the LDIF file if it already exists from a previous run.
+# It holds the password hash, so only the admin account may read it.
 > $LDIF
+chmod 600 $LDIF
 
-# Two username series this term: a27-m0..a27-m30 and a27-t0..a27-t30.
+# Two username series this term: m3a..m3p, m3z and m4a..m4p, m4z.
 # UID_BASE keeps the two series in separate, non-overlapping ranges.
 create_series() {
-  local PREFIX=$1     # "m" or "t"
-  local UID_BASE=$2   # 20000 for m-series, 21000 for t-series
+  local PREFIX=$1     # "m3" or "m4"
+  local UID_BASE=$2   # 20000 for m3, 21000 for m4
 
-  # Loop from 0 to 30, creating one LDAP entry per student
-  for i in $(seq 0 30); do
-    USERNAME="a27-${PREFIX}${i}"
-    UID_NUMBER=$((UID_BASE + i))
+  # Loop over a..p plus z, creating one LDAP entry per student.
+  # The UID offset comes from the letter, so q..y stay free for later.
+  for LETTER in {a..p} z; do
+    USERNAME="${PREFIX}${LETTER}"
+    UID_NUMBER=$((UID_BASE + $(printf '%d' "'${LETTER}") - 97))
 
     # Append this student's entry to the LDIF file.
     # Each entry is separated by a blank line (required by LDIF format).
@@ -315,10 +366,10 @@ ENTRY
   done
 }
 
-create_series "m" 20000
-create_series "t" 21000
+create_series "m3" 20000
+create_series "m4" 21000
 
-# Add all 62 entries to LDAP in a single operation.
+# Add all 34 entries to LDAP in a single operation.
 # -w = password (non-interactive, read from argument)
 ldapadd -x -H ldap://localhost \
   -D "$LDAP_ADMIN_DN" \
@@ -326,7 +377,7 @@ ldapadd -x -H ldap://localhost \
   -f $LDIF
 
 echo ""
-echo "Done. 62 student accounts created (a27-m0..m30, a27-t0..t30)."
+echo "Done. 34 student accounts created (m3a..m3p, m3z, m4a..m4p, m4z)."
 EOF
 
 # Make the script executable, then run it
@@ -334,11 +385,13 @@ chmod +x ~/Documents/ece387/create_students.sh
 bash ~/Documents/ece387/create_students.sh
 ```
 
+> **Nothing forces a password change.** Every account keeps this shared password until the student runs `passwd` or you reset it (see [Maintenance](#3-maintenance)).
+
 Verify all accounts were created:
 
 ```bash
 # Search the LDAP students OU and list just the uid field.
-# You should see uid: a27-m0 through uid: a27-m30, and uid: a27-t0 through uid: a27-t30.
+# You should see 34 entries: uid: m3a through uid: m3p, uid: m3z, uid: m4a through uid: m4p, uid: m4z.
 ldapsearch -x -H ldap://localhost \
   -b "ou=students,dc=ece387,dc=local" \
   -D "cn=admin,dc=ece387,dc=local" \
@@ -358,13 +411,13 @@ sudo mkdir -p /etc/ece387
 >
 > 1. **A student edit persists.** Nothing overwrites it at login. There is no login hook, no cron job, no sync daemon; after account creation the template and the student's file are unrelated.
 > 2. **An edit follows the student to every machine.** Editing `~/.bashrc` on master07 writes through to this server immediately, so logging into master12 an hour later gets the edited file. There is no per-machine copy to fall out of step.
-> 3. **An instructor push replaces it.** The push below overwrites `.bashrc` on all 62 accounts, discarding student edits with no warning and no backup. That is the only thing that reverts a student's changes, and it happens only when you run it by hand.
+> 3. **An instructor push replaces it.** The push below overwrites `.bashrc` on all 34 accounts, discarding student edits with no warning and no backup. That is the only thing that reverts a student's changes, and it happens only when you run it by hand.
 >
 > The file is owned by the student and mode `644`, so they *can* edit it. "Instructor-owned" is a course policy enforced by the push, not a permission setting.
 
 #### .bashrc Template
 
-`.bashrc` is sourced every time a terminal opens. Because `create_students.sh` copies this file *over* the student's `.bashrc`, the template must be a **complete** `.bashrc` — the Ubuntu defaults plus the course environment — not just the ECE 387 additions. A template containing only the course block produces accounts with no prompt, no history settings, and no `ls` colors.
+`.bashrc` is sourced every time a terminal opens. Because the push copies this file *over* the student's `.bashrc`, the template must be a **complete** `.bashrc` — the Ubuntu defaults plus the course environment — not just the ECE 387 additions. A template containing only the course block produces accounts with no prompt, no history settings, and no `ls` colors.
 
 Write it in one shot. The quoted `'TEMPLATE_EOF'` delimiter is required: it stops the shell from expanding `$@`, `$-`, `$(...)`, and `~` while the file is being written.
 
@@ -516,7 +569,7 @@ fi
 TEMPLATE_EOF
 ```
 
-Check the syntax before pushing it to 62 accounts - a typo here breaks every terminal in the lab at once:
+Check the syntax before pushing it to 34 accounts - a typo here breaks every terminal in the lab at once:
 
 ```bash
 bash -n /etc/ece387/bashrc_template && echo "syntax OK"
@@ -527,7 +580,6 @@ bash -n /etc/ece387/bashrc_template && echo "syntax OK"
 - The non-interactive guard sets the ROS variables *before* returning. The stock Ubuntu `.bashrc` returns immediately, which would leave `ssh master05 'ros2 topic list'` with no ROS environment. The variables are intentionally duplicated in the guard and in the course block below it - the guard `return`s before reaching the second copy, so keep the two in sync when you change one.
 - Interactivity matters for more than convenience: without the guard, anything the course block prints to stdout corrupts `scp` and `rsync` transfers to and from the robots.
 - `source /usr/share/gazebo/setup.sh` is **not** included. That path belongs to Gazebo Classic, which is not part of Jazzy - on a Jazzy master the file does not exist and every terminal opens with a "No such file or directory" error. If a future setup does need it, guard the source: `[ -f /usr/share/gazebo/setup.sh ] && source /usr/share/gazebo/setup.sh`.
-- `robotX` in the `bringup` alias is a placeholder. Either replace it before the first push or teach students to use `ssh_robot` and launch bringup by hand.
 
 #### .inputrc Template
 
@@ -566,7 +618,7 @@ bind -f /etc/ece387/inputrc_template && echo "readline accepted it"
 The templates are copied automatically only when accounts are first created. To push changes to all existing students at any time:
 
 ```bash
-for dir in /home/students/a27-*/; do
+for dir in /home/students/m[34]*/; do
   user=$(basename "$dir")
   # Read the UID from the home directory itself. Do NOT use `id -u "$user"`:
   # the login server hosts LDAP but is not an LDAP *client*, so NSS on this
@@ -590,7 +642,7 @@ sudo find /home/students -maxdepth 2 -name '.bashrc' -user root
 
 Run the push from the login server, not from a master — the home directories live here. Students pick up the change at their next login, or immediately with `source ~/.bashrc`.
 
-> **Verify on one account before pushing to all 62.** Copy the template to a single student, log in as them on a master, and confirm the prompt, `ros2 topic list`, and `ccbuild` all behave. A bad template pushed to every account takes down every bench at once.
+> **Verify on one account before pushing to all 34.** Copy the template to a single student, log in as them on a master, and confirm the prompt, `ros2 topic list`, and `ccbuild` all behave. A bad template pushed to every account takes down every bench at once.
 
 ### 1.7 Configure NFS Home Directories
 
@@ -601,7 +653,7 @@ NFS (Network File System) lets the master computers mount the server's `/home/st
 sudo apt install -y nfs-kernel-server
 
 # Create the parent directory that holds all student home directories.
-# Individual student dirs (a27-m0, a27-m1, ..., a27-t0, a27-t1, ...) were already created in 1.6.
+# Individual student dirs (m3a, m3b, ..., m4a, m4b, ...) were already created in 1.5.
 sudo mkdir -p /home/students
 sudo chmod 755 /home/students
 ```
@@ -633,9 +685,9 @@ sudo systemctl enable --now nfs-server
 showmount -e localhost
 ```
 
-> **`root_squash` isolates students from each other.** It tells the server to rewrite root on any master to an unprivileged anonymous user, so `sudo cat /home/students/a27-t2/lab3.py` run from a master is refused by the server itself. Nothing in this guide needs `no_root_squash`: `create_students.sh` and the push loop both run locally on this server, not over NFS. The tradeoff is that administrative fixes to student files must be made here rather than from a master.
+> **`root_squash` isolates students from each other.** It tells the server to rewrite root on any master to an unprivileged anonymous user, so `sudo cat /home/students/m4c/lab3.py` run from a master is refused by the server itself. Nothing in this guide needs `no_root_squash`: `create_students.sh` and the push loop both run locally on this server, not over NFS. The tradeoff is that administrative fixes to student files must be made here rather than from a master.
 >
-> **What it does not cover.** `root_squash` rewrites **UID 0 only**. A student who reaches root on a master can still `su - a27-t2` and read that account's files, because those requests carry UID 21002 and there is nothing to squash. This is inherent to `AUTH_SYS`, NFS's default authentication, where the client asserts its own UID and the server takes its word; closing it needs Kerberos (`sec=krb5`). In practice student file privacy rests on the honor code, with `root_squash` and the sudo whitelist removing the easy paths. See "Grant Students Restricted sudo Access" in [login-client.md](login-client.md).
+> **What it does not cover.** `root_squash` rewrites **UID 0 only**. A student who reaches root on a master can still `su - m4c` and read that account's files, because those requests carry UID 21002 and there is nothing to squash. This is inherent to `AUTH_SYS`, NFS's default authentication, where the client asserts its own UID and the server takes its word; closing it needs Kerberos (`sec=krb5`). In practice student file privacy rests on the honor code, with `root_squash` and the sudo whitelist removing the easy paths. See "Grant Students Restricted sudo Access" in [login-client.md](login-client.md).
 
 ### 1.8 Open Required Firewall Ports
 
@@ -643,17 +695,9 @@ showmount -e localhost
 # Allow SSH so you can manage the server remotely
 sudo ufw allow OpenSSH
 
-# Allow LDAP queries from master computers (port 389)
-sudo ufw allow 389/tcp
-
-# Allow NFS traffic (port 2049)
-sudo ufw allow 2049/tcp
-
-# Allow rpcbind/portmapper (port 111) — required for showmount and NFS negotiation
-sudo ufw allow 111/tcp
-sudo ufw allow 111/udp
-
-# Allow all traffic from the lab subnet
+# Allow all traffic from the lab subnet. This covers LDAP (389), NFS (2049),
+# and rpcbind (111), so they need no rules of their own. Opening those ports
+# by number would also expose them on any public IPv6 address the server has.
 sudo ufw allow from 10.99.1.0/24
 
 # Enable the firewall
@@ -663,14 +707,26 @@ sudo ufw enable
 sudo ufw status
 ```
 
-> **Reconfiguring an already-running server:** if `sudo ufw status` still shows an old subnet (e.g. `10.99.1.0/24`) from a previous setup, `ufw allow` won't replace it — the old rule stays active alongside the new one. Remove it explicitly:
+> **Reconfiguring an already-running server:** if `sudo ufw status` still shows an old subnet or open `389`, `2049`, or `111` rules from a previous setup, `ufw allow` won't replace it — the old rule stays active alongside the new one. Remove it explicitly:
 >
 > ```bash
 > sudo ufw status numbered      # find the rule number for the old subnet
-> sudo ufw delete <number>      # delete it
+> sudo ufw delete <number>      # delete it, then repeat for each stale rule
 > sudo ufw allow from 10.99.1.0/24
 > sudo ufw status
 > ```
+
+### 1.9 Create the Wheel Directory
+
+The masters fetch a prebuilt `dlib` wheel from here rather than compiling for 45 minutes each. Each architecture gets its own directory, because a wheel built on a robot will not install on a master.
+
+```bash
+sudo mkdir -p /srv/ece387/wheels/x86_64 /srv/ece387/wheels/aarch64
+sudo chmod 755 /srv/ece387/wheels
+
+# Wheels are copied in over scp as the admin account, so it must own these.
+sudo chown -R "$USER": /srv/ece387/wheels
+```
 
 Once the server is up, continue to [login-client.md](login-client.md) to configure each master to authenticate against it.
 
@@ -695,57 +751,57 @@ slappasswd -s NewStudentPass!
 
 # Step 2: Add the account to LDAP
 # Use the next free uidNumber in the right series:
-#   m series (a27-m0..m30):  20000-20030
-#   t series (a27-t0..t30):  21000-21030
-# e.g. a new t-series student a27-t31 gets uidNumber 21031
+#   m3 series:  20000 + letter offset (a = 0, z = 25)
+#   m4 series:  21000 + letter offset (a = 0, z = 25)
+# e.g. a new m4-series student m4q gets uidNumber 21016
 ldapadd -x -H ldap://localhost \
   -D "cn=admin,dc=ece387,dc=local" -W << 'EOF'
-dn: uid=a27-t31,ou=students,dc=ece387,dc=local
+dn: uid=m4q,ou=students,dc=ece387,dc=local
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
-uid: a27-t31
-cn: a27-t31
-sn: a27-t31
-uidNumber: 21031
+uid: m4q
+cn: m4q
+sn: m4q
+uidNumber: 21016
 gidNumber: 10000
-homeDirectory: /home/students/a27-t31
+homeDirectory: /home/students/m4q
 loginShell: /bin/bash
 userPassword: {SSHA}PASTE_HASH_HERE
 EOF
 
 # Step 3: Create the home directory on the server
-sudo mkdir -p /home/students/a27-t31
-sudo cp -r /etc/skel/. /home/students/a27-t31/
-sudo cp /etc/ece387/bashrc_template /home/students/a27-t31/.bashrc
-sudo cp /etc/ece387/inputrc_template /home/students/a27-t31/.inputrc
-sudo chown -R 21031:10000 /home/students/a27-t31
-sudo chmod 700 /home/students/a27-t31
+sudo mkdir -p /home/students/m4q
+sudo cp -r /etc/skel/. /home/students/m4q/
+sudo cp /etc/ece387/bashrc_template /home/students/m4q/.bashrc
+sudo cp /etc/ece387/inputrc_template /home/students/m4q/.inputrc
+sudo chown -R 21016:10000 /home/students/m4q
+sudo chmod 700 /home/students/m4q
 ```
 
 ### Reset a student password
 
 ```bash
-# Replace a27-m0 with the student's username, and set the new password with -s
+# Replace m3a with the student's username, and set the new password with -s
 ldappasswd -H ldap://localhost \
   -D "cn=admin,dc=ece387,dc=local" \
   -W -s NewPassword! \
-  "uid=a27-m0,ou=students,dc=ece387,dc=local"
+  "uid=m3a,ou=students,dc=ece387,dc=local"
 ```
 
-### Remove all students for a class year (year-end rollover)
+### Remove all students in a series (term rollover)
 
-Class-year prefixes change every year (`a27` = class of 2027, `a28` = class of 2028, etc.). Run this once at the start of a new year, right before running `create_students.sh` for the incoming class. It takes a prefix, backs up the LDAP database and matching home directories first, then deletes the LDAP entries and home directories for every account matching that prefix (both `m` and `t` series, since they share the same `a27-*` prefix).
+Account prefixes change between terms (this term uses `m3` and `m4`). Run this once per prefix, right before running `create_students.sh` for the incoming class. It takes a prefix, backs up the LDAP database and matching home directories first, then deletes the LDAP entries and home directories for every account matching that prefix.
 
 ```bash
 cat > ~/Documents/ece387/remove_students.sh << 'EOF'
 #!/bin/bash
-# Removes ALL student accounts for a given class-year prefix (e.g. a27)
+# Removes ALL student accounts for a given prefix (e.g. m3)
 # and deletes their home directories. Backs up LDAP + home dirs first.
 set -e
 
 if [ -z "$1" ]; then
-  echo "Usage: $0 <prefix>   e.g. $0 a27"
+  echo "Usage: $0 <prefix>   e.g. $0 m3"
   exit 1
 fi
 
@@ -755,7 +811,7 @@ LDAP_ADMIN_PW="LdapAdmin387!"    # your LDAP admin password
 BASE_DN="ou=students,dc=ece387,dc=local"
 
 echo "This will PERMANENTLY delete all LDAP accounts and home directories"
-echo "matching '${PREFIX}-*' under ${BASE_DN} (covers both m and t series)."
+echo "matching '${PREFIX}*' under ${BASE_DN}."
 read -p "Type the prefix again to confirm (${PREFIX}): " CONFIRM
 if [ "$CONFIRM" != "$PREFIX" ]; then
   echo "Confirmation did not match. Aborting."
@@ -769,17 +825,17 @@ mkdir -p "$BACKUP_DIR/home"
 echo "Backing up full LDAP database to ${BACKUP_DIR}/ldap-backup.ldif ..."
 sudo slapcat > "${BACKUP_DIR}/ldap-backup.ldif"
 
-echo "Backing up home directories matching ${PREFIX}-* to ${BACKUP_DIR}/home ..."
-sudo rsync -av --include="${PREFIX}-*" --include="${PREFIX}-*/**" --exclude="*" \
+echo "Backing up home directories matching ${PREFIX}* to ${BACKUP_DIR}/home ..."
+sudo rsync -av --include="${PREFIX}*" --include="${PREFIX}*/**" --exclude="*" \
   /home/students/ "${BACKUP_DIR}/home/"
 
 # --- Step 2: Find all matching uids in LDAP ---
 USERS=$(ldapsearch -x -H ldap://localhost \
   -b "$BASE_DN" -D "$LDAP_ADMIN_DN" -w "$LDAP_ADMIN_PW" \
-  "(uid=${PREFIX}-*)" uid | grep "^uid:" | awk '{print $2}')
+  "(uid=${PREFIX}*)" uid | grep "^uid:" | awk '{print $2}')
 
 if [ -z "$USERS" ]; then
-  echo "No accounts found matching ${PREFIX}-*. Nothing to remove."
+  echo "No accounts found matching ${PREFIX}*. Nothing to remove."
   exit 0
 fi
 
@@ -802,22 +858,23 @@ for USERNAME in $USERS; do
 done
 
 echo ""
-echo "Done. Removed accounts matching '${PREFIX}-*'."
+echo "Done. Removed accounts matching '${PREFIX}*'."
 echo "Backup saved to: ${BACKUP_DIR}"
 EOF
 
 chmod +x ~/Documents/ece387/remove_students.sh
 ```
 
-Run it with the outgoing class prefix, e.g.:
+Run it with each outgoing prefix, e.g.:
 
 ```bash
-bash ~/Documents/ece387/remove_students.sh a27
+bash ~/Documents/ece387/remove_students.sh m3
+bash ~/Documents/ece387/remove_students.sh m4
 ```
 
 Then create the incoming class with the new prefix by editing the `create_series` calls in `create_students.sh` (or parameterizing them the same way) before re-running it.
 
-> **Group and OU structure are untouched** — this only removes entries under `ou=students`. `ou=groups` and the `ece387students` group (gidNumber 10000) stay in place and are reused every year.
+> **Group and OU structure are untouched** — this only removes entries under `ou=students`. `ou=groups` and the `ece387students` group (gidNumber 10000) stay in place and are reused every term.
 
 ### List all student accounts
 
@@ -845,7 +902,7 @@ sudo slapcat > ~/Documents/ece387/ldap-backup-$(date +%Y%m%d).ldif
 
 | Problem | Command | Fix |
 |---------|---------|-----|
-| Student can't log in | `ldapsearch -x -H ldap://localhost -b "ou=students,dc=ece387,dc=local" -D "cn=admin,dc=ece387,dc=local" -W "(uid=a27-m0)"` | Check account exists; verify password hash is valid |
+| Student can't log in | `ldapsearch -x -H ldap://localhost -b "ou=students,dc=ece387,dc=local" -D "cn=admin,dc=ece387,dc=local" -W "(uid=m3a)"` | Check account exists; verify password hash is valid |
 | LDAP connection refused | `ldapsearch -x -H ldap://10.99.1.50 -b "dc=ece387,dc=local" -x` | Check `systemctl status slapd` on server |
 | NFS mount fails (from a client) | `showmount -e 10.99.1.50` | Check firewall on server; verify `nfs-server` is running |
 

@@ -56,6 +56,8 @@ The USB dongle is renamed to a fixed name `wlan1` so one config works across all
 | Master 01–14 | `master01`–`master14` | DHCP (dynamic) |
 | Robot access point | `robotX` | `192.168.50.1` |
 
+> **Using `phoenix` instead of the lab server:** masters on the home network point at `192.168.0.151`, not `10.99.1.50`. The address appears in the connectivity checks, `ldap_uri` in `/etc/sssd/sssd.conf`, and `/etc/auto.students`. The LDAP domain, accounts, and UIDs are the same on both servers.
+
 > Masters are identified by hostname, not IP, since their IP can change after a reboot or DHCP lease renewal. Ubuntu Desktop ships with `avahi-daemon` (mDNS) enabled, so each master is reachable at `<hostname>.local` from any other machine on `ECE387`. This guide uses the domain `ece387.local` for LDAP.
 
 > **The robot AP hands out its own DHCP lease and default route.** Left alone, `wlo1` will hijack the master's default route and break access to the login server and the internet. Section 1.8 pins the robot connection so this cannot happen — do not skip it.
@@ -196,7 +198,7 @@ sudo pip install --break-system-packages pupil-apriltags
 
 ```bash
 # Fetch the prebuilt wheel from the login server and install it
-scp ece387admin@ece387server:/srv/ece387/wheels/dlib-*.whl ~/
+scp stanbaek@10.99.1.50:/srv/ece387/wheels/x86_64/dlib-*.whl ~/
 sudo pip install --break-system-packages ~/dlib-*.whl
 ```
 
@@ -206,7 +208,7 @@ sudo pip install --break-system-packages ~/dlib-*.whl
 
 > Package names occasionally differ between distros. If any line fails, check availability with `apt-cache search <name>` before assuming the mirror is broken.
 
-**The shell environment is not configured here.** `.bashrc` for student accounts comes from `/etc/ece387/bashrc_template` on the login server and is distributed by the push procedure in [login-server.md §1.7](login-server.md). Do not add ROS environment lines to student `.bashrc` files on the master — home directories are on NFS, so a local edit would be overwritten by the next push and would silently diverge from the other 13 machines.
+**The shell environment is not configured here.** `.bashrc` for student accounts comes from `/etc/ece387/bashrc_template` on the login server and is distributed by the push procedure in [login-server.md §1.6](login-server.md). Do not add ROS environment lines to student `.bashrc` files on the master — home directories are on NFS, so a local edit would be overwritten by the next push and would silently diverge from the other 13 machines.
 
 ### 1.2b Install Visual Studio Code
 
@@ -279,7 +281,7 @@ EOF
 
 `search.exclude` matters as much as `files.watcherExclude`: without it a project-wide search returns thousands of matches from compiled artifacts and `--symlink-install` symlinks.
 
-> `/etc/skel` is copied only when an account is created, so existing students will not receive this. To apply it to the current 62, copy the file into each home directory with a loop modeled on the push in [login-server.md](login-server.md) — and be aware it overwrites any VS Code settings a student has already chosen.
+> `/etc/skel` is copied only when an account is created, so existing students will not receive this. To apply it to the current 34, copy the file into each home directory with a loop modeled on the push in [login-server.md](login-server.md) — and be aware it overwrites any VS Code settings a student has already chosen.
 
 ### 1.3 Configure SSSD for LDAP Authentication
 
@@ -343,6 +345,10 @@ offline_credentials_expiration = 0
 enumerate = true
 ```
 
+> **This file holds the LDAP admin password.** Anyone who gets root on a master can read it and change any account in the directory, and the student sudo whitelist in 1.6 grants a path to root. The server allows anonymous reads of everything except password hashes, so SSSD may not need these `ldap_default_*` lines at all. Test on one master before removing them from the fleet.
+>
+> **Plain-text logins on Wi-Fi.** Without TLS, passwords cross the network unencrypted, so anyone able to capture traffic on that network can read them. That includes the home network when using `phoenix`.
+
 ```bash
 # SSSD refuses to start if this file is readable by others
 sudo chmod 600 /etc/sssd/sssd.conf
@@ -359,8 +365,8 @@ sudo rm -rf /var/lib/sss/db/*
 sudo systemctl start sssd
 sleep 5
 
-# Expected: uid=20000(a27-m0) gid=10000(ece387students) groups=10000(ece387students)
-id a27-m0
+# Expected: uid=20000(m3a) gid=10000(ece387students) groups=10000(ece387students)
+id m3a
 ```
 
 ### 1.4 Mount NFS Home Directories
@@ -387,7 +393,7 @@ sudo nano /etc/auto.students
 
 ```
 # The * wildcard matches any username; & substitutes the matched name.
-# Accessing /home/students/a27-m0 mounts 10.99.1.50:/home/students/a27-m0
+# Accessing /home/students/m3a mounts 10.99.1.50:/home/students/m3a
 #
 # soft      = return an error if the server is unreachable, rather than hanging
 # timeo=30  = 3.0 seconds per attempt (units are 0.1s)
@@ -400,8 +406,8 @@ sudo systemctl enable --now autofs
 sudo systemctl restart autofs
 
 # Test: the home directory should mount on access
-sudo su - a27-m0
-pwd          # /home/students/a27-m0
+sudo su - m3a
+pwd          # /home/students/m3a
 ls -la       # .bashrc, .profile, etc.
 exit
 ```
@@ -455,7 +461,7 @@ This section is the **single definition of the student sudo whitelist**. Other g
 
 Two layers work together, and they protect different things:
 
-- **`root_squash` on the NFS server** rewrites root from any master to an unprivileged anonymous user, so `sudo cat /home/students/a27-t2/file` is refused by the server itself
+- **`root_squash` on the NFS server** rewrites root from any master to an unprivileged anonymous user, so `sudo cat /home/students/m4c/file` is refused by the server itself
 - **The sudoers whitelist** limits what can be run with sudo at all
 
 #### Server side — `root_squash`
@@ -475,7 +481,7 @@ sudo exportfs -v          # confirm root_squash appears in the options
 
 > **This must be `root_squash`, not `no_root_squash`.** `no_root_squash` gives every master's root full write access to every student's home directory. It does not affect the instructor push loop in [login-server.md](login-server.md) — that runs locally on the server, not over NFS.
 
-> **What `root_squash` does and does not cover.** It rewrites **UID 0 only**. A student who reaches root on a master can still `su - a27-t2` and read that account's files, because those requests carry UID 21002 and there is nothing to squash. This is inherent to `AUTH_SYS`, NFS's default authentication, where the client asserts its own UID and the server takes its word. Closing it entirely requires Kerberos (`sec=krb5`), which is a substantial addition. In practice, student file privacy here rests on the honor code, with `root_squash` and the whitelist removing the easy paths.
+> **What `root_squash` does and does not cover.** It rewrites **UID 0 only**. A student who reaches root on a master can still `su - m4c` and read that account's files, because those requests carry UID 21002 and there is nothing to squash. This is inherent to `AUTH_SYS`, NFS's default authentication, where the client asserts its own UID and the server takes its word. Closing it entirely requires Kerberos (`sec=krb5`), which is a substantial addition. In practice, student file privacy here rests on the honor code, with `root_squash` and the whitelist removing the easy paths.
 
 #### Master side — the whitelist
 
@@ -511,7 +517,7 @@ sudo chmod 440 /etc/sudoers.d/ece387-students
 sudo visudo -c -f /etc/sudoers.d/ece387-students
 
 # Confirm what a student can actually run
-sudo -l -U a27-m0
+sudo -l -U m3a
 ```
 
 #### What `ECE387_PKG` grants
@@ -529,7 +535,7 @@ Package installation means running someone else's code with privilege — that i
 Two consequences to plan around:
 
 - **Host-level restrictions become deterrents, not controls.** Immutable files, hosts-file blocking, and browser policy files can all be undone by a student who escalates to root. Where such restrictions are used, audit logging stops being optional — it is what converts an unenforceable rule into a recorded action.
-- **`root_squash` still holds for the casual case but not the determined one.** See the note above: a student with root can `su - a27-t2`, and those requests carry a legitimate UID.
+- **`root_squash` still holds for the casual case but not the determined one.** See the note above: a student with root can `su - m4c`, and those requests carry a legitimate UID.
 
 This is a reasonable trade in an honor-code environment. It is just worth making knowingly.
 
@@ -674,16 +680,17 @@ Create the tree, pre-populated for the current roster. Numeric IDs are used deli
 sudo mkdir -p /local
 sudo chmod 755 /local
 
-# a27-m0..a27-m30 -> uid 20000..20030 ; a27-t0..a27-t30 -> uid 21000..21030
+# m3a..m3p, m3z -> uid 20000 + letter offset ; m4a..m4p, m4z -> uid 21000 + letter offset
 # All students share gid 10000 (ece387students).
-# Verify with "getent passwd a27-m0" before running.
-for i in $(seq 0 30); do
+# Verify with "getent passwd m3a" before running.
+for letter in {a..p} z; do
+  i=$(( $(printf '%d' "'$letter") - 97 ))
   sudo install -d -o $((20000+i)) -g 10000 -m 700 \
-       /local/a27-m$i /local/a27-m$i/cache \
-       /local/a27-m$i/master_ws /local/a27-m$i/master_ws/src
+       /local/m3$letter /local/m3$letter/cache \
+       /local/m3$letter/master_ws /local/m3$letter/master_ws/src
   sudo install -d -o $((21000+i)) -g 10000 -m 700 \
-       /local/a27-t$i /local/a27-t$i/cache \
-       /local/a27-t$i/master_ws /local/a27-t$i/master_ws/src
+       /local/m4$letter /local/m4$letter/cache \
+       /local/m4$letter/master_ws /local/m4$letter/master_ws/src
 done
 
 ls -ln /local | head -3        # expect uid 20000, gid 10000, mode 700
@@ -721,8 +728,8 @@ echo "session optional pam_exec.so /usr/local/sbin/ece387-local-setup.sh" \
 Verify:
 
 ```bash
-sudo rm -rf /local/a27-m0
-sudo su - a27-m0 -c 'ls -ld /local/$USER'     # recreated automatically
+sudo rm -rf /local/m3a
+sudo su - m3a -c 'ls -ld /local/$USER'     # recreated automatically
 ```
 
 The symlinks themselves are created once on the **login server**, since that is where the home directories live — see [local-workspace.md](local-workspace.md) for that step and for the student-facing consequences.
@@ -1025,7 +1032,7 @@ sudo sssctl domain-status ece387.local
 
 When a student sits down at a master:
 
-1. **Log in** with the LDAP username (e.g. `a27-m0`) and password. SSSD authenticates against the login server; the home directory mounts automatically over NFS.
+1. **Log in** with the LDAP username (e.g. `m3a`) and password. SSSD authenticates against the login server; the home directory mounts automatically over NFS.
 2. **`.bashrc`, `.ssh/`, and the workspace are already there** — same files at every bench, no re-setup. This is what the login server is for.
 3. **Connect to the robot** from the network menu in the top-right corner: select `robotX` and enter the AP password. First time on a given master, also tick **"Use this connection only for resources on its network"** under Settings → Network → robotX → IPv4 and IPv6 (see Section 1.8) — without it, the lab network drops.
 
@@ -1120,16 +1127,16 @@ done
 
 ```bash
 # Run on the master; every line should succeed
-id a27-m0                                    # LDAP lookup works
-ls /home/students/a27-m0 > /dev/null          # NFS mount works
+id m3a                                    # LDAP lookup works
+ls /home/students/m3a > /dev/null          # NFS mount works
 id ece387rescue                              # rescue account exists
 ip route | grep default                       # default route is NOT 192.168.50.1
-sudo -l -U a27-m0                             # sudo whitelist is in effect
+sudo -l -U m3a                             # sudo whitelist is in effect
 ```
 
 ### Update the shell environment
 
-Student `.bashrc` and `.inputrc` live on the login server, not here. See [login-server.md §1.7](login-server.md). Nothing needs to be done on the masters.
+Student `.bashrc` and `.inputrc` live on the login server, not here. See [login-server.md §1.6](login-server.md). Nothing needs to be done on the masters.
 
 ---
 
@@ -1138,7 +1145,7 @@ Student `.bashrc` and `.inputrc` live on the login server, not here. See [login-
 | Problem | Command | Fix |
 |---------|---------|-----|
 | Home dir not mounting | `automount -v` | Check NFS exports on server, autofs config on master, server reachable |
-| SSSD not resolving users | `sssctl user-checks a27-m0` | `systemctl restart sssd` |
+| SSSD not resolving users | `sssctl user-checks m3a` | `systemctl restart sssd` |
 | NFS mount fails | `showmount -e 10.99.1.50` | Check server firewall; verify `nfs-kernel-server` is running |
 | Login slow (~30s) | `journalctl -u sssd` | Check LDAP URI is reachable: `ping 10.99.1.50` |
 | Can't reach a master by hostname | `ping masterNN.local` | Check `avahi-daemon` on both machines |

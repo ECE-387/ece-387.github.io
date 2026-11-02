@@ -4,6 +4,8 @@ Brings an already-built master in line with the current [login-client.md](login-
 
 **Time:** about 30 minutes, plus a 30–60 minute `dlib` compile on one machine only.
 
+> **Using `phoenix` instead of the lab server:** masters on the home network point at `192.168.0.151`, not `10.99.1.50`. The address appears in the connectivity checks, `ldap_uri` in `/etc/sssd/sssd.conf`, and `/etc/auto.students`. The LDAP domain, accounts, and UIDs are the same on both servers.
+
 Log in locally as `ece387admin`. Several steps touch networking, so do them at the console rather than over SSH — an SSH session riding the interface you are reconfiguring will drop mid-command.
 
 ---
@@ -33,8 +35,8 @@ sudo systemctl restart autofs
 Verify — the first must fail, the second must succeed:
 
 ```bash
-sudo ls /home/students/a27-t02          # expect: Permission denied
-sudo su - a27-m0 -c 'touch ~/t && ls ~/t && rm ~/t'   # expect: success
+sudo ls /home/students/m4c          # expect: Permission denied
+sudo su - m3a -c 'touch ~/t && ls ~/t && rm ~/t'   # expect: success
 ```
 
 If the first still lists files, the server-side `exportfs -rav` did not take. Go back and check `sudo exportfs -v` there.
@@ -59,7 +61,7 @@ offline_credentials_expiration = 0
 ```bash
 sudo chmod 600 /etc/sssd/sssd.conf
 sudo systemctl restart sssd
-id a27-m0                                # expect uid=20000(a27-m0) gid=10000(...)
+id m3a                                # expect uid=20000(m3a) gid=10000(...)
 ```
 
 ---
@@ -127,7 +129,7 @@ Check what is currently permitted:
 
 ```bash
 sudo cat /etc/sudoers.d/ece387-students
-sudo -l -U a27-m0
+sudo -l -U m3a
 ```
 
 Replace it with the version from [login-client.md §1.6](login-client.md), which is now the single definition. The short form:
@@ -149,7 +151,7 @@ EOF
 
 sudo chmod 440 /etc/sudoers.d/ece387-students
 sudo visudo -c -f /etc/sudoers.d/ece387-students
-sudo -l -U a27-m0
+sudo -l -U m3a
 ```
 
 > Because `apt` and `pip` remain, students retain a path to root. Any host-level restriction — immutable files, hosts-file blocking — is a deterrent rather than a control, which is why the audit logging in [genai-blocking.md §7](genai-blocking.md) matters more than the blocking itself.
@@ -182,7 +184,7 @@ sudo sysctl -p /etc/sysctl.d/61-dmesg.conf
 Verify as a student before moving on:
 
 ```bash
-sudo su - a27-m0 -c 'ls -l /dev/ttyACM0 /dev/video0 2>/dev/null; dmesg | tail -3'
+sudo su - m3a -c 'ls -l /dev/ttyACM0 /dev/video0 2>/dev/null; dmesg | tail -3'
 ```
 
 Device modes should be `crw-rw-rw-` and `dmesg` should produce output without sudo.
@@ -256,7 +258,7 @@ python3 -m pip wheel dlib-*.tar.gz          # 30-60 minutes
 Store it on the server so the other 13 masters and any future re-image can install in seconds:
 
 ```bash
-scp dlib-*-linux_x86_64.whl ece387admin@ece387server:/srv/ece387/wheels/x86_64/
+scp dlib-*-linux_x86_64.whl stanbaek@10.99.1.50:/srv/ece387/wheels/x86_64/
 sudo pip install --break-system-packages ./dlib-*.whl
 python3 -c "import dlib; print(dlib.__version__)"
 ```
@@ -264,7 +266,7 @@ python3 -c "import dlib; print(dlib.__version__)"
 **On every other master**, skip the compile entirely:
 
 ```bash
-scp ece387admin@ece387server:/srv/ece387/wheels/x86_64/dlib-*.whl ~/
+scp stanbaek@10.99.1.50:/srv/ece387/wheels/x86_64/dlib-*.whl ~/
 sudo pip install --break-system-packages ~/dlib-*.whl
 ```
 
@@ -336,7 +338,7 @@ The robot guide fixes this at the source with `dhcp-option=3`. If you have appli
 ## Step 9 — Confirm the pushed template arrived
 
 ```bash
-sudo su - a27-m0
+sudo su - m3a
 grep -n "ssh_robot\|bringup" ~/.bashrc      # both should show 192.168.50.1
 which ros2 && echo $ROS_DOMAIN_ID
 ccbuild --help > /dev/null 2>&1 && echo "ccbuild defined"
@@ -350,13 +352,13 @@ If the aliases still show `192.168.4.1` or `robotX`, the server-side push has no
 ## Full verification
 
 ```bash
-id a27-m0                                          # LDAP resolves
-ls /home/students/a27-m0 > /dev/null && echo "NFS OK"
-sudo ls /home/students/a27-t02 2>&1 | grep -q denied && echo "root_squash OK"
+id m3a                                          # LDAP resolves
+ls /home/students/m3a > /dev/null && echo "NFS OK"
+sudo ls /home/students/m4c 2>&1 | grep -q denied && echo "root_squash OK"
 id ece387rescue > /dev/null && echo "rescue account OK"
 python3 -c "import dlib" && echo "dlib OK"
 ip route | grep default                            # not via 192.168.50.1
-sudo -l -U a27-m0 | tail -5                        # apt/pip/shutdown/reboot only
+sudo -l -U m3a | tail -5                        # apt/pip/shutdown/reboot only
 ls -l /dev/video0 | grep -q 'rw-rw-rw' && echo "udev OK"
 sysctl kernel.dmesg_restrict                       # expect 0
 ```

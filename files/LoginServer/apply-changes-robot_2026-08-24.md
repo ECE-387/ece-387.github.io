@@ -166,14 +166,14 @@ python3 -m pip wheel dlib-*.tar.gz          # slow on a Pi; leave it running
 Copy it to the login server so it survives re-imaging:
 
 ```bash
-scp dlib-*-linux_aarch64.whl ece387admin@10.99.1.50:/srv/ece387/wheels/aarch64/
+scp dlib-*-linux_aarch64.whl stanbaek@10.99.1.50:/srv/ece387/wheels/aarch64/
 ```
 
 On every other robot:
 
 ```bash
 source ~/robot_env/bin/activate
-scp ece387admin@10.99.1.50:/srv/ece387/wheels/aarch64/dlib-*.whl ~/
+scp stanbaek@10.99.1.50:/srv/ece387/wheels/aarch64/dlib-*.whl ~/
 pip install ~/dlib-*.whl
 ```
 

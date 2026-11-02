@@ -67,6 +67,14 @@ separate physical connection:
 This is the same pattern used for the RobotTeaming network below —
 just a different subnet.
 
+### Devices on ECE387
+
+| Device | IP | Role |
+|---|---|---|
+| ECE387 WiFi router | `10.99.1.1` | Router, DHCP for this subnet |
+| `ece387server` (NUC9i7QNX1) | `10.99.1.50` | Login server (LDAP, NFS) — static IP |
+| `master01`–`master14` | DHCP | Master computers |
+
 ## RobotTeaming WiFi (10.20.1.0/24)
 
 Built the same way, using a Netgear Nighthawk router:
@@ -100,6 +108,16 @@ Built the same way, using a Netgear Nighthawk router:
 |---|---|---|
 | Netgear Nighthawk | `10.20.1.1` | Router, DHCP/DNS for this subnet |
 | GTX1080 desktop | `10.20.1.50` | Login/file server (SSH, NFS) — static IP, dual-homed with WiFi used only for internet egress (split-routing, not a gateway for this subnet) |
+
+## Home network (192.168.0.0/24)
+
+Not part of the ECE network. It holds `phoenix`, a second login server that is
+nearly identical to `ece387server`.
+
+| Device | IP | Role |
+|---|---|---|
+| Home router | `192.168.0.1` | Router, DHCP for this subnet |
+| `phoenix` (NUC9i7QNX1) | `192.168.0.151` | Login server (LDAP, NFS) — static IP on Wi-Fi (`wlp4s0`) |
 
 ## Key takeaways
 

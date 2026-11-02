@@ -8,6 +8,8 @@ Brings an already-built `ece387server` in line with the current [login-server.md
 
 **Log in as your admin user on the login server** (`stanbaek@ece387server`). Everything here runs locally on the server.
 
+> **Accounts.** This guide updates the `m3*` and `m4*` accounts. If the server still has accounts from an earlier term, first remove them with `remove_students.sh` and create the current ones with `create_students.sh`, both from [login-server.md](login-server.md). A server built from the current guide, such as `phoenix`, does not need this guide at all.
+
 ---
 
 ## Step 0 — Back up
@@ -17,11 +19,13 @@ sudo mkdir -p /root/pre-migration-$(date +%F)
 BK=/root/pre-migration-$(date +%F)
 sudo cp /etc/exports "$BK/"
 sudo cp -r /etc/ece387 "$BK/"
-sudo tar czf "$BK/student-dotfiles.tar.gz" /home/students/a27-*/.bashrc /home/students/a27-*/.inputrc 2>/dev/null
+# Run inside the elevated shell: student homes are chmod 700, so your own
+# shell cannot expand a path that reaches into them.
+sudo bash -c "tar czf '$BK/student-dotfiles.tar.gz' /home/students/m[34]*/.bashrc /home/students/m[34]*/.inputrc"
 ls -la "$BK"
 ```
 
-The tarball matters: Step 5 overwrites `.bashrc` on all 62 accounts, and if any student has customized theirs, this is the only copy.
+The tarball matters: Step 5 overwrites `.bashrc` on all 34 accounts, and if any student has customized theirs, this is the only copy.
 
 ---
 
@@ -119,12 +123,12 @@ sudo exportfs -v
 
 ---
 
-## Step 5 — Push the templates to all 62 accounts
+## Step 5 — Push the templates to all 34 accounts
 
 See what you are about to overwrite:
 
 ```bash
-sudo bash -c 'for f in /home/students/a27-*/.bashrc; do
+sudo bash -c 'for f in /home/students/m[34]*/.bashrc; do
   cmp -s /etc/ece387/bashrc_template "$f" || echo "MODIFIED: $f"
 done'
 ```
@@ -134,7 +138,7 @@ Every account will be listed, since Step 2 just changed the template. If you wan
 Push:
 
 ```bash
-for dir in /home/students/a27-*/; do
+for dir in /home/students/m[34]*/; do
   user=$(basename "$dir")
   uid=$(stat -c %u "$dir")
   sudo cp /etc/ece387/bashrc_template "${dir}.bashrc"   || { echo "FAILED: $user"; continue; }
@@ -144,14 +148,14 @@ for dir in /home/students/a27-*/; do
 done
 ```
 
-Expect 62 `Updated:` lines with sensible UIDs (`20000`–`20030`, `21000`–`21030`) and no `FAILED:` lines.
+Expect 34 `Updated:` lines with sensible UIDs (`20000`–`20025`, `21000`–`21025`) and no `FAILED:` lines.
 
 > Use `stat -c %u`, not `id -u "$user"`. This server hosts LDAP but is not an LDAP *client*, so NSS here cannot resolve student names and `id` fails silently — leaving `chown` a no-op.
 
 Verify ownership. The glob must be expanded inside the elevated shell, because student home directories are `chmod 700`:
 
 ```bash
-# Empty output = all 62 correct
+# Empty output = all 34 correct
 sudo find /home/students -maxdepth 2 -name '.bashrc' -user root
 ```
 
@@ -164,6 +168,7 @@ The masters fetch a prebuilt `dlib` wheel from here rather than compiling for 45
 ```bash
 sudo mkdir -p /srv/ece387/wheels/x86_64 /srv/ece387/wheels/aarch64
 sudo chmod 755 /srv/ece387/wheels
+sudo chown -R "$USER": /srv/ece387/wheels
 ```
 
 Separate directories per architecture — a wheel built on a robot is tagged `linux_aarch64` and will not install on a master. Populate them when you build the wheels (client guide, Step 6).
@@ -205,7 +210,7 @@ sudo exportfs -v | grep root_squash
 
 # All accounts pushed and owned correctly
 sudo find /home/students -maxdepth 2 -name '.bashrc' -user root   # expect no output
-sudo ls -ln /home/students/a27-m0/.bashrc                          # expect 20000 10000
+sudo ls -ln /home/students/m3a/.bashrc                          # expect 20000 10000
 
 # Services healthy
 sudo systemctl status slapd nfs-kernel-server --no-pager | grep Active
