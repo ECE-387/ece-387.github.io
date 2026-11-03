@@ -16,43 +16,46 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../_static/tabs.js?v=3ee01567"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -60,6 +63,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Appendix/login-server';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -67,34 +71,30 @@
     <link rel="prev" title="Robot Setup (ROS2 Jazzy)" href="RobotSetupJazzy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -102,7 +102,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -110,15 +109,59 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
     </header>
   
 
@@ -127,7 +170,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +201,17 @@
     
     
     <img src="../_static/ece387.png" class="logo__image only-light" alt="Introduction to Robotic Systems - Home"/>
-    <script>document.write(`<img src="../_static/ece387.png" class="logo__image only-dark" alt="Introduction to Robotic Systems - Home"/>`);</script>
+    <img src="../_static/ece387.png" class="logo__image only-dark pst-js-only" alt="Introduction to Robotic Systems - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="list-caption"><li class="toctree-l0 has-children"><details><summary><p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Info</span></p><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="nav bd-sidenav">
@@ -213,9 +253,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -298,7 +343,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -312,25 +357,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -352,10 +389,13 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-a-login-server">Why a Login Server?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture-overview">Architecture Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-planning">Network Planning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-planning">Network Planning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#second-server-phoenix">Second Server (<code class="docutils literal notranslate"><span class="pre">phoenix</span></code>)</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. Login Server Setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-working-directory">1.0 Create a Working Directory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-ubuntu-24-04-server">1.1 Install Ubuntu 24.04 Server</a></li>
@@ -371,13 +411,14 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-nfs-home-directories">1.7 Configure NFS Home Directories</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open-required-firewall-ports">1.8 Open Required Firewall Ports</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-wheel-directory">1.9 Create the Wheel Directory</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resilience-server-down-or-network-unreliable">2. Resilience — Server Down or Network Unreliable</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maintenance">3. Maintenance</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-new-student">Add a new student</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reset-a-student-password">Reset a student password</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-all-students-for-a-class-year-year-end-rollover">Remove all students for a class year (year-end rollover)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-all-students-in-a-series-term-rollover">Remove all students in a series (term rollover)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#list-all-student-accounts">List all student accounts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-up-home-directories-and-ldap-database">Back up home directories and LDAP database</a></li>
 </ul>
@@ -409,7 +450,7 @@ document.write(`
 <ul class="simple">
 <li><p>The lab has a bank of master computers (e.g., 14 NUCs) and students do not own or sit at the same machine every session.</p></li>
 <li><p>A student should be able to sit down at <em>any</em> master, log in with their own credentials, and immediately have their <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, SSH keys, and ROS workspace available — without re-cloning or re-configuring anything.</p></li>
-<li><p>You want to manage 20–30 student accounts centrally: create them once, reset a forgotten password in one command, and push a <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> update to every account at once (see <a class="reference internal" href="#maintenance">Maintenance</a>). The shell environment is instructor-owned — every account runs an identical, known-good <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, so “it works on my machine” never enters a debugging session.</p></li>
+<li><p>You want to manage about 30 student accounts centrally: create them once, reset a forgotten password in one command, and push a <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> update to every account at once (see <a class="reference internal" href="#maintenance">Maintenance</a>). The shell environment is instructor-owned — every account runs an identical, known-good <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, so “it works on my machine” never enters a debugging session.</p></li>
 <li><p>You need some isolation between students who share the same physical hardware (restricted sudo, separate home directories, no ability to read another student’s files).</p></li>
 </ul>
 <p><strong>When a login server is overkill:</strong></p>
@@ -417,7 +458,7 @@ document.write(`
 <li><p>Students each have their own laptop or a personal workstation they always use. In that case there is nothing to “roam” between — a local Ubuntu account already gives each student a persistent home directory, and centralized authentication just adds an extra server to install, patch, and keep running (plus a single point of failure if it goes down). Use <a class="reference internal" href="MasterSetupJazzy.html"><span class="std std-doc">Master Setup - Standalone</span></a> instead — it sets up the same ROS 2 environment with a normal local account and no LDAP/NFS dependency.</p></li>
 <li><p>You only have a handful of machines and can simply assign one student (or a fixed pair) per machine for the term.</p></li>
 </ul>
-<p><strong>The trade-off:</strong> a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in <a class="reference internal" href="login-client.html"><span class="std std-doc">Master (Client) Setup</span></a> with SSSD credential caching and soft NFS mounts). For ECE 387’s AFA lab — a fixed set of 14 dedicated NUCs used by a rotating roster of ~30 students across sections — that trade-off is worth it.</p>
+<p><strong>The trade-off:</strong> a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in <a class="reference internal" href="login-client.html"><span class="std std-doc">Master (Client) Setup</span></a> with SSSD credential caching and soft NFS mounts). For ECE 387’s AFA lab — a fixed set of 14 dedicated NUCs used by a rotating roster of 34 student accounts across sections — that trade-off is worth it.</p>
 </section>
 <section id="architecture-overview">
 <h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">#</a></h2>
@@ -457,7 +498,7 @@ document.write(`
 <section id="network-planning">
 <h2>Network Planning<a class="headerlink" href="#network-planning" title="Link to this heading">#</a></h2>
 <p>Assign static IPs on your lab’s network before starting. All machines must be on the same subnet so they can reach each other.</p>
-<p><strong>Lab network:</strong> WiFi router at <code class="docutils literal notranslate"><span class="pre">10.99.1.1</span></code>, SSID <code class="docutils literal notranslate"><span class="pre">ece387</span></code>, subnet <code class="docutils literal notranslate"><span class="pre">10.99.1.0/24</span></code>.</p>
+<p><strong>Lab network:</strong> WiFi router at <code class="docutils literal notranslate"><span class="pre">10.99.1.1</span></code>, SSID <code class="docutils literal notranslate"><span class="pre">ECE387</span></code>, subnet <code class="docutils literal notranslate"><span class="pre">10.99.1.0/24</span></code>.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Host</p></th>
@@ -490,8 +531,63 @@ document.write(`
 </table>
 </div>
 <blockquote>
-<div><p>The login server IP (<code class="docutils literal notranslate"><span class="pre">10.99.1.50</span></code>) is the AFA lab address, reachable over the <code class="docutils literal notranslate"><span class="pre">ece387</span></code> WiFi network at <code class="docutils literal notranslate"><span class="pre">10.99.1.1</span></code>. Master IPs above (<code class="docutils literal notranslate"><span class="pre">10.99.1.101</span></code>–<code class="docutils literal notranslate"><span class="pre">150</span></code>) are a suggested continuation of that range — adjust if you assign them differently. This guide uses the domain <code class="docutils literal notranslate"><span class="pre">ece387.local</span></code>.</p>
+<div><p>The login server IP (<code class="docutils literal notranslate"><span class="pre">10.99.1.50</span></code>) is the AFA lab address, reachable over the <code class="docutils literal notranslate"><span class="pre">ECE387</span></code> WiFi network at <code class="docutils literal notranslate"><span class="pre">10.99.1.1</span></code>. Master IPs above (<code class="docutils literal notranslate"><span class="pre">10.99.1.101</span></code>–<code class="docutils literal notranslate"><span class="pre">150</span></code>) are a suggested continuation of that range — adjust if you assign them differently. This guide uses the domain <code class="docutils literal notranslate"><span class="pre">ece387.local</span></code>.</p>
 </div></blockquote>
+<section id="second-server-phoenix">
+<h3>Second Server (<code class="docutils literal notranslate"><span class="pre">phoenix</span></code>)<a class="headerlink" href="#second-server-phoenix" title="Link to this heading">#</a></h3>
+<p>There are two near-identical login servers, both NUC9i7QNX1. The commands in this guide show the lab server. When building <code class="docutils literal notranslate"><span class="pre">phoenix</span></code>, substitute the values below; everything else, including the LDAP domain, accounts, and UIDs, is the same.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting</p></th>
+<th class="head"><p>Lab server</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">phoenix</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Hostname</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ece387server</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phoenix</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>IP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.99.1.50</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">192.168.0.151</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Gateway</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.99.1.1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">192.168.0.1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Subnet (NFS export, firewall)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.99.1.0/24</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">192.168.0.0/24</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Interface</p></td>
+<td><p>Ethernet</p></td>
+<td><p>Wi-Fi (<code class="docutils literal notranslate"><span class="pre">wlp4s0</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">phoenix</span></code> uses Wi-Fi, so its static address goes under <code class="docutils literal notranslate"><span class="pre">wifis:</span></code> and keeps the existing <code class="docutils literal notranslate"><span class="pre">access-points:</span></code> block:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">network</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">wifis</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">wlp4s0</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dhcp4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">      </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">192.168.0.151/24</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">routes</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">          </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.1</span>
+<span class="w">      </span><span class="nt">nameservers</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">8.8.8.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.8.4.4</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">access-points</span><span class="p">:</span>
+<span class="w">        </span><span class="s">"YOUR_SSID"</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">"YOUR_WIFI_PASSWORD"</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Changing the IP drops any SSH session connected to the old address. Do it last, and reserve the address on the router so DHCP does not hand it to another device.</p>
+</div></blockquote>
+</section>
 </section>
 <hr class="docutils" />
 <section id="id1">
@@ -535,7 +631,7 @@ sudo<span class="w"> </span>nano<span class="w"> </span>/etc/netplan/50-cloud-in
 <span class="w">      </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.99.1.50/24</span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="nt">routes</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-<span class="w">          </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.99.1.1</span><span class="w">          </span><span class="c1"># WiFi router IP (ece387only)</span>
+<span class="w">          </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.99.1.1</span><span class="w">          </span><span class="c1"># WiFi router IP</span>
 <span class="w">      </span><span class="nt">nameservers</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">8.8.8.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.8.4.4</span><span class="p p-Indicator">]</span>
 </pre></div>
@@ -565,7 +661,7 @@ sudo<span class="w"> </span>hostnamectl<span class="w"> </span>set-hostname<span
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/hosts
 </pre></div>
 </div>
-<p>The file should contain:</p>
+<p>Replace the installer’s <code class="docutils literal notranslate"><span class="pre">127.0.1.1</span></code> line with the server’s real address, and leave the rest of the file alone, including the IPv6 lines:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">127.0.0.1</span>   <span class="n">localhost</span>
 <span class="mf">10.99.1.50</span>  <span class="n">ece387server</span><span class="o">.</span><span class="n">ece387</span><span class="o">.</span><span class="n">local</span>  <span class="n">ece387server</span>
 </pre></div>
@@ -607,11 +703,26 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
 <span class="c1"># -x         = simple authentication (no Kerberos)</span>
 <span class="c1"># -H         = server URI</span>
 <span class="c1"># -b         = base DN to search from</span>
-<span class="c1"># -D         = who you&#39;re connecting as (the admin account)</span>
+<span class="c1"># -D         = who you're connecting as (the admin account)</span>
 <span class="c1"># -W         = prompt for password</span>
-ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span>-b<span class="w"> </span><span class="s2">&quot;dc=ece387,dc=local&quot;</span><span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=ece387,dc=local&quot;</span><span class="w"> </span>-W
+ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span>-b<span class="w"> </span><span class="s2">"dc=ece387,dc=local"</span><span class="w"> </span>-D<span class="w"> </span><span class="s2">"cn=admin,dc=ece387,dc=local"</span><span class="w"> </span>-W
 </pre></div>
 </div>
+<blockquote>
+<div><p><strong>Scripting the install.</strong> To skip the prompts, set the answers before installing. This replaces both the prompts above and <code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>debconf-set-selections<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">slapd slapd/no_configuration boolean false</span>
+<span class="s">slapd slapd/domain string ece387.local</span>
+<span class="s">slapd shared/organization string ECE387</span>
+<span class="s">slapd slapd/password1 password LdapAdmin387!</span>
+<span class="s">slapd slapd/password2 password LdapAdmin387!</span>
+<span class="s">slapd slapd/purge_database boolean false</span>
+<span class="s">slapd slapd/move_old_database boolean true</span>
+<span class="s">EOF</span>
+sudo<span class="w"> </span><span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>slapd<span class="w"> </span>ldap-utils<span class="w"> </span>ldapscripts
+</pre></div>
+</div>
+</div></blockquote>
 </section>
 <section id="create-ldap-structure">
 <h3>1.4 Create LDAP Structure<a class="headerlink" href="#create-ldap-structure" title="Link to this heading">#</a></h3>
@@ -619,7 +730,7 @@ ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> <
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write the structure definition to a file in LDIF format.</span>
 <span class="c1"># LDIF (LDAP Data Interchange Format) is the text format used to describe</span>
 <span class="c1"># entries you want to add, modify, or delete in the LDAP database.</span>
-cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/structure.ldif<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/structure.ldif<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s"># ou=students: holds all student user accounts</span>
 <span class="s">dn: ou=students,dc=ece387,dc=local</span>
 <span class="s">objectClass: organizationalUnit</span>
@@ -641,51 +752,54 @@ cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/struct
 <span class="c1"># Add these entries to the LDAP database</span>
 <span class="c1"># -f = read from file instead of stdin</span>
 ldapadd<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=ece387,dc=local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-D<span class="w"> </span><span class="s2">"cn=admin,dc=ece387,dc=local"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-W<span class="w"> </span>-f<span class="w"> </span>~/Documents/ece387/structure.ldif
 </pre></div>
 </div>
 </section>
 <section id="create-student-accounts">
 <h3>1.5 Create Student Accounts<a class="headerlink" href="#create-student-accounts" title="Link to this heading">#</a></h3>
-<p>Student IDs follow two series this term: <code class="docutils literal notranslate"><span class="pre">a27-m0</span></code> through <code class="docutils literal notranslate"><span class="pre">a27-m30</span></code> (31 accounts) and <code class="docutils literal notranslate"><span class="pre">a27-t0</span></code> through <code class="docutils literal notranslate"><span class="pre">a27-t30</span></code> (31 accounts) — 62 accounts total. The script below:</p>
+<p>Student IDs follow two series this term: <code class="docutils literal notranslate"><span class="pre">m3a</span></code> through <code class="docutils literal notranslate"><span class="pre">m3p</span></code> plus <code class="docutils literal notranslate"><span class="pre">m3z</span></code> (17 accounts) and <code class="docutils literal notranslate"><span class="pre">m4a</span></code> through <code class="docutils literal notranslate"><span class="pre">m4p</span></code> plus <code class="docutils literal notranslate"><span class="pre">m4z</span></code> (17 accounts) — 34 accounts total. The script below:</p>
 <ol class="arabic simple">
 <li><p>Generates a hashed password for all accounts</p></li>
-<li><p>Builds a single LDIF file with all 62 user entries</p></li>
+<li><p>Builds a single LDIF file with all 34 user entries</p></li>
 <li><p>Creates each student’s home directory on the server, populated with the <code class="docutils literal notranslate"><span class="pre">/etc/skel</span></code> defaults (the course <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> is applied in 1.6)</p></li>
 <li><p>Adds all accounts to LDAP in one command</p></li>
 </ol>
-<p>UID numbers are split into two non-overlapping ranges so the two series never collide: <code class="docutils literal notranslate"><span class="pre">m</span></code> series uses <code class="docutils literal notranslate"><span class="pre">20000</span></code>–<code class="docutils literal notranslate"><span class="pre">20030</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code> series uses <code class="docutils literal notranslate"><span class="pre">21000</span></code>–<code class="docutils literal notranslate"><span class="pre">21030</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/create_students.sh<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<p>UID numbers are split into two non-overlapping ranges so the two series never collide: <code class="docutils literal notranslate"><span class="pre">m3</span></code> starts at <code class="docutils literal notranslate"><span class="pre">20000</span></code> and <code class="docutils literal notranslate"><span class="pre">m4</span></code> at <code class="docutils literal notranslate"><span class="pre">21000</span></code>. Each account is offset by its letter (<code class="docutils literal notranslate"><span class="pre">a</span></code> = 0, <code class="docutils literal notranslate"><span class="pre">z</span></code> = 25), so <code class="docutils literal notranslate"><span class="pre">m3a</span></code> is <code class="docutils literal notranslate"><span class="pre">20000</span></code>, <code class="docutils literal notranslate"><span class="pre">m3z</span></code> is <code class="docutils literal notranslate"><span class="pre">20025</span></code>, and <code class="docutils literal notranslate"><span class="pre">q</span></code>–<code class="docutils literal notranslate"><span class="pre">y</span></code> stay free for later additions.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/create_students.sh<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s">#!/bin/bash</span>
 <span class="s"># Exit immediately if any command fails</span>
 <span class="s">set -e</span>
 
 <span class="s"># --- Configuration ---</span>
-<span class="s">LDAP_ADMIN_DN=&quot;cn=admin,dc=ece387,dc=local&quot;</span>
-<span class="s">LDAP_ADMIN_PW=&quot;LdapAdmin387!&quot;    # your LDAP admin password</span>
-<span class="s">INITIAL_PW=&quot;TempPass2024!&quot;        # students change this on first login</span>
+<span class="s">LDAP_ADMIN_DN="cn=admin,dc=ece387,dc=local"</span>
+<span class="s">LDAP_ADMIN_PW="LdapAdmin387!"    # your LDAP admin password</span>
+<span class="s">INITIAL_PW="dfec3141"             # shared by all accounts until changed</span>
 <span class="s">LDIF=~/Documents/ece387/students.ldif</span>
 
 <span class="s"># Generate a single password hash to reuse for all accounts.</span>
 <span class="s"># slappasswd hashes the password in a format OpenLDAP understands ({SSHA}...).</span>
-<span class="s">HASH=$(slappasswd -s &quot;$INITIAL_PW&quot;)</span>
+<span class="s">HASH=$(slappasswd -s "$INITIAL_PW")</span>
 
-<span class="s"># Clear the LDIF file if it already exists from a previous run</span>
+<span class="s"># Clear the LDIF file if it already exists from a previous run.</span>
+<span class="s"># It holds the password hash, so only the admin account may read it.</span>
 <span class="s">&gt; $LDIF</span>
+<span class="s">chmod 600 $LDIF</span>
 
-<span class="s"># Two username series this term: a27-m0..a27-m30 and a27-t0..a27-t30.</span>
+<span class="s"># Two username series this term: m3a..m3p, m3z and m4a..m4p, m4z.</span>
 <span class="s"># UID_BASE keeps the two series in separate, non-overlapping ranges.</span>
 <span class="s">create_series() {</span>
-<span class="s">  local PREFIX=$1     # &quot;m&quot; or &quot;t&quot;</span>
-<span class="s">  local UID_BASE=$2   # 20000 for m-series, 21000 for t-series</span>
+<span class="s">  local PREFIX=$1     # "m3" or "m4"</span>
+<span class="s">  local UID_BASE=$2   # 20000 for m3, 21000 for m4</span>
 
-<span class="s">  # Loop from 0 to 30, creating one LDAP entry per student</span>
-<span class="s">  for i in $(seq 0 30); do</span>
-<span class="s">    USERNAME=&quot;a27-${PREFIX}${i}&quot;</span>
-<span class="s">    UID_NUMBER=$((UID_BASE + i))</span>
+<span class="s">  # Loop over a..p plus z, creating one LDAP entry per student.</span>
+<span class="s">  # The UID offset comes from the letter, so q..y stay free for later.</span>
+<span class="s">  for LETTER in {a..p} z; do</span>
+<span class="s">    USERNAME="${PREFIX}${LETTER}"</span>
+<span class="s">    UID_NUMBER=$((UID_BASE + $(printf '%d' "'${LETTER}") - 97))</span>
 
-<span class="s">    # Append this student&#39;s entry to the LDIF file.</span>
+<span class="s">    # Append this student's entry to the LDIF file.</span>
 <span class="s">    # Each entry is separated by a blank line (required by LDIF format).</span>
 <span class="s">    cat &gt;&gt; $LDIF &lt;&lt; ENTRY</span>
 <span class="s">dn: uid=${USERNAME},ou=students,dc=ece387,dc=local</span>
@@ -703,33 +817,33 @@ ldapadd<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </sp
 
 <span class="s">ENTRY</span>
 
-<span class="s">    # Create the student&#39;s home directory on the NFS share.</span>
+<span class="s">    # Create the student's home directory on the NFS share.</span>
 <span class="s">    # /etc/skel contains default files (.bashrc, .profile, etc.) that are</span>
 <span class="s">    # copied into every new home directory.</span>
 <span class="s">    sudo mkdir -p /home/students/${USERNAME}</span>
 <span class="s">    sudo cp -r /etc/skel/. /home/students/${USERNAME}/</span>
 
-<span class="s">    # Set ownership to the student&#39;s UID and the shared group GID (10000).</span>
+<span class="s">    # Set ownership to the student's UID and the shared group GID (10000).</span>
 <span class="s">    # chmod 700 means only the student can read/write their own directory.</span>
 <span class="s">    sudo chown -R ${UID_NUMBER}:10000 /home/students/${USERNAME}</span>
 <span class="s">    sudo chmod 700 /home/students/${USERNAME}</span>
 
-<span class="s">    echo &quot;Prepared: ${USERNAME} (uid=${UID_NUMBER})&quot;</span>
+<span class="s">    echo "Prepared: ${USERNAME} (uid=${UID_NUMBER})"</span>
 <span class="s">  done</span>
 <span class="s">}</span>
 
-<span class="s">create_series &quot;m&quot; 20000</span>
-<span class="s">create_series &quot;t&quot; 21000</span>
+<span class="s">create_series "m3" 20000</span>
+<span class="s">create_series "m4" 21000</span>
 
-<span class="s"># Add all 62 entries to LDAP in a single operation.</span>
+<span class="s"># Add all 34 entries to LDAP in a single operation.</span>
 <span class="s"># -w = password (non-interactive, read from argument)</span>
 <span class="s">ldapadd -x -H ldap://localhost \</span>
-<span class="s">  -D &quot;$LDAP_ADMIN_DN&quot; \</span>
-<span class="s">  -w &quot;$LDAP_ADMIN_PW&quot; \</span>
+<span class="s">  -D "$LDAP_ADMIN_DN" \</span>
+<span class="s">  -w "$LDAP_ADMIN_PW" \</span>
 <span class="s">  -f $LDIF</span>
 
-<span class="s">echo &quot;&quot;</span>
-<span class="s">echo &quot;Done. 62 student accounts created (a27-m0..m30, a27-t0..t30).&quot;</span>
+<span class="s">echo ""</span>
+<span class="s">echo "Done. 34 student accounts created (m3a..m3p, m3z, m4a..m4p, m4z)."</span>
 <span class="s">EOF</span>
 
 <span class="c1"># Make the script executable, then run it</span>
@@ -737,13 +851,16 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/Documents/ece387/create
 bash<span class="w"> </span>~/Documents/ece387/create_students.sh
 </pre></div>
 </div>
+<blockquote>
+<div><p><strong>Nothing forces a password change.</strong> Every account keeps this shared password until the student runs <code class="docutils literal notranslate"><span class="pre">passwd</span></code> or you reset it (see <a class="reference internal" href="#maintenance">Maintenance</a>).</p>
+</div></blockquote>
 <p>Verify all accounts were created:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search the LDAP students OU and list just the uid field.</span>
-<span class="c1"># You should see uid: a27-m0 through uid: a27-m30, and uid: a27-t0 through uid: a27-t30.</span>
+<span class="c1"># You should see 34 entries: uid: m3a through uid: m3p, uid: m3z, uid: m4a through uid: m4p, uid: m4z.</span>
 ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-b<span class="w"> </span><span class="s2">&quot;ou=students,dc=ece387,dc=local&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=ece387,dc=local&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-W<span class="w"> </span>uid<span class="w"> </span>uidNumber<span class="w"> </span>homeDirectory<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^uid:&quot;</span>
+<span class="w">  </span>-b<span class="w"> </span><span class="s2">"ou=students,dc=ece387,dc=local"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-D<span class="w"> </span><span class="s2">"cn=admin,dc=ece387,dc=local"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-W<span class="w"> </span>uid<span class="w"> </span>uidNumber<span class="w"> </span>homeDirectory<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"^uid:"</span>
 </pre></div>
 </div>
 </section>
@@ -759,32 +876,40 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <ol class="arabic simple">
 <li><p><strong>A student edit persists.</strong> Nothing overwrites it at login. There is no login hook, no cron job, no sync daemon; after account creation the template and the student’s file are unrelated.</p></li>
 <li><p><strong>An edit follows the student to every machine.</strong> Editing <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> on master07 writes through to this server immediately, so logging into master12 an hour later gets the edited file. There is no per-machine copy to fall out of step.</p></li>
-<li><p><strong>An instructor push replaces it.</strong> The push below overwrites <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> on all 62 accounts, discarding student edits with no warning and no backup. That is the only thing that reverts a student’s changes, and it happens only when you run it by hand.</p></li>
+<li><p><strong>An instructor push replaces it.</strong> The push below overwrites <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> on all 34 accounts, discarding student edits with no warning and no backup. That is the only thing that reverts a student’s changes, and it happens only when you run it by hand.</p></li>
 </ol>
 <p>The file is owned by the student and mode <code class="docutils literal notranslate"><span class="pre">644</span></code>, so they <em>can</em> edit it. “Instructor-owned” is a course policy enforced by the push, not a permission setting.</p>
 </div></blockquote>
 <section id="bashrc-template">
 <h4>.bashrc Template<a class="headerlink" href="#bashrc-template" title="Link to this heading">#</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> is sourced every time a terminal opens. Because <code class="docutils literal notranslate"><span class="pre">create_students.sh</span></code> copies this file <em>over</em> the student’s <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, the template must be a <strong>complete</strong> <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> — the Ubuntu defaults plus the course environment — not just the ECE 387 additions. A template containing only the course block produces accounts with no prompt, no history settings, and no <code class="docutils literal notranslate"><span class="pre">ls</span></code> colors.</p>
+<p><code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> is sourced every time a terminal opens. Because the push copies this file <em>over</em> the student’s <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, the template must be a <strong>complete</strong> <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> — the Ubuntu defaults plus the course environment — not just the ECE 387 additions. A template containing only the course block produces accounts with no prompt, no history settings, and no <code class="docutils literal notranslate"><span class="pre">ls</span></code> colors.</p>
 <p>Write it in one shot. The quoted <code class="docutils literal notranslate"><span class="pre">'TEMPLATE_EOF'</span></code> delimiter is required: it stops the shell from expanding <code class="docutils literal notranslate"><span class="pre">$&#64;</span></code>, <code class="docutils literal notranslate"><span class="pre">$-</span></code>, <code class="docutils literal notranslate"><span class="pre">$(...)</span></code>, and <code class="docutils literal notranslate"><span class="pre">~</span></code> while the file is being written.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; &#39;TEMPLATE_EOF&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'TEMPLATE_EOF'</span>
 <span class="s"># ~/.bashrc: executed by bash(1) for non-login shells.</span>
 <span class="s"># ECE 387 course template — managed by the instructor, overwritten on every push.</span>
 <span class="s"># Do not edit this file on a student account; edit /etc/ece387/bashrc_template</span>
 <span class="s"># on the login server and re-push.</span>
 
-<span class="s"># If not running interactively, don&#39;t do anything</span>
-<span class="s">case $- in</span>
-<span class="s">    *i*) ;;</span>
-<span class="s">      *) return;;</span>
-<span class="s">esac</span>
+<span class="s"># If not running interactively, set the ROS environment and return early.</span>
+<span class="s"># This is what makes non-login commands work, e.g.:</span>
+<span class="s">#   ssh master05 'ros2 topic list'</span>
+<span class="s">if [[ $- != *i* ]]; then</span>
+<span class="s">    source /opt/ros/jazzy/setup.bash</span>
+<span class="s">    source ~/master_ws/install/setup.bash 2&gt;/dev/null || true</span>
+<span class="s">    export TURTLEBOT3_MODEL=burger</span>
+<span class="s">    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp</span>
+<span class="s">    export ROS_DOMAIN_ID=99     # TURTLEBOT3</span>
+<span class="s">    export LDS_MODEL=LDS-02     # Replace with LDS-03 if using new LIDAR</span>
+
+<span class="s">    return</span>
+<span class="s">fi</span>
 
 <span class="s"># ---------------- Ubuntu defaults ----------------</span>
 
-<span class="s"># don&#39;t put duplicate lines or lines starting with space in the history.</span>
+<span class="s"># don't put duplicate lines or lines starting with space in the history.</span>
 <span class="s">HISTCONTROL=ignoreboth</span>
 
-<span class="s"># append to the history file, don&#39;t overwrite it</span>
+<span class="s"># append to the history file, don't overwrite it</span>
 <span class="s">shopt -s histappend</span>
 
 <span class="s">HISTSIZE=1000</span>
@@ -794,18 +919,18 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <span class="s">shopt -s checkwinsize</span>
 
 <span class="s"># make less more friendly for non-text input files, see lesspipe(1)</span>
-<span class="s">[ -x /usr/bin/lesspipe ] &amp;&amp; eval &quot;$(SHELL=/bin/sh lesspipe)&quot;</span>
+<span class="s">[ -x /usr/bin/lesspipe ] &amp;&amp; eval "$(SHELL=/bin/sh lesspipe)"</span>
 
 <span class="s"># set variable identifying the chroot you work in (used in the prompt below)</span>
-<span class="s">if [ -z &quot;${debian_chroot:-}&quot; ] &amp;&amp; [ -r /etc/debian_chroot ]; then</span>
+<span class="s">if [ -z "${debian_chroot:-}" ] &amp;&amp; [ -r /etc/debian_chroot ]; then</span>
 <span class="s">    debian_chroot=$(cat /etc/debian_chroot)</span>
 <span class="s">fi</span>
 
-<span class="s">case &quot;$TERM&quot; in</span>
+<span class="s">case "$TERM" in</span>
 <span class="s">    xterm-color|*-256color) color_prompt=yes;;</span>
 <span class="s">esac</span>
 
-<span class="s">if [ -n &quot;$force_color_prompt&quot; ]; then</span>
+<span class="s">if [ -n "$force_color_prompt" ]; then</span>
 <span class="s">    if [ -x /usr/bin/tput ] &amp;&amp; tput setaf 1 &gt;&amp;/dev/null; then</span>
 <span class="s">        color_prompt=yes</span>
 <span class="s">    else</span>
@@ -813,17 +938,17 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <span class="s">    fi</span>
 <span class="s">fi</span>
 
-<span class="s">if [ &quot;$color_prompt&quot; = yes ]; then</span>
-<span class="s">    PS1=&#39;${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\n\$ &#39;</span>
+<span class="s">if [ "$color_prompt" = yes ]; then</span>
+<span class="s">    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\n\$ '</span>
 <span class="s">else</span>
-<span class="s">    PS1=&#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &#39;</span>
+<span class="s">    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '</span>
 <span class="s">fi</span>
 <span class="s">unset color_prompt force_color_prompt</span>
 
 <span class="s"># If this is an xterm set the title to user@host:dir</span>
-<span class="s">case &quot;$TERM&quot; in</span>
+<span class="s">case "$TERM" in</span>
 <span class="s">xterm*|rxvt*)</span>
-<span class="s">    PS1=&quot;\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1&quot;</span>
+<span class="s">    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"</span>
 <span class="s">    ;;</span>
 <span class="s">*)</span>
 <span class="s">    ;;</span>
@@ -831,16 +956,16 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 
 <span class="s"># enable color support of ls and also add handy aliases</span>
 <span class="s">if [ -x /usr/bin/dircolors ]; then</span>
-<span class="s">    test -r ~/.dircolors &amp;&amp; eval &quot;$(dircolors -b ~/.dircolors)&quot; || eval &quot;$(dircolors -b)&quot;</span>
-<span class="s">    alias ls=&#39;ls --color=auto&#39;</span>
-<span class="s">    alias grep=&#39;grep --color=auto&#39;</span>
-<span class="s">    alias fgrep=&#39;fgrep --color=auto&#39;</span>
-<span class="s">    alias egrep=&#39;egrep --color=auto&#39;</span>
+<span class="s">    test -r ~/.dircolors &amp;&amp; eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"</span>
+<span class="s">    alias ls='ls --color=auto'</span>
+<span class="s">    alias grep='grep --color=auto'</span>
+<span class="s">    alias fgrep='fgrep --color=auto'</span>
+<span class="s">    alias egrep='egrep --color=auto'</span>
 <span class="s">fi</span>
 
-<span class="s">alias ll=&#39;ls -alF&#39;</span>
-<span class="s">alias la=&#39;ls -A&#39;</span>
-<span class="s">alias l=&#39;ls -CF&#39;</span>
+<span class="s">alias ll='ls -alF'</span>
+<span class="s">alias la='ls -A'</span>
+<span class="s">alias l='ls -CF'</span>
 
 <span class="s"># enable programmable completion features</span>
 <span class="s">if ! shopt -oq posix; then</span>
@@ -853,17 +978,17 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 
 <span class="s"># ---------------- ECE 387 course environment ----------------</span>
 
-<span class="s">alias gedit=&#39;gnome-text-editor&#39;</span>
+<span class="s">alias gedit='gnome-text-editor'</span>
 
 <span class="s"># Launch the TurtleBot3 bringup on the robot over SSH.</span>
-<span class="s">alias bringup=&#39;ssh pi@192.168.50.1 &#39;\&#39;&#39;ros2 launch turtlebot3_bringup robot.launch.py&#39;\&#39;</span>
+<span class="s">alias bringup='ssh pi@192.168.50.1 '\''ros2 launch turtlebot3_bringup robot.launch.py'\'</span>
 
 <span class="s"># Shortcut to SSH into the robot.</span>
-<span class="s">alias ssh_robot=&#39;ssh pi@192.168.50.1&#39;</span>
+<span class="s">alias ssh_robot='ssh pi@192.168.50.1'</span>
 
 <span class="s"># Build the workspace, passing through any colcon arguments</span>
 <span class="s">function ccbuild() {</span>
-<span class="s">    cd ~/master_ws &amp;&amp; colcon build --symlink-install &quot;$@&quot;</span>
+<span class="s">    cd ~/master_ws &amp;&amp; colcon build --symlink-install "$@"</span>
 <span class="s">    source ~/master_ws/install/setup.bash</span>
 <span class="s">}</span>
 
@@ -873,8 +998,8 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <span class="s"># Source the ROS 2 Jazzy environment so ros2 commands are available</span>
 <span class="s">source /opt/ros/jazzy/setup.bash</span>
 
-<span class="s"># Source the student&#39;s own workspace if it has been built.</span>
-<span class="s"># &quot;2&gt;/dev/null || true&quot; suppresses the error if it doesn&#39;t exist yet.</span>
+<span class="s"># Source the student's own workspace if it has been built.</span>
+<span class="s"># "2&gt;/dev/null || true" suppresses the error if it doesn't exist yet.</span>
 <span class="s">source ~/master_ws/install/setup.bash 2&gt;/dev/null || true</span>
 
 <span class="s">export TURTLEBOT3_MODEL=burger</span>
@@ -892,11 +1017,22 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <span class="s">#   export ROS_DOMAIN_ID=7</span>
 <span class="s">export ROS_DOMAIN_ID=99</span>
 <span class="s">export LDS_MODEL=LDS-02   # Replace with LDS-03 if using new LIDAR</span>
+
+<span class="s"># ---- Local working directory ----</span>
+<span class="s"># ~/master_ws and ~/.cache are symlinks to /local/$USER on THIS machine.</span>
+<span class="s"># Build output and caches are large and change constantly, so they stay on</span>
+<span class="s"># local disk rather than crossing NFS. Source code lives in git.</span>
+<span class="s">#</span>
+<span class="s"># Work does NOT follow you to another bench. Commit and push before you leave.</span>
+<span class="s">if [ ! -d "/local/$USER/master_ws" ]; then</span>
+<span class="s">    mkdir -p "/local/$USER/master_ws/src" "/local/$USER/cache" 2&gt;/dev/null \</span>
+<span class="s">      &amp;&amp; chmod 700 "/local/$USER" 2&gt;/dev/null</span>
+<span class="s">fi</span>
 <span class="s">TEMPLATE_EOF</span>
 </pre></div>
 </div>
-<p>Check the syntax before pushing it to 62 accounts - a typo here breaks every terminal in the lab at once:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>-n<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;syntax OK&quot;</span>
+<p>Check the syntax before pushing it to 34 accounts - a typo here breaks every terminal in the lab at once:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>-n<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"syntax OK"</span>
 </pre></div>
 </div>
 <p><strong>Notes on the template:</strong></p>
@@ -904,13 +1040,12 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <li><p>The non-interactive guard sets the ROS variables <em>before</em> returning. The stock Ubuntu <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> returns immediately, which would leave <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">master05</span> <span class="pre">'ros2</span> <span class="pre">topic</span> <span class="pre">list'</span></code> with no ROS environment. The variables are intentionally duplicated in the guard and in the course block below it - the guard <code class="docutils literal notranslate"><span class="pre">return</span></code>s before reaching the second copy, so keep the two in sync when you change one.</p></li>
 <li><p>Interactivity matters for more than convenience: without the guard, anything the course block prints to stdout corrupts <code class="docutils literal notranslate"><span class="pre">scp</span></code> and <code class="docutils literal notranslate"><span class="pre">rsync</span></code> transfers to and from the robots.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/usr/share/gazebo/setup.sh</span></code> is <strong>not</strong> included. That path belongs to Gazebo Classic, which is not part of Jazzy - on a Jazzy master the file does not exist and every terminal opens with a “No such file or directory” error. If a future setup does need it, guard the source: <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">-f</span> <span class="pre">/usr/share/gazebo/setup.sh</span> <span class="pre">]</span> <span class="pre">&amp;&amp;</span> <span class="pre">source</span> <span class="pre">/usr/share/gazebo/setup.sh</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">robotX</span></code> in the <code class="docutils literal notranslate"><span class="pre">bringup</span></code> alias is a placeholder. Either replace it before the first push or teach students to use <code class="docutils literal notranslate"><span class="pre">ssh_robot</span></code> and launch bringup by hand.</p></li>
 </ul>
 </section>
 <section id="inputrc-template">
 <h4>.inputrc Template<a class="headerlink" href="#inputrc-template" title="Link to this heading">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">.inputrc</span></code> configures readline behavior - used by bash for history search and tab completion.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s"># ~/.inputrc: readline initialization file.</span>
 <span class="s"># ECE 387 course template — managed by the instructor, overwritten on every push.</span>
 
@@ -918,9 +1053,9 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <span class="s"># /etc/inputrc entirely rather than adding to it.</span>
 <span class="s">$include /etc/inputrc</span>
 
-<span class="s"># Arrow keys search history based on what&#39;s already typed</span>
-<span class="s">&quot;\e[A&quot;: history-search-backward</span>
-<span class="s">&quot;\e[B&quot;: history-search-forward</span>
+<span class="s"># Arrow keys search history based on what's already typed</span>
+<span class="s">"\e[A": history-search-backward</span>
+<span class="s">"\e[B": history-search-forward</span>
 
 <span class="s"># Case-insensitive tab completion</span>
 <span class="s">set completion-ignore-case on</span>
@@ -928,7 +1063,7 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 </pre></div>
 </div>
 <p>Readline fails silently on a bad binding — a typo does not error, the key just does nothing. Test before pushing:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">bind</span><span class="w"> </span>-f<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;readline accepted it&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">bind</span><span class="w"> </span>-f<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"readline accepted it"</span>
 </pre></div>
 </div>
 <blockquote>
@@ -941,22 +1076,22 @@ sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </sp
 <section id="pushing-updates-to-all-students">
 <h4>Pushing Updates to All Students<a class="headerlink" href="#pushing-updates-to-all-students" title="Link to this heading">#</a></h4>
 <p>The templates are copied automatically only when accounts are first created. To push changes to all existing students at any time:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>dir<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/students/a27-*/<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span><span class="nv">user</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">&quot;</span><span class="k">)</span>
-<span class="w">  </span><span class="c1"># Read the UID from the home directory itself. Do NOT use `id -u &quot;$user&quot;`:</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>dir<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/students/m<span class="o">[</span><span class="m">34</span><span class="o">]</span>*/<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">user</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$dir</span><span class="s2">"</span><span class="k">)</span>
+<span class="w">  </span><span class="c1"># Read the UID from the home directory itself. Do NOT use `id -u "$user"`:</span>
 <span class="w">  </span><span class="c1"># the login server hosts LDAP but is not an LDAP *client*, so NSS on this</span>
 <span class="w">  </span><span class="c1"># machine cannot resolve student names and `id` fails silently.</span>
-<span class="w">  </span><span class="nv">uid</span><span class="o">=</span><span class="k">$(</span>stat<span class="w"> </span>-c<span class="w"> </span>%u<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">&quot;</span><span class="k">)</span>
-<span class="w">  </span>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.bashrc&quot;</span><span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAILED: </span><span class="nv">$user</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
-<span class="w">  </span>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.inputrc&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAILED: </span><span class="nv">$user</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
-<span class="w">  </span>sudo<span class="w"> </span>chown<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">uid</span><span class="si">}</span><span class="s2">:10000&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.bashrc&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.inputrc&quot;</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Updated: </span><span class="nv">$user</span><span class="s2"> (uid=</span><span class="nv">$uid</span><span class="s2">)&quot;</span>
+<span class="w">  </span><span class="nv">uid</span><span class="o">=</span><span class="k">$(</span>stat<span class="w"> </span>-c<span class="w"> </span>%u<span class="w"> </span><span class="s2">"</span><span class="nv">$dir</span><span class="s2">"</span><span class="k">)</span>
+<span class="w">  </span>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.bashrc"</span><span class="w">   </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"FAILED: </span><span class="nv">$user</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">  </span>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.inputrc"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"FAILED: </span><span class="nv">$user</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">  </span>sudo<span class="w"> </span>chown<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">uid</span><span class="si">}</span><span class="s2">:10000"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.bashrc"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">dir</span><span class="si">}</span><span class="s2">.inputrc"</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Updated: </span><span class="nv">$user</span><span class="s2"> (uid=</span><span class="nv">$uid</span><span class="s2">)"</span>
 <span class="k">done</span>
 </pre></div>
 </div>
 <p>Verify ownership afterward. The glob must be expanded <em>inside</em> the elevated shell — student home directories are <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">700</span></code>, so your own shell cannot expand a path that reaches into them:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Empty output = all accounts correct</span>
-sudo<span class="w"> </span>find<span class="w"> </span>/home/students<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">2</span><span class="w"> </span>-name<span class="w"> </span><span class="s1">&#39;.bashrc&#39;</span><span class="w"> </span>-user<span class="w"> </span>root
+sudo<span class="w"> </span>find<span class="w"> </span>/home/students<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">2</span><span class="w"> </span>-name<span class="w"> </span><span class="s1">'.bashrc'</span><span class="w"> </span>-user<span class="w"> </span>root
 </pre></div>
 </div>
 <blockquote>
@@ -964,7 +1099,7 @@ sudo<span class="w"> </span>find<span class="w"> </span>/home/students<span clas
 </div></blockquote>
 <p>Run the push from the login server, not from a master — the home directories live here. Students pick up the change at their next login, or immediately with <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.bashrc</span></code>.</p>
 <blockquote>
-<div><p><strong>Verify on one account before pushing to all 62.</strong> Copy the template to a single student, log in as them on a master, and confirm the prompt, <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">list</span></code>, and <code class="docutils literal notranslate"><span class="pre">ccbuild</span></code> all behave. A bad template pushed to every account takes down every bench at once.</p>
+<div><p><strong>Verify on one account before pushing to all 34.</strong> Copy the template to a single student, log in as them on a master, and confirm the prompt, <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">list</span></code>, and <code class="docutils literal notranslate"><span class="pre">ccbuild</span></code> all behave. A bad template pushed to every account takes down every bench at once.</p>
 </div></blockquote>
 </section>
 </section>
@@ -975,7 +1110,7 @@ sudo<span class="w"> </span>find<span class="w"> </span>/home/students<span clas
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nfs-kernel-server
 
 <span class="c1"># Create the parent directory that holds all student home directories.</span>
-<span class="c1"># Individual student dirs (a27-m0, a27-m1, ..., a27-t0, a27-t1, ...) were already created in 1.6.</span>
+<span class="c1"># Individual student dirs (m3a, m3b, ..., m4a, m4b, ...) were already created in 1.5.</span>
 sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/students
 sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>/home/students
 </pre></div>
@@ -1004,7 +1139,8 @@ showmount<span class="w"> </span>-e<span class="w"> </span>localhost
 </pre></div>
 </div>
 <blockquote>
-<div><p><strong><code class="docutils literal notranslate"><span class="pre">root_squash</span></code> is what actually isolates students from each other.</strong> It tells the server to treat root on any master as an unprivileged anonymous user, so <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cat</span> <span class="pre">/home/students/a27-t02/lab3.py</span></code> run from a master is refused by the server — regardless of what a student managed to do on the client. Nothing in this guide needs <code class="docutils literal notranslate"><span class="pre">no_root_squash</span></code>: <code class="docutils literal notranslate"><span class="pre">create_students.sh</span></code> and the push loop both run locally on this server, not over NFS. The tradeoff is that administrative fixes to student files must be made here rather than from a master. See “Grant Students Restricted sudo Access” in <a class="reference internal" href="login-client.html"><span class="std std-doc">login-client.md</span></a>.</p>
+<div><p><strong><code class="docutils literal notranslate"><span class="pre">root_squash</span></code> isolates students from each other.</strong> It tells the server to rewrite root on any master to an unprivileged anonymous user, so <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cat</span> <span class="pre">/home/students/m4c/lab3.py</span></code> run from a master is refused by the server itself. Nothing in this guide needs <code class="docutils literal notranslate"><span class="pre">no_root_squash</span></code>: <code class="docutils literal notranslate"><span class="pre">create_students.sh</span></code> and the push loop both run locally on this server, not over NFS. The tradeoff is that administrative fixes to student files must be made here rather than from a master.</p>
+<p><strong>What it does not cover.</strong> <code class="docutils literal notranslate"><span class="pre">root_squash</span></code> rewrites <strong>UID 0 only</strong>. A student who reaches root on a master can still <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">m4c</span></code> and read that account’s files, because those requests carry UID 21002 and there is nothing to squash. This is inherent to <code class="docutils literal notranslate"><span class="pre">AUTH_SYS</span></code>, NFS’s default authentication, where the client asserts its own UID and the server takes its word; closing it needs Kerberos (<code class="docutils literal notranslate"><span class="pre">sec=krb5</span></code>). In practice student file privacy rests on the honor code, with <code class="docutils literal notranslate"><span class="pre">root_squash</span></code> and the sudo whitelist removing the easy paths. See “Grant Students Restricted sudo Access” in <a class="reference internal" href="login-client.html"><span class="std std-doc">login-client.md</span></a>.</p>
 </div></blockquote>
 </section>
 <section id="open-required-firewall-ports">
@@ -1012,17 +1148,9 @@ showmount<span class="w"> </span>-e<span class="w"> </span>localhost
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Allow SSH so you can manage the server remotely</span>
 sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>OpenSSH
 
-<span class="c1"># Allow LDAP queries from master computers (port 389)</span>
-sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">389</span>/tcp
-
-<span class="c1"># Allow NFS traffic (port 2049)</span>
-sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">2049</span>/tcp
-
-<span class="c1"># Allow rpcbind/portmapper (port 111) — required for showmount and NFS negotiation</span>
-sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">111</span>/tcp
-sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">111</span>/udp
-
-<span class="c1"># Allow all traffic from the lab subnet</span>
+<span class="c1"># Allow all traffic from the lab subnet. This covers LDAP (389), NFS (2049),</span>
+<span class="c1"># and rpcbind (111), so they need no rules of their own. Opening those ports</span>
+<span class="c1"># by number would also expose them on any public IPv6 address the server has.</span>
 sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.99.1.0/24
 
 <span class="c1"># Enable the firewall</span>
@@ -1033,14 +1161,25 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 </pre></div>
 </div>
 <blockquote>
-<div><p><strong>Reconfiguring an already-running server:</strong> if <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">ufw</span> <span class="pre">status</span></code> still shows an old subnet (e.g. <code class="docutils literal notranslate"><span class="pre">10.99.1.0/24</span></code>) from a previous setup, <code class="docutils literal notranslate"><span class="pre">ufw</span> <span class="pre">allow</span></code> won’t replace it — the old rule stays active alongside the new one. Remove it explicitly:</p>
+<div><p><strong>Reconfiguring an already-running server:</strong> if <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">ufw</span> <span class="pre">status</span></code> still shows an old subnet or open <code class="docutils literal notranslate"><span class="pre">389</span></code>, <code class="docutils literal notranslate"><span class="pre">2049</span></code>, or <code class="docutils literal notranslate"><span class="pre">111</span></code> rules from a previous setup, <code class="docutils literal notranslate"><span class="pre">ufw</span> <span class="pre">allow</span></code> won’t replace it — the old rule stays active alongside the new one. Remove it explicitly:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>ufw<span class="w"> </span>status<span class="w"> </span>numbered<span class="w">      </span><span class="c1"># find the rule number for the old subnet</span>
-sudo<span class="w"> </span>ufw<span class="w"> </span>delete<span class="w"> </span>&lt;number&gt;<span class="w">      </span><span class="c1"># delete it</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span>delete<span class="w"> </span>&lt;number&gt;<span class="w">      </span><span class="c1"># delete it, then repeat for each stale rule</span>
 sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.99.1.0/24
 sudo<span class="w"> </span>ufw<span class="w"> </span>status
 </pre></div>
 </div>
 </div></blockquote>
+</section>
+<section id="create-the-wheel-directory">
+<h3>1.9 Create the Wheel Directory<a class="headerlink" href="#create-the-wheel-directory" title="Link to this heading">#</a></h3>
+<p>The masters fetch a prebuilt <code class="docutils literal notranslate"><span class="pre">dlib</span></code> wheel from here rather than compiling for 45 minutes each. Each architecture gets its own directory, because a wheel built on a robot will not install on a master.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/srv/ece387/wheels/x86_64<span class="w"> </span>/srv/ece387/wheels/aarch64
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>/srv/ece387/wheels
+
+<span class="c1"># Wheels are copied in over scp as the admin account, so it must own these.</span>
+sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>:<span class="w"> </span>/srv/ece387/wheels
+</pre></div>
+</div>
 <p>Once the server is up, continue to <a class="reference internal" href="login-client.html"><span class="std std-doc">login-client.md</span></a> to configure each master to authenticate against it.</p>
 </section>
 </section>
@@ -1061,133 +1200,134 @@ slappasswd<span class="w"> </span>-s<span class="w"> </span>NewStudentPass!
 
 <span class="c1"># Step 2: Add the account to LDAP</span>
 <span class="c1"># Use the next free uidNumber in the right series:</span>
-<span class="c1">#   m series (a27-m0..m30):  20000-20030</span>
-<span class="c1">#   t series (a27-t0..t30):  21000-21030</span>
-<span class="c1"># e.g. a new t-series student a27-t31 gets uidNumber 21031</span>
+<span class="c1">#   m3 series:  20000 + letter offset (a = 0, z = 25)</span>
+<span class="c1">#   m4 series:  21000 + letter offset (a = 0, z = 25)</span>
+<span class="c1"># e.g. a new m4-series student m4q gets uidNumber 21016</span>
 ldapadd<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=ece387,dc=local&quot;</span><span class="w"> </span>-W<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
-<span class="s">dn: uid=a27-t31,ou=students,dc=ece387,dc=local</span>
+<span class="w">  </span>-D<span class="w"> </span><span class="s2">"cn=admin,dc=ece387,dc=local"</span><span class="w"> </span>-W<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">dn: uid=m4q,ou=students,dc=ece387,dc=local</span>
 <span class="s">objectClass: inetOrgPerson</span>
 <span class="s">objectClass: posixAccount</span>
 <span class="s">objectClass: shadowAccount</span>
-<span class="s">uid: a27-t31</span>
-<span class="s">cn: a27-t31</span>
-<span class="s">sn: a27-t31</span>
-<span class="s">uidNumber: 21031</span>
+<span class="s">uid: m4q</span>
+<span class="s">cn: m4q</span>
+<span class="s">sn: m4q</span>
+<span class="s">uidNumber: 21016</span>
 <span class="s">gidNumber: 10000</span>
-<span class="s">homeDirectory: /home/students/a27-t31</span>
+<span class="s">homeDirectory: /home/students/m4q</span>
 <span class="s">loginShell: /bin/bash</span>
 <span class="s">userPassword: {SSHA}PASTE_HASH_HERE</span>
 <span class="s">EOF</span>
 
 <span class="c1"># Step 3: Create the home directory on the server</span>
-sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/students/a27-t31
-sudo<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span>/etc/skel/.<span class="w"> </span>/home/students/a27-t31/
-sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span>/home/students/a27-t31/.bashrc
-sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span>/home/students/a27-t31/.inputrc
-sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="m">21031</span>:10000<span class="w"> </span>/home/students/a27-t31
-sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/home/students/a27-t31
+sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/students/m4q
+sudo<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span>/etc/skel/.<span class="w"> </span>/home/students/m4q/
+sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/bashrc_template<span class="w"> </span>/home/students/m4q/.bashrc
+sudo<span class="w"> </span>cp<span class="w"> </span>/etc/ece387/inputrc_template<span class="w"> </span>/home/students/m4q/.inputrc
+sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="m">21016</span>:10000<span class="w"> </span>/home/students/m4q
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/home/students/m4q
 </pre></div>
 </div>
 </section>
 <section id="reset-a-student-password">
 <h3>Reset a student password<a class="headerlink" href="#reset-a-student-password" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace a27-m0 with the student&#39;s username, and set the new password with -s</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace m3a with the student's username, and set the new password with -s</span>
 ldappasswd<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=ece387,dc=local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-D<span class="w"> </span><span class="s2">"cn=admin,dc=ece387,dc=local"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-W<span class="w"> </span>-s<span class="w"> </span>NewPassword!<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;uid=a27-m0,ou=students,dc=ece387,dc=local&quot;</span>
+<span class="w">  </span><span class="s2">"uid=m3a,ou=students,dc=ece387,dc=local"</span>
 </pre></div>
 </div>
 </section>
-<section id="remove-all-students-for-a-class-year-year-end-rollover">
-<h3>Remove all students for a class year (year-end rollover)<a class="headerlink" href="#remove-all-students-for-a-class-year-year-end-rollover" title="Link to this heading">#</a></h3>
-<p>Class-year prefixes change every year (<code class="docutils literal notranslate"><span class="pre">a27</span></code> = class of 2027, <code class="docutils literal notranslate"><span class="pre">a28</span></code> = class of 2028, etc.). Run this once at the start of a new year, right before running <code class="docutils literal notranslate"><span class="pre">create_students.sh</span></code> for the incoming class. It takes a prefix, backs up the LDAP database and matching home directories first, then deletes the LDAP entries and home directories for every account matching that prefix (both <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> series, since they share the same <code class="docutils literal notranslate"><span class="pre">a27-*</span></code> prefix).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/remove_students.sh<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<section id="remove-all-students-in-a-series-term-rollover">
+<h3>Remove all students in a series (term rollover)<a class="headerlink" href="#remove-all-students-in-a-series-term-rollover" title="Link to this heading">#</a></h3>
+<p>Account prefixes change between terms (this term uses <code class="docutils literal notranslate"><span class="pre">m3</span></code> and <code class="docutils literal notranslate"><span class="pre">m4</span></code>). Run this once per prefix, right before running <code class="docutils literal notranslate"><span class="pre">create_students.sh</span></code> for the incoming class. It takes a prefix, backs up the LDAP database and matching home directories first, then deletes the LDAP entries and home directories for every account matching that prefix.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/remove_students.sh<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s">#!/bin/bash</span>
-<span class="s"># Removes ALL student accounts for a given class-year prefix (e.g. a27)</span>
+<span class="s"># Removes ALL student accounts for a given prefix (e.g. m3)</span>
 <span class="s"># and deletes their home directories. Backs up LDAP + home dirs first.</span>
 <span class="s">set -e</span>
 
-<span class="s">if [ -z &quot;$1&quot; ]; then</span>
-<span class="s">  echo &quot;Usage: $0 &lt;prefix&gt;   e.g. $0 a27&quot;</span>
+<span class="s">if [ -z "$1" ]; then</span>
+<span class="s">  echo "Usage: $0 &lt;prefix&gt;   e.g. $0 m3"</span>
 <span class="s">  exit 1</span>
 <span class="s">fi</span>
 
 <span class="s">PREFIX=$1</span>
-<span class="s">LDAP_ADMIN_DN=&quot;cn=admin,dc=ece387,dc=local&quot;</span>
-<span class="s">LDAP_ADMIN_PW=&quot;LdapAdmin387!&quot;    # your LDAP admin password</span>
-<span class="s">BASE_DN=&quot;ou=students,dc=ece387,dc=local&quot;</span>
+<span class="s">LDAP_ADMIN_DN="cn=admin,dc=ece387,dc=local"</span>
+<span class="s">LDAP_ADMIN_PW="LdapAdmin387!"    # your LDAP admin password</span>
+<span class="s">BASE_DN="ou=students,dc=ece387,dc=local"</span>
 
-<span class="s">echo &quot;This will PERMANENTLY delete all LDAP accounts and home directories&quot;</span>
-<span class="s">echo &quot;matching &#39;${PREFIX}-*&#39; under ${BASE_DN} (covers both m and t series).&quot;</span>
-<span class="s">read -p &quot;Type the prefix again to confirm (${PREFIX}): &quot; CONFIRM</span>
-<span class="s">if [ &quot;$CONFIRM&quot; != &quot;$PREFIX&quot; ]; then</span>
-<span class="s">  echo &quot;Confirmation did not match. Aborting.&quot;</span>
+<span class="s">echo "This will PERMANENTLY delete all LDAP accounts and home directories"</span>
+<span class="s">echo "matching '${PREFIX}*' under ${BASE_DN}."</span>
+<span class="s">read -p "Type the prefix again to confirm (${PREFIX}): " CONFIRM</span>
+<span class="s">if [ "$CONFIRM" != "$PREFIX" ]; then</span>
+<span class="s">  echo "Confirmation did not match. Aborting."</span>
 <span class="s">  exit 1</span>
 <span class="s">fi</span>
 
 <span class="s"># --- Step 1: Back up before deleting anything ---</span>
 <span class="s">BACKUP_DIR=~/Documents/ece387/backups/$(date +%Y%m%d)-${PREFIX}</span>
-<span class="s">mkdir -p &quot;$BACKUP_DIR/home&quot;</span>
+<span class="s">mkdir -p "$BACKUP_DIR/home"</span>
 
-<span class="s">echo &quot;Backing up full LDAP database to ${BACKUP_DIR}/ldap-backup.ldif ...&quot;</span>
-<span class="s">sudo slapcat &gt; &quot;${BACKUP_DIR}/ldap-backup.ldif&quot;</span>
+<span class="s">echo "Backing up full LDAP database to ${BACKUP_DIR}/ldap-backup.ldif ..."</span>
+<span class="s">sudo slapcat &gt; "${BACKUP_DIR}/ldap-backup.ldif"</span>
 
-<span class="s">echo &quot;Backing up home directories matching ${PREFIX}-* to ${BACKUP_DIR}/home ...&quot;</span>
-<span class="s">sudo rsync -av --include=&quot;${PREFIX}-*&quot; --include=&quot;${PREFIX}-*/**&quot; --exclude=&quot;*&quot; \</span>
-<span class="s">  /home/students/ &quot;${BACKUP_DIR}/home/&quot;</span>
+<span class="s">echo "Backing up home directories matching ${PREFIX}* to ${BACKUP_DIR}/home ..."</span>
+<span class="s">sudo rsync -av --include="${PREFIX}*" --include="${PREFIX}*/**" --exclude="*" \</span>
+<span class="s">  /home/students/ "${BACKUP_DIR}/home/"</span>
 
 <span class="s"># --- Step 2: Find all matching uids in LDAP ---</span>
 <span class="s">USERS=$(ldapsearch -x -H ldap://localhost \</span>
-<span class="s">  -b &quot;$BASE_DN&quot; -D &quot;$LDAP_ADMIN_DN&quot; -w &quot;$LDAP_ADMIN_PW&quot; \</span>
-<span class="s">  &quot;(uid=${PREFIX}-*)&quot; uid | grep &quot;^uid:&quot; | awk &#39;{print $2}&#39;)</span>
+<span class="s">  -b "$BASE_DN" -D "$LDAP_ADMIN_DN" -w "$LDAP_ADMIN_PW" \</span>
+<span class="s">  "(uid=${PREFIX}*)" uid | grep "^uid:" | awk '{print $2}')</span>
 
-<span class="s">if [ -z &quot;$USERS&quot; ]; then</span>
-<span class="s">  echo &quot;No accounts found matching ${PREFIX}-*. Nothing to remove.&quot;</span>
+<span class="s">if [ -z "$USERS" ]; then</span>
+<span class="s">  echo "No accounts found matching ${PREFIX}*. Nothing to remove."</span>
 <span class="s">  exit 0</span>
 <span class="s">fi</span>
 
-<span class="s">echo &quot;Found $(echo &quot;$USERS&quot; | wc -l) accounts to remove:&quot;</span>
-<span class="s">echo &quot;$USERS&quot;</span>
-<span class="s">echo &quot;&quot;</span>
+<span class="s">echo "Found $(echo "$USERS" | wc -l) accounts to remove:"</span>
+<span class="s">echo "$USERS"</span>
+<span class="s">echo ""</span>
 
 <span class="s"># --- Step 3: Delete each LDAP entry ---</span>
 <span class="s">for USERNAME in $USERS; do</span>
-<span class="s">  echo &quot;Deleting LDAP entry: uid=${USERNAME}&quot;</span>
+<span class="s">  echo "Deleting LDAP entry: uid=${USERNAME}"</span>
 <span class="s">  ldapdelete -x -H ldap://localhost \</span>
-<span class="s">    -D &quot;$LDAP_ADMIN_DN&quot; -w &quot;$LDAP_ADMIN_PW&quot; \</span>
-<span class="s">    &quot;uid=${USERNAME},${BASE_DN}&quot;</span>
+<span class="s">    -D "$LDAP_ADMIN_DN" -w "$LDAP_ADMIN_PW" \</span>
+<span class="s">    "uid=${USERNAME},${BASE_DN}"</span>
 <span class="s">done</span>
 
 <span class="s"># --- Step 4: Remove home directories ---</span>
 <span class="s">for USERNAME in $USERS; do</span>
-<span class="s">  echo &quot;Removing home directory: /home/students/${USERNAME}&quot;</span>
-<span class="s">  sudo rm -rf &quot;/home/students/${USERNAME}&quot;</span>
+<span class="s">  echo "Removing home directory: /home/students/${USERNAME}"</span>
+<span class="s">  sudo rm -rf "/home/students/${USERNAME}"</span>
 <span class="s">done</span>
 
-<span class="s">echo &quot;&quot;</span>
-<span class="s">echo &quot;Done. Removed accounts matching &#39;${PREFIX}-*&#39;.&quot;</span>
-<span class="s">echo &quot;Backup saved to: ${BACKUP_DIR}&quot;</span>
+<span class="s">echo ""</span>
+<span class="s">echo "Done. Removed accounts matching '${PREFIX}*'."</span>
+<span class="s">echo "Backup saved to: ${BACKUP_DIR}"</span>
 <span class="s">EOF</span>
 
 chmod<span class="w"> </span>+x<span class="w"> </span>~/Documents/ece387/remove_students.sh
 </pre></div>
 </div>
-<p>Run it with the outgoing class prefix, e.g.:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>~/Documents/ece387/remove_students.sh<span class="w"> </span>a27
+<p>Run it with each outgoing prefix, e.g.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>~/Documents/ece387/remove_students.sh<span class="w"> </span>m3
+bash<span class="w"> </span>~/Documents/ece387/remove_students.sh<span class="w"> </span>m4
 </pre></div>
 </div>
 <p>Then create the incoming class with the new prefix by editing the <code class="docutils literal notranslate"><span class="pre">create_series</span></code> calls in <code class="docutils literal notranslate"><span class="pre">create_students.sh</span></code> (or parameterizing them the same way) before re-running it.</p>
 <blockquote>
-<div><p><strong>Group and OU structure are untouched</strong> — this only removes entries under <code class="docutils literal notranslate"><span class="pre">ou=students</span></code>. <code class="docutils literal notranslate"><span class="pre">ou=groups</span></code> and the <code class="docutils literal notranslate"><span class="pre">ece387students</span></code> group (gidNumber 10000) stay in place and are reused every year.</p>
+<div><p><strong>Group and OU structure are untouched</strong> — this only removes entries under <code class="docutils literal notranslate"><span class="pre">ou=students</span></code>. <code class="docutils literal notranslate"><span class="pre">ou=groups</span></code> and the <code class="docutils literal notranslate"><span class="pre">ece387students</span></code> group (gidNumber 10000) stay in place and are reused every term.</p>
 </div></blockquote>
 </section>
 <section id="list-all-student-accounts">
 <h3>List all student accounts<a class="headerlink" href="#list-all-student-accounts" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://localhost<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-b<span class="w"> </span><span class="s2">&quot;ou=students,dc=ece387,dc=local&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=ece387,dc=local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-b<span class="w"> </span><span class="s2">"ou=students,dc=ece387,dc=local"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-D<span class="w"> </span><span class="s2">"cn=admin,dc=ece387,dc=local"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-W<span class="w"> </span>uid<span class="w"> </span>cn
 </pre></div>
 </div>
@@ -1216,7 +1356,7 @@ sudo<span class="w"> </span>slapcat<span class="w"> </span>&gt;<span class="w"> 
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Student can’t log in</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ldapsearch</span> <span class="pre">-x</span> <span class="pre">-H</span> <span class="pre">ldap://localhost</span> <span class="pre">-b</span> <span class="pre">&quot;ou=students,dc=ece387,dc=local&quot;</span> <span class="pre">-D</span> <span class="pre">&quot;cn=admin,dc=ece387,dc=local&quot;</span> <span class="pre">-W</span> <span class="pre">&quot;(uid=a27-m0)&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ldapsearch</span> <span class="pre">-x</span> <span class="pre">-H</span> <span class="pre">ldap://localhost</span> <span class="pre">-b</span> <span class="pre">&quot;ou=students,dc=ece387,dc=local&quot;</span> <span class="pre">-D</span> <span class="pre">&quot;cn=admin,dc=ece387,dc=local&quot;</span> <span class="pre">-W</span> <span class="pre">&quot;(uid=m3a)&quot;</span></code></p></td>
 <td><p>Check account exists; verify password hash is valid</p></td>
 </tr>
 <tr class="row-odd"><td><p>LDAP connection refused</p></td>
@@ -1289,18 +1429,23 @@ sudo<span class="w"> </span>slapcat<span class="w"> </span>&gt;<span class="w"> 
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-a-login-server">Why a Login Server?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture-overview">Architecture Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-planning">Network Planning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-planning">Network Planning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#second-server-phoenix">Second Server (<code class="docutils literal notranslate"><span class="pre">phoenix</span></code>)</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. Login Server Setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-working-directory">1.0 Create a Working Directory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-ubuntu-24-04-server">1.1 Install Ubuntu 24.04 Server</a></li>
@@ -1316,13 +1461,14 @@ sudo<span class="w"> </span>slapcat<span class="w"> </span>&gt;<span class="w"> 
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-nfs-home-directories">1.7 Configure NFS Home Directories</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open-required-firewall-ports">1.8 Open Required Firewall Ports</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-wheel-directory">1.9 Create the Wheel Directory</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resilience-server-down-or-network-unreliable">2. Resilience — Server Down or Network Unreliable</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maintenance">3. Maintenance</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-new-student">Add a new student</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reset-a-student-password">Reset a student password</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-all-students-for-a-class-year-year-end-rollover">Remove all students for a class year (year-end rollover)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-all-students-in-a-series-term-rollover">Remove all students in a series (term rollover)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#list-all-student-accounts">List all student accounts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-up-home-directories-and-ldap-database">Back up home directories and LDAP database</a></li>
 </ul>
@@ -1376,8 +1522,8 @@ By Stan Baek
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>

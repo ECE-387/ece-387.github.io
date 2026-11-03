@@ -16,43 +16,46 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../_static/tabs.js?v=3ee01567"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -60,6 +63,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Appendix/login-client';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -67,34 +71,30 @@
     <link rel="prev" title="Login Server Setup" href="login-server.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -102,7 +102,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -110,15 +109,59 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
     </header>
   
 
@@ -127,7 +170,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +201,17 @@
     
     
     <img src="../_static/ece387.png" class="logo__image only-light" alt="Introduction to Robotic Systems - Home"/>
-    <script>document.write(`<img src="../_static/ece387.png" class="logo__image only-dark" alt="Introduction to Robotic Systems - Home"/>`);</script>
+    <img src="../_static/ece387.png" class="logo__image only-dark pst-js-only" alt="Introduction to Robotic Systems - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="list-caption"><li class="toctree-l0 has-children"><details><summary><p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Info</span></p><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="nav bd-sidenav">
@@ -213,9 +253,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -298,7 +343,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -312,25 +357,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -352,7 +389,7 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-planning">Network Planning</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#topology-a-ethernet-available-preferred">Topology A — Ethernet available (preferred)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#topology-b-no-ethernet">Topology B — No Ethernet</a></li>
@@ -381,6 +418,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-still-left-out-and-why">What is still left out, and why</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-hardware-access-with-groups-and-udev-not-sudo">Solve hardware access with groups and udev, not sudo</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#if-a-lab-genuinely-needs-root">If a lab genuinely needs root</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#allow-students-to-manage-network-connections">Allow students to manage network connections</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#discover-what-students-actually-need">Discover what students actually need</a></li>
 </ul>
 </li>
@@ -610,8 +648,8 @@ sudo<span class="w"> </span>curl<span class="w"> </span>-sSL<span class="w"> </s
 <span class="w">  </span>-o<span class="w"> </span>/usr/share/keyrings/ros-archive-keyring.gpg
 
 <span class="c1"># ROS 2 apt repository for Ubuntu Noble (24.04)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=</span><span class="k">$(</span>dpkg<span class="w"> </span>--print-architecture<span class="k">)</span><span class="s2"> signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \</span>
-<span class="s2">  http://packages.ros.org/ros2/ubuntu </span><span class="k">$(</span>.<span class="w"> </span>/etc/os-release<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$UBUNTU_CODENAME</span><span class="k">)</span><span class="s2"> main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [arch=</span><span class="k">$(</span>dpkg<span class="w"> </span>--print-architecture<span class="k">)</span><span class="s2"> signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \</span>
+<span class="s2">  http://packages.ros.org/ros2/ubuntu </span><span class="k">$(</span>.<span class="w"> </span>/etc/os-release<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$UBUNTU_CODENAME</span><span class="k">)</span><span class="s2"> main"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/ros2.list
 
 sudo<span class="w"> </span>apt<span class="w"> </span>update
@@ -646,7 +684,7 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 <div><p>This list must stay in step with <a class="reference internal" href="MasterSetupJazzy.html"><span class="std std-doc">MasterSetupJazzy.md</span></a>, which covers the standalone master. Students run identical labs on both, so a package present on one and missing on the other produces a lab that works at one bench and not another.</p>
 </div></blockquote>
 <p>Python packages are installed system-wide, not in a per-student virtual environment. Ubuntu 24.04 blocks pip from writing to the system Python (<a class="reference external" href="https://peps.python.org/pep-0668/">PEP 668</a>), so <code class="docutils literal notranslate"><span class="pre">--break-system-packages</span></code> is required:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--break-system-packages<span class="w"> </span><span class="s2">&quot;pydantic&lt;2&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--break-system-packages<span class="w"> </span><span class="s2">"pydantic&lt;2"</span>
 sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--break-system-packages<span class="w"> </span>imutils
 sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--break-system-packages<span class="w"> </span>pupil-apriltags
 </pre></div>
@@ -669,7 +707,7 @@ sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> <
 <section id="b-install-visual-studio-code">
 <h3>1.2b Install Visual Studio Code<a class="headerlink" href="#b-install-visual-studio-code" title="Link to this heading">#</a></h3>
 <p>Install from the <code class="docutils literal notranslate"><span class="pre">.deb</span></code>, not the snap. Snap confinement interferes with serial device access and with picking up the ROS environment from the student’s shell.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/code.deb<span class="w"> </span><span class="s1">&#39;https://code.visualstudio.com/sha/download?build=stable&amp;os=linux-deb-x64&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/code.deb<span class="w"> </span><span class="s1">'https://code.visualstudio.com/sha/download?build=stable&amp;os=linux-deb-x64'</span>
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>/tmp/code.deb
 rm<span class="w"> </span>/tmp/code.deb
 </pre></div>
@@ -692,7 +730,7 @@ sudo<span class="w"> </span>apt<span class="w"> </span>update
 <section id="raise-the-file-watcher-limit">
 <h4>Raise the file watcher limit<a class="headerlink" href="#raise-the-file-watcher-limit" title="Link to this heading">#</a></h4>
 <p>Required on every master. VS Code watches every file in an open folder, and a built <code class="docutils literal notranslate"><span class="pre">master_ws</span></code> has tens of thousands across <code class="docutils literal notranslate"><span class="pre">build/</span></code> and <code class="docutils literal notranslate"><span class="pre">install/</span></code> — well past the default inotify ceiling. Students hit “file watcher limit reached” the first time they open their workspace.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;fs.inotify.max_user_watches=524288&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/60-inotify.conf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">"fs.inotify.max_user_watches=524288"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/60-inotify.conf
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span>/etc/sysctl.d/60-inotify.conf
 </pre></div>
 </div>
@@ -707,17 +745,17 @@ sudo<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </s
 <p>Seed sensible defaults so students are not each discovering the build-directory problem themselves. Add to <code class="docutils literal notranslate"><span class="pre">/etc/skel</span></code> on the <strong>login server</strong>, so new accounts pick it up:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># On ece387server</span>
 sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/skel/.config/Code/User
-sudo<span class="w"> </span>tee<span class="w"> </span>/etc/skel/.config/Code/User/settings.json<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/skel/.config/Code/User/settings.json<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s">{</span>
-<span class="s">  &quot;files.watcherExclude&quot;: {</span>
-<span class="s">    &quot;**/build/**&quot;: true,</span>
-<span class="s">    &quot;**/install/**&quot;: true,</span>
-<span class="s">    &quot;**/log/**&quot;: true</span>
+<span class="s">  "files.watcherExclude": {</span>
+<span class="s">    "**/build/**": true,</span>
+<span class="s">    "**/install/**": true,</span>
+<span class="s">    "**/log/**": true</span>
 <span class="s">  },</span>
-<span class="s">  &quot;search.exclude&quot;: {</span>
-<span class="s">    &quot;**/build/**&quot;: true,</span>
-<span class="s">    &quot;**/install/**&quot;: true,</span>
-<span class="s">    &quot;**/log/**&quot;: true</span>
+<span class="s">  "search.exclude": {</span>
+<span class="s">    "**/build/**": true,</span>
+<span class="s">    "**/install/**": true,</span>
+<span class="s">    "**/log/**": true</span>
 <span class="s">  }</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
@@ -739,7 +777,7 @@ sudo<span class="w"> </span>tee<span class="w"> </span>/etc/skel/.config/Code/Us
 </pre></div>
 </div>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[sssd]</span>
-<span class="c1"># nss = name lookups (&quot;id username&quot;, &quot;getent passwd&quot;)</span>
+<span class="c1"># nss = name lookups ("id username", "getent passwd")</span>
 <span class="c1"># pam = login authentication</span>
 <span class="na">services</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nss, pam</span>
 <span class="na">domains</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ece387.local</span>
@@ -781,7 +819,7 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">en
 <span class="c1"># Create a home directory on first login if one does not exist</span>
 sudo<span class="w"> </span>pam-auth-update<span class="w"> </span>--enable<span class="w"> </span>mkhomedir
 
-<span class="c1"># SSSD may cache &quot;offline&quot; responses during the first seconds after boot,</span>
+<span class="c1"># SSSD may cache "offline" responses during the first seconds after boot,</span>
 <span class="c1"># before the LDAP connection is established. Clear the cache for fresh lookups.</span>
 sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>sssd
 sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/sss/db/*
@@ -843,14 +881,14 @@ sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> <
 </pre></div>
 </div>
 <p>Give it a home on local disk (the default <code class="docutils literal notranslate"><span class="pre">/home/ece387rescue</span></code> already is — it is outside <code class="docutils literal notranslate"><span class="pre">/home/students</span></code>, so autofs never touches it) and a minimal ROS environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/home/ece387rescue/.bashrc<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/home/ece387rescue/.bashrc<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 
 <span class="s"># ECE 387 rescue environment</span>
 <span class="s">source /opt/ros/jazzy/setup.bash</span>
 <span class="s">export TURTLEBOT3_MODEL=burger</span>
 <span class="s">export LDS_MODEL=LDS-02</span>
 <span class="s">export ROS_DOMAIN_ID=99</span>
-<span class="s">alias ssh_robot=&#39;ssh pi@192.168.50.1&#39;</span>
+<span class="s">alias ssh_robot='ssh pi@192.168.50.1'</span>
 <span class="s">EOF</span>
 </pre></div>
 </div>
@@ -905,7 +943,7 @@ sudo<span class="w"> </span>exportfs<span class="w"> </span>-v<span class="w">  
 <span class="c1"># NOPASSWD avoids a password prompt — practical in a lab setting.</span>
 
 <span class="c1"># Package management — students install their own libraries during labs.</span>
-<span class="c1"># See &quot;What this grants&quot; below: this is equivalent to full root.</span>
+<span class="c1"># See "What this grants" below: this is equivalent to full root.</span>
 <span class="n">Cmnd_Alias</span> <span class="n">ECE387_PKG</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">apt</span><span class="p">,</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="p">,</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">dpkg</span><span class="p">,</span> \
                         <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span><span class="p">,</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
 
@@ -996,11 +1034,11 @@ sudo<span class="w"> </span>-l<span class="w"> </span>-U<span class="w"> </span>
 <h4>Solve hardware access with groups and udev, not sudo<a class="headerlink" href="#solve-hardware-access-with-groups-and-udev-not-sudo" title="Link to this heading">#</a></h4>
 <p>Serial and camera access is a permissions problem, not a privilege problem:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Device permissions set at plug-in time — no sudo needed by anyone</span>
-sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-ece387.rules<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-ece387.rules<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s"># OpenCR / Dynamixel controller</span>
-<span class="s">SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;0483&quot;, MODE=&quot;0666&quot;</span>
+<span class="s">SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", MODE="0666"</span>
 <span class="s"># USB cameras</span>
-<span class="s">KERNEL==&quot;video[0-9]*&quot;, MODE=&quot;0666&quot;</span>
+<span class="s">KERNEL=="video[0-9]*", MODE="0666"</span>
 <span class="s">EOF</span>
 
 sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload
@@ -1008,7 +1046,7 @@ sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">dmesg</span></code> is restricted to root on Ubuntu, which students need when debugging USB. Open it rather than whitelisting it:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;kernel.dmesg_restrict=0&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/61-dmesg.conf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">"kernel.dmesg_restrict=0"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sysctl.d/61-dmesg.conf
 sudo<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span>/etc/sysctl.d/61-dmesg.conf
 </pre></div>
 </div>
@@ -1016,7 +1054,7 @@ sudo<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </s
 <section id="if-a-lab-genuinely-needs-root">
 <h4>If a lab genuinely needs root<a class="headerlink" href="#if-a-lab-genuinely-needs-root" title="Link to this heading">#</a></h4>
 <p>Write a wrapper that does exactly one thing, rather than whitelisting a general binary. For example,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/usr/local/sbin/ece387-flash-opencr<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/usr/local/sbin/ece387-flash-opencr<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s">#!/bin/bash</span>
 <span class="s">set -e</span>
 <span class="s">exec /opt/ece387/opencr_update/update.sh /dev/ttyACM0 burger.opencr</span>
@@ -1032,10 +1070,46 @@ sudo<span class="w"> </span>chattr<span class="w"> </span>+i<span class="w"> </s
 </div>
 <p>Root-owned, immutable, no student-controlled arguments, no shell. That is a permission; <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">systemctl</span></code> is a root shell.</p>
 </section>
+<section id="allow-students-to-manage-network-connections">
+<h4>Allow students to manage network connections<a class="headerlink" href="#allow-students-to-manage-network-connections" title="Link to this heading">#</a></h4>
+<p>By default polkit grants <code class="docutils literal notranslate"><span class="pre">org.freedesktop.NetworkManager.settings.modify.system</span></code> only to members of <code class="docutils literal notranslate"><span class="pre">sudo</span></code> or <code class="docutils literal notranslate"><span class="pre">admin</span></code>. Students are in neither, so the GUI refuses with <em>“System policy prevents modification of network settings for all users.”</em></p>
+<p><strong>polkit and sudo are separate systems.</strong> The sudoers whitelist above has no effect here — polkit checks group membership, not sudo rules. Granting network management therefore does not widen what students can run in a terminal.</p>
+<p>Benches are shared, lab WiFi is not always reliable, and students need to attach to robot access points without waiting for an instructor:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/polkit-1/rules.d/50-ece387-network.rules<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">// Allow ECE387 students to manage network connections from the GUI.</span>
+<span class="s">polkit.addRule(function(action, subject) {</span>
+<span class="s">    if (subject.isInGroup("ece387students")) {</span>
+<span class="s">        switch (action.id) {</span>
+<span class="s">            case "org.freedesktop.NetworkManager.settings.modify.system":</span>
+<span class="s">            case "org.freedesktop.NetworkManager.network-control":</span>
+<span class="s">            case "org.freedesktop.NetworkManager.enable-disable-wifi":</span>
+<span class="s">                return polkit.Result.YES;</span>
+<span class="s">        }</span>
+<span class="s">    }</span>
+<span class="s">});</span>
+<span class="s">EOF</span>
+
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>polkit
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">settings.modify.hostname</span></code> is deliberately excluded — hostnames identify the master in the Ansible inventory and in mDNS lookups, and a renamed machine is an annoying problem to trace.</p>
+<p>Students can now also break the <code class="docutils literal notranslate"><span class="pre">ECE387</span></code> profile for whoever sits there next. Keep a known-good copy:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span>/etc/NetworkManager/system-connections<span class="w"> </span><span class="se">\</span>
+<span class="w">           </span>/etc/NetworkManager/system-connections.ece387-backup
+</pre></div>
+</div>
+<p>Restore with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/NetworkManager/system-connections.ece387-backup/*<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>/etc/NetworkManager/system-connections/
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/etc/NetworkManager/system-connections/*
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>NetworkManager
+</pre></div>
+</div>
+</section>
 <section id="discover-what-students-actually-need">
 <h4>Discover what students actually need<a class="headerlink" href="#discover-what-students-actually-need" title="Link to this heading">#</a></h4>
 <p>Rather than guessing, log real usage for a week of labs:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Defaults log_input, log_output&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sudoers.d/00-logging
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">'Defaults log_input, log_output'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/sudoers.d/00-logging
 sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">440</span><span class="w"> </span>/etc/sudoers.d/00-logging
 </pre></div>
 </div>
@@ -1060,11 +1134,11 @@ ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><s
 </pre></div>
 </div>
 <p>Give the wired connection a better route metric than any WiFi, so it is preferred whenever the cable is plugged in:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the connection name (usually &quot;Wired connection 1&quot;)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the connection name (usually "Wired connection 1")</span>
 nmcli<span class="w"> </span>connection<span class="w"> </span>show
 
-nmcli<span class="w"> </span>connection<span class="w"> </span>modify<span class="w"> </span><span class="s2">&quot;Wired connection 1&quot;</span><span class="w"> </span>ipv4.route-metric<span class="w"> </span><span class="m">50</span>
-nmcli<span class="w"> </span>connection<span class="w"> </span>up<span class="w"> </span><span class="s2">&quot;Wired connection 1&quot;</span>
+nmcli<span class="w"> </span>connection<span class="w"> </span>modify<span class="w"> </span><span class="s2">"Wired connection 1"</span><span class="w"> </span>ipv4.route-metric<span class="w"> </span><span class="m">50</span>
+nmcli<span class="w"> </span>connection<span class="w"> </span>up<span class="w"> </span><span class="s2">"Wired connection 1"</span>
 </pre></div>
 </div>
 <p>No USB dongle is required in this topology. Skip to 1.8.</p>
@@ -1127,20 +1201,20 @@ ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </spa
 <span class="w">    </span><span class="nt">wlan1</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">dhcp4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">access-points</span><span class="p">:</span>
-<span class="w">        </span><span class="s">&quot;ECE387&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ece387only&quot;</span>
+<span class="w">        </span><span class="s">"ECE387"</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">"ece387only"</span>
 <span class="w">          </span><span class="nt">networkmanager</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">passthrough</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">connection.autoconnect-priority</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
-<span class="w">        </span><span class="s">&quot;AF_ACADEMY_GUEST&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">              </span><span class="nt">connection.autoconnect-priority</span><span class="p">:</span><span class="w"> </span><span class="s">"20"</span>
+<span class="w">        </span><span class="s">"AF_ACADEMY_GUEST"</span><span class="p p-Indicator">:</span>
 <span class="w">          </span><span class="nt">networkmanager</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">passthrough</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">connection.autoconnect-priority</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;10&quot;</span>
-<span class="w">        </span><span class="s">&quot;ECE&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dfec3141&quot;</span>
+<span class="w">              </span><span class="nt">connection.autoconnect-priority</span><span class="p">:</span><span class="w"> </span><span class="s">"10"</span>
+<span class="w">        </span><span class="s">"ECE"</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">"dfec3141"</span>
 <span class="w">          </span><span class="nt">networkmanager</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">passthrough</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">connection.autoconnect-priority</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;5&quot;</span>
+<span class="w">              </span><span class="nt">connection.autoconnect-priority</span><span class="p">:</span><span class="w"> </span><span class="s">"5"</span>
 </pre></div>
 </div>
 <p>Higher <code class="docutils literal notranslate"><span class="pre">autoconnect-priority</span></code> wins when several networks are in range: <code class="docutils literal notranslate"><span class="pre">ECE387</span></code> (lab) first, then <code class="docutils literal notranslate"><span class="pre">AF_ACADEMY_GUEST</span></code> (internet), then <code class="docutils literal notranslate"><span class="pre">ECE</span></code> (backup internet).</p>
@@ -1164,7 +1238,7 @@ ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><s
 </pre></div>
 </div>
 <p><strong>f. Reconnecting manually.</strong> NetworkManager does not preempt an active connection when a higher-priority network reappears. If <code class="docutils literal notranslate"><span class="pre">wlan1</span></code> is on <code class="docutils literal notranslate"><span class="pre">ECE</span></code> and <code class="docutils literal notranslate"><span class="pre">ECE387</span></code> comes back into range:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nmcli<span class="w"> </span>connection<span class="w"> </span>up<span class="w"> </span><span class="s2">&quot;ECE387&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nmcli<span class="w"> </span>connection<span class="w"> </span>up<span class="w"> </span><span class="s2">"ECE387"</span>
 </pre></div>
 </div>
 </section>
@@ -1300,7 +1374,7 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;u
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">AF_ACADEMY_GUEST</span></code> provides internet independently of the lab network, so GitHub stays reachable when the login server does not.</p>
 <p><strong>3. Push before logging out.</strong> <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> is cleared on reboot and the rescue account is shared:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>-A<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;work from &lt;date&gt;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>-A<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"work from &lt;date&gt;"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push
 </pre></div>
 </div>
 <blockquote>
@@ -1341,7 +1415,7 @@ ssh_robot<span class="w">                  </span><span class="c1"># alias for: 
 </div>
 </li>
 <li><p><strong>Set the bench’s ROS domain</strong> so benches do not see each other’s traffic:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span><span class="m">7</span><span class="w">          </span><span class="c1"># use your robot&#39;s ID</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span><span class="m">7</span><span class="w">          </span><span class="c1"># use your robot's ID</span>
 </pre></div>
 </div>
 </li>
@@ -1364,12 +1438,12 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>avahi-daemon<span class="w"> </span>libnss-mdns
 sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>avahi-daemon
 
-<span class="c1"># Should resolve to master01&#39;s current DHCP address</span>
+<span class="c1"># Should resolve to master01's current DHCP address</span>
 ping<span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span>master01.local
 
 <span class="c1"># Inventory. Masters use DHCP, so address them by mDNS hostname rather than IP —</span>
 <span class="c1"># this keeps working after a reboot changes the lease.</span>
-cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/masters-inventory.ini<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>~/Documents/ece387/masters-inventory.ini<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
 <span class="s">[masters]</span>
 <span class="s">master01 ansible_host=master01.local</span>
 <span class="s">master02 ansible_host=master02.local</span>
@@ -1408,7 +1482,7 @@ ansible-playbook<span class="w"> </span>-i<span class="w"> </span>~/Documents/ec
 <section id="check-who-is-logged-in-across-all-masters">
 <h3>Check who is logged in across all masters<a class="headerlink" href="#check-who-is-logged-in-across-all-masters" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span>-w<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">14</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=== master</span><span class="nv">$i</span><span class="s2"> ===&quot;</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== master</span><span class="nv">$i</span><span class="s2"> ==="</span>
 <span class="w">  </span>ssh<span class="w"> </span>ece387admin@master<span class="nv">$i</span>.local<span class="w"> </span>who<span class="w"> </span><span class="m">2</span>&gt;/dev/null
 <span class="k">done</span>
 </pre></div>
@@ -1551,15 +1625,17 @@ sudo<span class="w"> </span>-l<span class="w"> </span>-U<span class="w"> </span>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-planning">Network Planning</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#topology-a-ethernet-available-preferred">Topology A — Ethernet available (preferred)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#topology-b-no-ethernet">Topology B — No Ethernet</a></li>
@@ -1588,6 +1664,7 @@ sudo<span class="w"> </span>-l<span class="w"> </span>-U<span class="w"> </span>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-still-left-out-and-why">What is still left out, and why</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-hardware-access-with-groups-and-udev-not-sudo">Solve hardware access with groups and udev, not sudo</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#if-a-lab-genuinely-needs-root">If a lab genuinely needs root</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#allow-students-to-manage-network-connections">Allow students to manage network connections</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#discover-what-students-actually-need">Discover what students actually need</a></li>
 </ul>
 </li>
@@ -1670,8 +1747,8 @@ By Stan Baek
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>

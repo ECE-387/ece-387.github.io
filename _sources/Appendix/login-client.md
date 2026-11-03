@@ -580,6 +580,50 @@ Cmnd_Alias ECE387_TOOLS = /usr/local/sbin/ece387-flash-opencr
 
 Root-owned, immutable, no student-controlled arguments, no shell. That is a permission; `sudo systemctl` is a root shell.
 
+#### Allow students to manage network connections
+
+By default polkit grants `org.freedesktop.NetworkManager.settings.modify.system` only to members of `sudo` or `admin`. Students are in neither, so the GUI refuses with *"System policy prevents modification of network settings for all users."*
+
+**polkit and sudo are separate systems.** The sudoers whitelist above has no effect here — polkit checks group membership, not sudo rules. Granting network management therefore does not widen what students can run in a terminal.
+
+Benches are shared, lab WiFi is not always reliable, and students need to attach to robot access points without waiting for an instructor:
+
+```bash
+sudo tee /etc/polkit-1/rules.d/50-ece387-network.rules > /dev/null << 'EOF'
+// Allow ECE387 students to manage network connections from the GUI.
+polkit.addRule(function(action, subject) {
+    if (subject.isInGroup("ece387students")) {
+        switch (action.id) {
+            case "org.freedesktop.NetworkManager.settings.modify.system":
+            case "org.freedesktop.NetworkManager.network-control":
+            case "org.freedesktop.NetworkManager.enable-disable-wifi":
+                return polkit.Result.YES;
+        }
+    }
+});
+EOF
+
+sudo systemctl restart polkit
+```
+
+`settings.modify.hostname` is deliberately excluded — hostnames identify the master in the Ansible inventory and in mDNS lookups, and a renamed machine is an annoying problem to trace.
+
+Students can now also break the `ECE387` profile for whoever sits there next. Keep a known-good copy:
+
+```bash
+sudo cp -r /etc/NetworkManager/system-connections \
+           /etc/NetworkManager/system-connections.ece387-backup
+```
+
+Restore with:
+
+```bash
+sudo cp /etc/NetworkManager/system-connections.ece387-backup/* \
+        /etc/NetworkManager/system-connections/
+sudo chmod 600 /etc/NetworkManager/system-connections/*
+sudo systemctl restart NetworkManager
+```
+
 #### Discover what students actually need
 
 Rather than guessing, log real usage for a week of labs:

@@ -16,43 +16,46 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../_static/tabs.js?v=3ee01567"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -62,6 +65,7 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Labs/Lab7_TF';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -69,34 +73,30 @@
     <link rel="prev" title="🔬 Lab6: IMU-Based Navigation" href="Lab6_IMU.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -104,7 +104,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -112,15 +111,59 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
     </header>
   
 
@@ -129,7 +172,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -159,21 +203,17 @@
     
     
     <img src="../_static/ece387.png" class="logo__image only-light" alt="Introduction to Robotic Systems - Home"/>
-    <script>document.write(`<img src="../_static/ece387.png" class="logo__image only-dark" alt="Introduction to Robotic Systems - Home"/>`);</script>
+    <img src="../_static/ece387.png" class="logo__image only-dark pst-js-only" alt="Introduction to Robotic Systems - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="list-caption"><li class="toctree-l0 has-children"><details><summary><p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Info</span></p><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="nav bd-sidenav">
@@ -215,9 +255,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -300,7 +345,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -314,25 +359,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -354,7 +391,7 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">📌 Objectives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">📜 Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-lab-testing-the-imu">🌱 Pre-Lab: Testing the IMU</a><ul class="nav section-nav flex-column">
@@ -429,17 +466,17 @@ document.write(`
 <p>Sometimes, we need to execute commands remotely without logging into the remote host via SSH. Here’s how you can run commands remotely from your local computer:</p>
 <ol class="arabic">
 <li><p>Run the following command on your master computer:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">&#39;ls -la&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">'ls -la'</span>
 </pre></div>
 </div>
 <p>Here, X is the number assigned to your robot. This command will display the files and directories in the <code class="docutils literal notranslate"><span class="pre">pi</span></code> user’s home directory, allowing us to execute commands on the remote computer without actually logging into it.</p>
 </li>
 <li><p>Try running this command next:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">&#39;echo $ROS_DOMAIN_ID&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">'echo $ROS_DOMAIN_ID'</span>
 </pre></div>
 </div>
 <p>You may notice that it returns an empty string, even though we have already defined <code class="docutils literal notranslate"><span class="pre">ROS_DOMAIN_ID</span></code> inside the <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file. To verify it’s defined correctly, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">&#39;cat ~/.bashrc&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">'cat ~/.bashrc'</span>
 </pre></div>
 </div>
 <p>Look for the line:</p>
@@ -449,7 +486,7 @@ document.write(`
 <p>It confirms that <code class="docutils literal notranslate"><span class="pre">ROS_DOMAIN_ID</span></code> is defined correctly in the <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file.</p>
 </li>
 <li><p>At the beginning of the <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file, you will find the following lines:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># If not running interactively, don&#39;t do anything</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># If not running interactively, don't do anything</span>
 <span class="k">case</span><span class="w"> </span><span class="nv">$-</span><span class="w"> </span><span class="k">in</span>
 <span class="w">    </span>*i*<span class="o">)</span><span class="w"> </span><span class="p">;;</span>
 <span class="w">      </span>*<span class="o">)</span><span class="w"> </span><span class="k">return</span><span class="p">;;</span>
@@ -461,7 +498,7 @@ document.write(`
 <li><p>Open Visual Studio Code (<code class="docutils literal notranslate"><span class="pre">VS</span> <span class="pre">Code</span></code>) and click on the <code class="docutils literal notranslate"><span class="pre">Extensions</span></code> icon on the left sidebar or press <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+X</span></code>. Type <code class="docutils literal notranslate"><span class="pre">remote</span></code> and select <code class="docutils literal notranslate"><span class="pre">Remote-SSH</span></code>. Install it if it’s not already installed.</p></li>
 <li><p>Open the Command Palette by pressing <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code> or navigating to <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">&gt;</span> <span class="pre">Command</span> <span class="pre">Palette</span></code>. Type the first few letters of <code class="docutils literal notranslate"><span class="pre">Remote-SSH</span></code> and select <code class="docutils literal notranslate"><span class="pre">Remote-SSH:</span> <span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Host</span></code>. Enter <code class="docutils literal notranslate"><span class="pre">pi&#64;robotX</span></code> and hit Enter. Type the password if prompted, though it should be password-free if you’ve set up an SSH key. It may take a couple of minutes to set up the <code class="docutils literal notranslate"><span class="pre">vscode</span> <span class="pre">server</span></code> on the remote computer for the first time.</p></li>
 <li><p>Click <code class="docutils literal notranslate"><span class="pre">Explorer</span></code> on the left sidebar, choose <code class="docutils literal notranslate"><span class="pre">/home/pi</span></code> for the <code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">Folder</span></code> option, and hit OK. You should now see all the files in the home directory. Click on <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> to open it. Replace the following lines:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># If not running interactively, don&#39;t do anything</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># If not running interactively, don't do anything</span>
 <span class="k">case</span><span class="w"> </span><span class="nv">$-</span><span class="w"> </span><span class="k">in</span>
 <span class="w">    </span>*i*<span class="o">)</span><span class="w"> </span><span class="p">;;</span>
 <span class="w">      </span>*<span class="o">)</span><span class="w"> </span><span class="k">return</span><span class="p">;;</span>
@@ -484,7 +521,7 @@ document.write(`
 <p>Ensure that <code class="docutils literal notranslate"><span class="pre">ROS_DOMAIN_ID=98</span></code> is set with your domain ID. Save the file.</p>
 </li>
 <li><p>On a terminal, try:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">&#39;echo $ROS_DOMAIN_ID&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">'echo $ROS_DOMAIN_ID'</span>
 </pre></div>
 </div>
 <p>It should now return your domain ID.</p>
@@ -496,13 +533,13 @@ document.write(`
 <p>Previously, to drive a physical TurtleBot3, we had to log into the remote host using SSH and run <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">launch</span> <span class="pre">turtlebot3_bringup</span> <span class="pre">robot.launch.py</span></code>. Here, we will implement a more convenient method to accomplish the same task without logging into the remote computer:</p>
 <ol class="arabic">
 <li><p>On a terminal, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">&#39;ros2 launch turtlebot3_bringup robot.launch.py&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>pi@robotX<span class="w"> </span><span class="s1">'ros2 launch turtlebot3_bringup robot.launch.py'</span>
 </pre></div>
 </div>
 <p>This command remotely starts the <code class="docutils literal notranslate"><span class="pre">robot.launch.py</span></code> script on the TurtleBot3.</p>
 </li>
 <li><p>To simplify this process, add the following alias to the <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file on your <code class="docutils literal notranslate"><span class="pre">master</span></code> computer:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">alias</span><span class="w"> </span><span class="nv">bringup</span><span class="o">=</span><span class="s1">&#39;ssh pi@robotX &#39;</span><span class="se">\&#39;</span><span class="s1">&#39;ros2 launch turtlebot3_bringup robot.launch.py&#39;</span><span class="se">\&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">alias</span><span class="w"> </span><span class="nv">bringup</span><span class="o">=</span><span class="s1">'ssh pi@robotX '</span><span class="se">\'</span><span class="s1">'ros2 launch turtlebot3_bringup robot.launch.py'</span><span class="se">\'</span>
 </pre></div>
 </div>
 </li>
@@ -558,8 +595,8 @@ document.write(`
 </li>
 <li><p><strong>Modify <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>:</strong> Update the <code class="docutils literal notranslate"><span class="pre">entry_points</span></code> section to include the <code class="docutils literal notranslate"><span class="pre">move2goal_tf</span></code> script:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s1">&#39;move2goal_tf = lab7_tf.move2goal_tf:main&#39;</span><span class="p">,</span>
+    <span class="s1">'console_scripts'</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">'move2goal_tf = lab7_tf.move2goal_tf:main'</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">},</span>
 </pre></div>
@@ -571,23 +608,23 @@ document.write(`
 <h3><strong>Implementing the Service Server</strong><a class="headerlink" href="#implementing-the-service-server" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p><strong>Import Required Libraries:</strong>  Open <code class="docutils literal notranslate"><span class="pre">move2goal_tf.py</span></code> and add the following imports:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Empty</span>
-<span class="kn">from</span> <span class="nn">nav2_msgs.srv</span> <span class="kn">import</span> <span class="n">SetInitialPose</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">std_srvs.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">Empty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nav2_msgs.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">SetInitialPose</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Create a Service Server:</strong> Add the following service server inside the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="c1"># TODO: Create a service server that will handle &#39;/set_pose&#39; service requests</span>
- <span class="c1"># - Service type: &#39;SetInitialPose&#39;</span>
- <span class="c1"># - Service name: &#39;/set_pose&#39;</span>
- <span class="c1"># - Callback function: &#39;self.set_pose_callback&#39; to execute when the service is called</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="c1"># TODO: Create a service server that will handle '/set_pose' service requests</span>
+ <span class="c1"># - Service type: 'SetInitialPose'</span>
+ <span class="c1"># - Service name: '/set_pose'</span>
+ <span class="c1"># - Callback function: 'self.set_pose_callback' to execute when the service is called</span>
  <span class="bp">self</span><span class="o">.</span><span class="n">reset_service</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Update this line.</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Update Position Variables:</strong> Replace the following lines in the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables to store the robot&#39;s current position and orientation</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables to store the robot's current position and orientation</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># Current x-coordinate</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># Current y-coordinate</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">yaw</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Current orientation (yaw angle in radians)</span>
@@ -607,10 +644,10 @@ document.write(`
 </div>
 </li>
 <li><p><strong>Define the Callback Function:</strong> Implement the service callback function to reset the local pose:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_pose_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">SetInitialPose</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Empty</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Empty</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">set_pose_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">SetInitialPose</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Empty</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Empty</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Resets the local position coordinates to zero and clears the previous position coordinates.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1"># Reset the local position coordinates</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">local_x</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
@@ -622,7 +659,7 @@ document.write(`
     <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_yaw</span> <span class="o">=</span> <span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span>
 
     <span class="c1"># Reset the state</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;ROTATE_TO_GOAL&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">"ROTATE_TO_GOAL"</span>
 
     <span class="c1"># Clear the previous position coordinates</span>
     <span class="c1"># This ensures that any previous position data is discarded</span>
@@ -631,7 +668,7 @@ document.write(`
     <span class="bp">self</span><span class="o">.</span><span class="n">initial_global_yaw</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Log a message to indicate the local position has been reset</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Local pose set to x=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_y</span><span class="si">}</span><span class="s2">, yaw=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_yaw</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Local pose set to x=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_y</span><span class="si">}</span><span class="s2">, yaw=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_yaw</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
 
     <span class="c1"># Return the response to the service caller</span>
     <span class="k">return</span> <span class="n">response</span>
@@ -643,7 +680,7 @@ document.write(`
 </pre></div>
 </div>
 <p>Then, in another terminal, call the service:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/set_pose<span class="w"> </span>nav2_msgs/srv/SetInitialPose<span class="w"> </span><span class="s2">&quot;{pose: {pose: {pose: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}}&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/set_pose<span class="w"> </span>nav2_msgs/srv/SetInitialPose<span class="w"> </span><span class="s2">"{pose: {pose: {pose: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}}"</span>
 </pre></div>
 </div>
 <p>You should see a confirmation message indicating that the local pose has been reset.</p>
@@ -654,16 +691,16 @@ document.write(`
 <h3><strong>Implementing the Service Client</strong><a class="headerlink" href="#implementing-the-service-client" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p><strong>Modify <code class="docutils literal notranslate"><span class="pre">gamepad.py</span></code>:</strong> Import the required libraries:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Empty</span>
-<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseWithCovarianceStamped</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">std_srvs.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">Empty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">PoseWithCovarianceStamped</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Create a Service Client:</strong> Inside the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, add:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="c1"># TODO: Create a service client to call the &#39;/set_pose&#39; service</span>
- <span class="c1"># - Service type: &#39;SetInitialPose&#39;</span>
- <span class="c1"># - Service name: &#39;/set_pose&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="c1"># TODO: Create a service client to call the '/set_pose' service</span>
+ <span class="c1"># - Service type: 'SetInitialPose'</span>
+ <span class="c1"># - Service name: '/set_pose'</span>
  <span class="bp">self</span><span class="o">.</span><span class="n">reset_pose_client</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Update this line</span>
 </pre></div>
 </div>
@@ -676,13 +713,13 @@ document.write(`
 </div>
 </li>
 <li><p><strong>Define the Request Function:</strong> Implement <code class="docutils literal notranslate"><span class="pre">send_set_pose_request</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">send_set_pose_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span><span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calls the &#39;reset_pose&#39; service to reset the robot&#39;s pose.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">send_set_pose_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span><span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Calls the 'reset_pose' service to reset the robot's pose.</span>
+<span class="sd">    """</span>
     <span class="c1"># Check if the service is available</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_pose_client</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout_sec</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Service &#39;reset_pose&#39; not available.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">"Service 'reset_pose' not available."</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="c1"># Create a request object </span>
@@ -690,7 +727,7 @@ document.write(`
     <span class="n">request</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="n">PoseWithCovarianceStamped</span><span class="p">()</span>  
 
     <span class="c1"># Set Header</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;map&quot;</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">"map"</span>
     <span class="n">request</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clock</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
 
     <span class="c1"># TODO: Set Position</span>
@@ -712,19 +749,19 @@ document.write(`
 </div>
 </li>
 <li><p><strong>Handle Service Response:</strong> Add the following method to the <code class="docutils literal notranslate"><span class="pre">Gamepad</span></code> class:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reset_pose_done_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Callback function to handle the response from the &#39;reset_pose&#39; service.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">reset_pose_done_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Callback function to handle the response from the 'reset_pose' service.</span>
+<span class="sd">    """</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Check if the service call was successful</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pose reset successfully.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Pose reset successfully."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Pose reset failed.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Pose reset failed."</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Service call failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Service call failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -734,11 +771,11 @@ document.write(`
 <h3><strong>Implement Coordinate Transformation</strong><a class="headerlink" href="#implement-coordinate-transformation" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p><strong>Modify the <code class="docutils literal notranslate"><span class="pre">imu_callback</span></code> Method</strong> First, update the <code class="docutils literal notranslate"><span class="pre">imu_callback</span></code> method in the <code class="docutils literal notranslate"><span class="pre">MoveToGoal</span></code> class as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">imu_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imu_msg</span><span class="p">:</span> <span class="n">Imu</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">imu_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imu_msg</span><span class="p">:</span> <span class="n">Imu</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Callback function for handling control relinquishment messages.</span>
 <span class="sd">    Updates local yaw relative to the starting orientation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">imu_msg</span><span class="o">.</span><span class="n">orientation</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">global_yaw</span> <span class="o">=</span> <span class="n">euler_from_quaternion</span><span class="p">([</span><span class="n">q</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">w</span><span class="p">])</span>
 
@@ -753,11 +790,11 @@ document.write(`
 </div>
 </li>
 <li><p><strong>Modify the <code class="docutils literal notranslate"><span class="pre">odom_callback</span></code> Method</strong> Update the <code class="docutils literal notranslate"><span class="pre">odom_callback</span></code> method to handle odometry messages and update the local x and y coordinates relative to the starting position:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">odom_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">odom_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Callback function for handling odometry messages.</span>
 <span class="sd">    Updates the local x and y coordinates relative to the starting position.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Extract global x and y coordinates from the odometry message</span>
     <span class="n">global_x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
     <span class="n">global_y</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
@@ -887,15 +924,17 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">📌 Objectives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">📜 Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-lab-testing-the-imu">🌱 Pre-Lab: Testing the IMU</a><ul class="nav section-nav flex-column">
@@ -960,8 +999,8 @@ By Stan Baek
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>
