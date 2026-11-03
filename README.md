@@ -1,12 +1,6 @@
 # ECE387
 ECE387 Course Web
 
-## How to edit and publish this course web
-
-I recommned [vscode](https://code.visualstudio.com/) to edit and publish it.
-
-- Python 3.10.11
-
 ### How to install required Python packages? 
 - Open a terminal.
 - Navigate to the root folder and find requirements.txt
@@ -15,6 +9,7 @@ I recommned [vscode](https://code.visualstudio.com/) to edit and publish it.
 - I recommned using a virtual environment.
 
 ### How to build and publish?
+- Run `sudo apt install ghp-import`
 - Run the following under the `docs` folder.
 - Build: `jupyter-book build --all .`  
 - Publish: `ghp-import -n -p -f _build/html` 
@@ -23,23 +18,10 @@ I recommned [vscode](https://code.visualstudio.com/) to edit and publish it.
 - Python, Python Extension Pack
 - Jupyter, MyST-Markdown
 
-### Convert Jupyter notebooks to markdown files
-- jupytext notebook.ipynb --to md
-
 ### Convert jupyter notebook to markdown
 - jupytext https://jupytext.readthedocs.io/en/latest/using-cli.html
 - install: pip install jupytext
 - How to use: jupytext lab2.ipynb --to md
-
-
-### Settings inside settings.json
-```
-{
-    "python.envFile": "${workspaceFolder}/.venv",
-    "python.terminal.activateEnvInCurrentTerminal": true,
-}
-```
-
 
 ### To remove version constraints
 
