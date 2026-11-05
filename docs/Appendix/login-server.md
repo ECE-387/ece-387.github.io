@@ -12,7 +12,7 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
 
 **When a login server helps:**
 
-- The lab has a bank of master computers (e.g., 14 NUCs) and students do not own or sit at the same machine every session.
+- The lab has a bank of master computers (e.g., 14 login clients) and students do not own or sit at the same machine every session.
 - A student should be able to sit down at *any* master, log in with their own credentials, and immediately have their `.bashrc`, SSH keys, and ROS workspace available — without re-cloning or re-configuring anything.
 - You want to manage about 30 student accounts centrally: create them once, reset a forgotten password in one command, and push a `.bashrc` update to every account at once (see [Maintenance](#3-maintenance)). The shell environment is instructor-owned — every account runs an identical, known-good `.bashrc`, so "it works on my machine" never enters a debugging session.
 - You need some isolation between students who share the same physical hardware (restricted sudo, separate home directories, no ability to read another student's files).
@@ -22,13 +22,13 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
 - Students each have their own laptop or a personal workstation they always use. In that case there is nothing to "roam" between — a local Ubuntu account already gives each student a persistent home directory, and centralized authentication just adds an extra server to install, patch, and keep running (plus a single point of failure if it goes down). Use [Master Setup - Standalone](MasterSetupJazzy.md) instead — it sets up the same ROS 2 environment with a normal local account and no LDAP/NFS dependency.
 - You only have a handful of machines and can simply assign one student (or a fixed pair) per machine for the term.
 
-**The trade-off:** a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in [Master (Client) Setup](login-client.md) with SSSD credential caching and soft NFS mounts). For ECE 387's AFA lab — a fixed set of 14 dedicated NUCs used by a rotating roster of 34 student accounts across sections — that trade-off is worth it.
+**The trade-off:** a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in [Master (Client) Setup](login-client.md) with SSSD credential caching and soft NFS mounts). For ECE 387's AFA lab — a fixed set of 14 dedicated login clients used by a rotating roster of 34 student accounts across sections — that trade-off is worth it.
 
 ## Architecture Overview
 
 ```
                     ┌──────────────────────────────────┐
-                    │   Login Server (NUC 9 or NUC 11) │
+                    │   Login Server                   │
                     │   Ubuntu 24.04                   │
                     │   - OpenLDAP (user accounts)     │
                     │   - SSSD (authentication)        │
@@ -39,7 +39,6 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
               │                  │                  │
     ┌─────────┴──────┐  ┌────────┴───────┐  ┌──────┴─────────┐
     │  Master 01     │  │  Master 02     │  │  Master N...   │
-    │  NUC 9         │  │  NUC 9         │  │  NUC 9         │
     │  Ubuntu 24.04  │  │  Ubuntu 24.04  │  │  Ubuntu 24.04  │
     │  ROS2 Jazzy    │  │  ROS2 Jazzy    │  │  ROS2 Jazzy    │
     │  SSSD client   │  │  SSSD client   │  │  SSSD client   │
@@ -78,7 +77,7 @@ Assign static IPs on your lab's network before starting. All machines must be on
 
 ### Second Server (`phoenix`)
 
-There are two near-identical login servers, both NUC9i7QNX1. The commands in this guide show the lab server. When building `phoenix`, substitute the values below; everything else, including the LDAP domain, accounts, and UIDs, is the same.
+There are two near-identical login servers. The commands in this guide show the lab server. When building `phoenix`, substitute the values below; everything else, including the LDAP domain, accounts, and UIDs, is the same.
 
 | Setting | Lab server | `phoenix` |
 |---------|------------|-----------|

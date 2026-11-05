@@ -10,7 +10,7 @@ This guide is adapted from the [TurtleBot3 e-Manual](https://emanual.robotis.com
 ---
 
 ## Hardware
-For our application, we are using [Intel NUC Kits](https://www.intel.com/content/www/us/en/products/details/nuc/kits.html) but these instructions will work on any AMD64 architecture.
+These instructions will work on any AMD64 architecture master computer.
 
 
 ## Software
@@ -20,7 +20,7 @@ For the desktop machine you will first need to download [Ubuntu Desktop 24.04 LT
 
 Once downloaded, follow the instructions to create a [bootable Ubuntu USB stick](https://ubuntu.com/tutorials/create-a-usb-stick-on-ubuntu#1-overview) within Ubuntu. The guide provides links to create USB sticks from Windows and macOS as well.
 
-Once the bootable USB stick is created, follow the guide to [Install Ubuntu desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) selecting a useful computer name such as `master0`. The NUC requires you to press and hold F10 on startup to boot from a USB stick.
+Once the bootable USB stick is created, follow the guide to [Install Ubuntu desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview) selecting a useful computer name such as `master0`. Check your machine's boot-menu key (often F10, F12, Esc, or Del) to boot from a USB stick.
 
 
 ### Update Alternatives
@@ -221,7 +221,7 @@ sudo pip install --break-system-packages pupil-apriltags
 (building-a-dlib-wheel)=
 #### Building a dlib Wheel
 
-**Why not just `pip install dlib`?** Because dlib is a C++ library. PyPI ships it only as a source distribution, so `pip install dlib` downloads the source and invokes the compiler, which takes 30-60 minutes on a NUC and needs cmake, a full build toolchain, and a few GB of RAM.
+**Why not just `pip install dlib`?** Because dlib is a C++ library. PyPI ships it only as a source distribution, so `pip install dlib` downloads the source and invokes the compiler, which takes 30-60 minutes on a typical master computer and needs cmake, a full build toolchain, and a few GB of RAM.
 
 A **wheel** (`.whl`) is a zip archive of the *already-compiled* result. Building one once and installing it everywhere else turns a 45-minute compile into a 5-second unzip. The reasons this is worth doing:
 

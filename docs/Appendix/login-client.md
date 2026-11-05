@@ -62,7 +62,7 @@ The USB dongle is renamed to a fixed name `wlan1` so one config works across all
 
 ---
 
-## 1. Master Computer Setup (NUC 9 × 14)
+## 1. Master Computer Setup (14 login clients)
 
 Do this on each of the 14 master computers. Most steps can be scripted and run via Ansible — see [Ansible Automation](#4-ansible-automation-recommended-for-14-machines).
 
@@ -105,7 +105,7 @@ Nothing students do depends on it. Both connections they use are addressed numer
 
 So mDNS exists purely so *you* can reach the masters by name from the login server, without caring what address DHCP handed out this week.
 
-Keep it unless you have a reason not to. `avahi-daemon` ships enabled on Ubuntu Desktop, uses roughly 3–5 MB of RAM, and is idle otherwise — not a meaningful load on a NUC 9. Check on a running machine with:
+Keep it unless you have a reason not to. `avahi-daemon` ships enabled on Ubuntu Desktop, uses roughly 3–5 MB of RAM, and is idle otherwise — not a meaningful load on a master computer. Check on a running machine with:
 
 ```bash
 systemctl status avahi-daemon | grep Memory
@@ -128,9 +128,9 @@ sudo apt remove -y libnss-mdns
 
 Then replace the `ansible_host=masterNN.local` entries in the Section 4 inventory with the reserved IP addresses, and use IPs in the Section 5 loop.
 
-> Disabling mDNS without setting up DHCP reservations first will leave you walking to each NUC with a keyboard whenever a config changes. Do the reservations first, confirm they hold across a reboot, then disable.
+> Disabling mDNS without setting up DHCP reservations first will leave you walking to each master with a keyboard whenever a config changes. Do the reservations first, confirm they hold across a reboot, then disable.
 
-Note the exact Ethernet and WiFi interface names from `ip addr` — you need them in 1.7. The onboard WiFi is `wlo1` on the NUC 9; confirm rather than assume.
+Note the exact Ethernet and WiFi interface names from `ip addr` — you need them in 1.7. Interface names vary by machine; confirm rather than assume.
 
 ### 1.2 Install ROS 2 Jazzy and Course Packages
 

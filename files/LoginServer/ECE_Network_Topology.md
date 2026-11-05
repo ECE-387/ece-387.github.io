@@ -72,7 +72,7 @@ just a different subnet.
 | Device | IP | Role |
 |---|---|---|
 | ECE387 WiFi router | `10.99.1.1` | Router, DHCP for this subnet |
-| `ece387server` (NUC9i7QNX1) | `10.99.1.50` | Login server (LDAP, NFS) — static IP |
+| `ece387server` | `10.99.1.50` | Login server (LDAP, NFS) — static IP |
 | `master01`–`master14` | DHCP | Master computers |
 
 ## RobotTeaming WiFi (10.20.1.0/24)
@@ -117,7 +117,7 @@ nearly identical to `ece387server`.
 | Device | IP | Role |
 |---|---|---|
 | Home router | `192.168.0.1` | Router, DHCP for this subnet |
-| `phoenix` (NUC9i7QNX1) | `192.168.0.151` | Login server (LDAP, NFS) — static IP on Wi-Fi (`wlp4s0`) |
+| `phoenix` | `192.168.0.151` | Login server (LDAP, NFS) — static IP on Wi-Fi (`wlp4s0`) |
 
 ## Key takeaways
 

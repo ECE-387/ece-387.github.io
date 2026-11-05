@@ -422,7 +422,7 @@ We use a WiFi dongle to create an access point, allowing a remote master compute
 In this configuration, the TurtleBot3 uses **two independent Wi-Fi interfaces**:
 
 - One interface connects to an existing Wi-Fi network for **internet access**
-- The second interface runs as a **dedicated Access Point (AP)** for direct, low-latency communication with a remote master computer (NUC or laptop)
+- The second interface runs as a **dedicated Access Point (AP)** for direct, low-latency communication with a remote master computer (login client or laptop)
 
 This design avoids routing complexity and provides a stable ROS2 communication link.
 
@@ -436,7 +436,7 @@ This design avoids routing complexity and provides a stable ROS2 communication l
 
 - **No NAT or packet forwarding**
 - **No NetworkManager**
-- Laptop/NUC maintains its own internet connection
+- Laptop/master maintains its own internet connection
 
 ### Verify Interfaces
 
