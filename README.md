@@ -10,7 +10,7 @@ ECE387 Course Web
 
 ### How to build and publish?
 - Run `sudo apt install ghp-import`
-- Run the following under the `docs` folder.
+- Run the following under the `book` folder.
 - Build: `jupyter-book build --all .`  
 - Publish: `ghp-import -n -p -f _build/html` 
 

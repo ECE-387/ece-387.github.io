@@ -10,5 +10,5 @@ __pycache__/
 .DS_Store
 .vscode
 .venv
-docs/_build/
-docs/_work/
+book/_build/
+book/_work/
