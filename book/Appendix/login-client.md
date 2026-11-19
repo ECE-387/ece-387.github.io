@@ -17,9 +17,9 @@ Each master needs **two independent network connections**:
 | Purpose | Carries | Interface |
 |---|---|---|
 | **Lab network** (`ECE387`) | LDAP authentication, NFS home directories, internet | Ethernet *or* USB WiFi dongle (`wlan1`) |
-| **Robot link** | ROS 2 traffic to the TurtleBot3 | Onboard WiFi (`wlo1`) → robot's access point |
+| **Robot link** | ROS 2 traffic to the TurtleBot3 | Separate onboard or USB WiFi → robot's access point |
 
-The onboard adapter `wlo1` is **always** dedicated to the robot. Only the lab-network side changes between the two supported topologies:
+The robot connection uses a separate adapter from the lab connection. An onboard adapter is preferred when available; `master99` temporarily uses a second USB WiFi adapter. Interface names vary by machine:
 
 ### Topology A — Ethernet available (preferred)
 
@@ -45,20 +45,20 @@ Use this wherever a wired drop exists. Ethernet is faster and more reliable than
          └──────────────────────────┘
 ```
 
-The USB dongle is renamed to a fixed name `wlan1` so one config works across all 14 masters regardless of which dongle is plugged in.
+The lab USB dongle can be named `wlan1`. Match adapters individually when more than one USB WiFi device is present; a generic USB rule can assign the same name to both.
 
 ### Addresses
 
 | Host | Hostname | IP |
 |------|----------|----|
 | WiFi router / DHCP / gateway | — | `10.99.1.1` (SSID `ECE387`) |
-| Login Server | `ece387server` | `10.99.1.50` (static) |
+| Login Server used by `master99` | `phoenix` | `10.99.1.50` (static on lab Ethernet) |
 | Master 01–14 | `master01`–`master14` | DHCP (dynamic) |
 | Robot access point | `robotX` | `192.168.50.1` |
 
 > Masters are identified by hostname, not IP, since their IP can change after a reboot or DHCP lease renewal. Ubuntu Desktop ships with `avahi-daemon` (mDNS) enabled, so each master is reachable at `<hostname>.local` from any other machine on `ECE387`. This guide uses the domain `ece387.local` for LDAP.
 
-> **The robot AP hands out its own DHCP lease and default route.** Left alone, `wlo1` will hijack the master's default route and break access to the login server and the internet. Section 1.8 pins the robot connection so this cannot happen — do not skip it.
+> The robot AP provides DHCP. Current robot instructions suppress its gateway advertisement, but older images may advertise one. Restrict robot profiles to their own network as described in Section 1.8; a robot default route can interrupt LDAP, NFS, and internet access.
 
 ---
 
@@ -276,22 +276,37 @@ EOF
 
 > `/etc/skel` is copied only when an account is created, so existing students will not receive this. To apply it to the current 62, copy the file into each home directory with a loop modeled on the push in [login-server.md](login-server.md) — and be aware it overwrites any VS Code settings a student has already chosen.
 
-### 1.3 Configure SSSD for LDAP Authentication
+### 1.3 Configure SSSD for Encrypted LDAP Authentication
 
-SSSD is the bridge between the master and the login server's LDAP database. When a student types their username and password, SSSD verifies it against LDAP.
+The LDAP server must support StartTLS and present a certificate signed by a trusted CA with the address used by the client in its subject alternative names. Configure the server first (see [Login Server Setup](login-server.md#13a-enable-starttls-on-phoenix)). `master99` uses `phoenix` at `10.99.1.50`. Do not configure a client to fall back to unencrypted LDAP.
 
-```bash
-sudo apt install -y sssd sssd-ldap libpam-sss libnss-sss oddjob oddjob-mkhomedir
-```
+Copy **only the public CA certificate** from the server over authenticated SSH. Verify its SHA-256 fingerprint through a trusted independent channel before installation; the current `phoenix` fingerprint is recorded in the server guide. Do not copy the CA private key.
 
 ```bash
-sudo nano /etc/sssd/sssd.conf
+scp stanbaek@10.99.1.50:/etc/ssl/certs/ece387-ldap-ca.crt /tmp/ece387-ldap-ca.crt
+openssl x509 -in /tmp/ece387-ldap-ca.crt -noout -fingerprint -sha256 -dates
+# Compare the fingerprint with the trusted value before continuing.
+sudo install -d -m 755 /etc/sssd/pki
+sudo install -o root -g root -m 644 /tmp/ece387-ldap-ca.crt /etc/sssd/pki/ece387-ldap-ca.crt
+
+# Require TLS and certificate verification. Both commands should succeed.
+LDAPTLS_CACERT=/etc/sssd/pki/ece387-ldap-ca.crt LDAPTLS_REQCERT=demand \
+  ldapwhoami -x -ZZ -H ldap://10.99.1.50
+LDAPTLS_CACERT=/etc/sssd/pki/ece387-ldap-ca.crt LDAPTLS_REQCERT=demand \
+  ldapsearch -LLL -x -ZZ -H ldap://10.99.1.50 \
+  -b "ou=students,dc=ece387,dc=local" "(uid=m3a)" uid uidNumber gidNumber
 ```
+
+Install the client packages if missing:
+
+```bash
+sudo apt install -y sssd sssd-ldap sssd-tools libpam-sss libnss-sss ldap-utils oddjob oddjob-mkhomedir
+```
+
+Back up `/etc/sssd/sssd.conf` before editing it. A backup of a previous configuration may contain credentials; keep it root-only. Preserve any unrelated settings. The relevant configuration is:
 
 ```ini
 [sssd]
-# nss = name lookups ("id username", "getent passwd")
-# pam = login authentication
 services = nss, pam
 domains = ece387.local
 config_file_version = 2
@@ -299,50 +314,33 @@ config_file_version = 2
 [domain/ece387.local]
 id_provider = ldap
 auth_provider = ldap
-
 ldap_uri = ldap://10.99.1.50
 ldap_search_base = dc=ece387,dc=local
 ldap_user_search_base = ou=students,dc=ece387,dc=local
 ldap_group_search_base = ou=groups,dc=ece387,dc=local
-
-ldap_default_bind_dn = cn=admin,dc=ece387,dc=local
-ldap_default_authtok_type = password
-ldap_default_authtok = LdapAdmin387!
-
-# No TLS on the isolated lab network
-ldap_id_use_start_tls = false
-
-# Cache credentials so students can log in when the server is unreachable.
-# Applies only to accounts that have logged into THIS machine before.
+ldap_id_use_start_tls = true
+ldap_tls_reqcert = demand
+ldap_tls_cacert = /etc/sssd/pki/ece387-ldap-ca.crt
 cache_credentials = true
-
-# Cached credentials never expire (0 = no limit). Without this, offline logins
-# stop working after a number of days.
-offline_credentials_expiration = 0
-
-# Pre-load all accounts so getent and tab-completion work
 enumerate = true
 ```
 
+Remove `ldap_auth_disable_tls_never_use_in_production` and any `ldap_default_bind_dn`, `ldap_default_authtok_type`, and `ldap_default_authtok` lines after confirming anonymous student **and group** lookup over TLS works on the server. Do not store the LDAP administrator password in the client configuration. `offline_credentials_expiration` is a **PAM** option, not a domain option; its default is `0` (no time limit). Set it under `[pam]` only if a different policy is desired.
+
 ```bash
-# SSSD refuses to start if this file is readable by others
+sudo chown root:root /etc/sssd/sssd.conf
 sudo chmod 600 /etc/sssd/sssd.conf
-
+sudo sssctl config-check
 sudo systemctl enable --now sssd
-
-# Create a home directory on first login if one does not exist
+sudo systemctl restart sssd
 sudo pam-auth-update --enable mkhomedir
-
-# SSSD may cache "offline" responses during the first seconds after boot,
-# before the LDAP connection is established. Clear the cache for fresh lookups.
-sudo systemctl stop sssd
-sudo rm -rf /var/lib/sss/db/*
-sudo systemctl start sssd
-sleep 5
-
-# Expected: uid=20000(a27-m0) gid=10000(ece387students) groups=10000(ece387students)
-id a27-m0
+id m3a
+sudo sssctl domain-status ece387.local
+# Test a real student password locally; enter it only at the prompt.
+su - m3a -c 'id'
 ```
+
+Do not clear SSSD's cache as a routine setup step: it contains cached credentials needed for offline authentication. A successful cached lookup alone does not prove online authentication. `master99` was verified online against `10.99.1.50` with a successful `m3a` password test on 2026-11-19.
 
 ### 1.4 Mount NFS Home Directories
 
@@ -370,10 +368,10 @@ sudo nano /etc/auto.students
 # The * wildcard matches any username; & substitutes the matched name.
 # Accessing /home/students/a27-m0 mounts 10.99.1.50:/home/students/a27-m0
 #
-# soft      = return an error if the server is unreachable, rather than hanging
+# hard      = retry requests until the NFS server responds
 # timeo=30  = 3.0 seconds per attempt (units are 0.1s)
-# retrans=2 = retry twice, so failure surfaces after roughly 6 seconds
-*  -fstype=nfs,soft,timeo=30,retrans=2  10.99.1.50:/home/students/&
+# retrans=2 = report a timeout after retries; hard mounts continue retrying
+*  -fstype=nfs,hard,timeo=30,retrans=2  10.99.1.50:/home/students/&
 ```
 
 ```bash
@@ -387,7 +385,7 @@ ls -la       # .bashrc, .profile, etc.
 exit
 ```
 
-> **`soft` trades a hang for an error.** With a `hard` mount (the NFS default) an unreachable server freezes the terminal indefinitely. With `soft`, I/O fails after ~6 seconds instead — the student sees `Input/output error` and keeps a usable session, but a write interrupted mid-operation can leave a truncated file. See [Section 2](#2-resilience--server-down-or-network-unreliable).
+> **Hard mounts favor data integrity.** A server outage can leave programs waiting indefinitely until the server returns. Existing mounts retain their old options until unmounted; reload autofs and verify a newly mounted home with `findmnt -T /home/students/m3a -o TARGET,OPTIONS`. Do not forcibly unmount an active student session.
 
 ### 1.5 Create the Local Rescue Account
 
@@ -670,30 +668,29 @@ No USB dongle is required in this topology. Skip to 1.8.
 
 #### Option B — USB WiFi Dongle
 
-**a. Rename the dongle to a fixed `wlan1`.** Each master's dongle has a different MAC, so match on bus and type instead — the same config then works on every machine:
-
-```bash
-sudo nano /etc/systemd/network/10-usb-wifi.link
-```
+**a. Name USB adapters individually.** Identify each adapter and its hardware MAC with `ip link`, and use a separate `.link` file per device. The example below is specific to `master99`; use the actual MACs on other machines. A catch-all `Type=wlan` / `ID_BUS=usb` rule is unsafe when two USB WiFi adapters are present, because both match `wlan1`.
 
 ```ini
+# /etc/systemd/network/10-usb-wifi.link: master99 lab adapter
 [Match]
 Type=wlan
-Property=ID_BUS=usb
-
+MACAddress=60:83:e7:71:2e:14
 [Link]
+NamePolicy=
 Name=wlan1
 ```
 
-```bash
-sudo udevadm control --reload
-sudo udevadm trigger --subsystem-match=net --action=add
-# Unplug and replug the dongle (or reboot) so it re-enumerates under the new name
-
-ip addr show wlan1     # confirm; the old wlx<mac> name should be gone
+```ini
+# /etc/systemd/network/11-ece387-robot-usb.link: master99 temporary robot adapter
+[Match]
+Type=wlan
+MACAddress=dc:62:79:f2:b4:1d
+[Link]
+NamePolicy=
+Name=wlan0
 ```
 
-> This `.link` file matches *any* USB WiFi adapter. It has no effect on `wlo1`, which is a PCIe device, so the onboard adapter keeps its name and stays available for the robot.
+Reload udev rules with `sudo udevadm control --reload`. The names apply on replug or reboot. Avoid triggering or restarting the active lab adapter remotely. When onboard WiFi is installed, review these assignments before moving the robot connection to it.
 
 **b. Configure the lab networks on `wlan1`.** Ubuntu Desktop uses NetworkManager, and netplan hands control to it. `ls /etc/netplan/` typically shows:
 
@@ -765,9 +762,9 @@ network: {config: disabled}
 nmcli connection up "ECE387"
 ```
 
-### 1.8 The Robot Link on `wlo1`
+### 1.8 The Robot Link
 
-The onboard adapter `wlo1` connects to the robot's access point `robotX`, where X is the robot ID. The robot is at `192.168.50.1`.
+Use the dedicated robot adapter to connect to `robotX`, where X is the robot ID. The robot is at `192.168.50.1`. The adapter is `wlan0` on `master99` until onboard WiFi is installed; other masters may use `wlo1`. Robot profile setup and testing on `master99` are deferred.
 
 **Students connect through the GUI**, using the AP password provided in lab — there is nothing in `/etc/netplan` for the robot, and no pre-created profile. The connection is deliberately manual: benches are shared and robots move, so an auto-connecting profile would put students on whichever robot happened to be in range, including their neighbor's.
 
@@ -775,7 +772,7 @@ Students select the network from the top-right network menu (or **Settings → N
 
 #### The one setting that must be changed
 
-The robot's access point runs its own DHCP server and advertises itself as a default gateway. If NetworkManager accepts that, the master's default route points at the robot and **LDAP, NFS, and internet access all stop working** — while the robot itself responds normally, so it presents as a server outage rather than a routing problem.
+The robot's access point runs its own DHCP server. Current robot instructions suppress the default gateway, but older images may advertise one. If NetworkManager accepts it, the master's default route points at the robot and **LDAP, NFS, and internet access all stop working** — while the robot itself responds normally, so it presents as a server outage rather than a routing problem.
 
 After connecting to `robotX` for the first time:
 
@@ -783,9 +780,9 @@ After connecting to `robotX` for the first time:
 
 Do the same on the **IPv6** tab, then click Apply and reconnect.
 
-That checkbox tells NetworkManager to route only the robot's own subnet over `wlo1` and to ignore its gateway and DNS offers. It is stored in the saved profile, so it only has to be set once per robot per master.
+That checkbox prevents the robot profile from becoming the default route. Also disable automatically supplied DNS for IPv4 and IPv6 as shown below. These settings are stored in the profile for that robot and master.
 
-> **The robot can fix this for every master at once.** DHCP option 3 is what carries the gateway offer, and it is set on the robot's `dnsmasq`, not here. Adding `dhcp-option=3` and `dhcp-option=6` to `/etc/dnsmasq.conf` on each robot stops the offer at the source — see the dnsmasq step in [RobotSetupJazzy.md](RobotSetupJazzy.md). With that in place the checkbox below is belt-and-braces rather than load-bearing. Set it anyway on any master that may meet a robot flashed from an older image.
+> **The robot can fix this for every master at once.** DHCP option 3 is what carries the gateway offer, and it is set on the robot's `dnsmasq`, not here. The current [Robot Setup](RobotSetupJazzy.md) uses `dhcp-option=3` to suppress the gateway and disables DNS in dnsmasq. Client-side settings remain useful for older images. Set it anyway on any master that may meet a robot flashed from an older image.
 
 The equivalent from a terminal, if you are configuring a machine yourself:
 
@@ -793,7 +790,8 @@ The equivalent from a terminal, if you are configuring a machine yourself:
 nmcli connection modify robotX \
   ipv4.never-default yes \
   ipv6.never-default yes \
-  ipv4.ignore-auto-dns yes
+  ipv4.ignore-auto-dns yes \
+  ipv6.ignore-auto-dns yes
 nmcli connection up robotX
 ```
 
@@ -802,7 +800,7 @@ nmcli connection up robotX
 | Topology | Risk |
 |---|---|
 | **A — Ethernet** | Lower. NetworkManager assigns wired connections a much better route metric (~100) than WiFi (~600), so Ethernet usually keeps the default route regardless. DNS can still be affected. |
-| **B — Two WiFi links** | **High.** `wlan1` and `wlo1` receive comparable metrics and the winner is not predictable. Assume it will go wrong. |
+| **B — Two WiFi links** | **High.** the lab and robot WiFi interfaces can receive comparable metrics and the winner is not predictable. Assume it will go wrong. |
 
 Set the checkbox in both cases. It costs one click and removes the uncertainty.
 
@@ -836,6 +834,18 @@ ssh_robot
 
 ---
 
+### Current status: `master99` (2026-11-19)
+
+- Hostname `master99`, local admin `stanbaek`; Ubuntu 24.04, ROS 2 Jazzy, TurtleBot3, VS Code, and local `ece387rescue` exist.
+- `phoenix` at `10.99.1.50`: verified StartTLS and an online `m3a` password login. SSSD uses anonymous lookup and verified TLS.
+- NFS map changed to `hard` and autofs reloaded. An existing `m3a` mount still showed `soft`; verify a new mount after the old one expires before claiming completion.
+- Two USB WiFi adapters are assigned above. Student NetworkManager policy is installed but still needs a student test. Robot connection setup is deferred. Ethernet will be used later.
+- Review the existing student sudo rule and local-workspace behavior before deciding on further changes. Test graphical login and the rescue account. OpenSSH server is not installed.
+- `dlib` imported as version 20.0.1 in `/usr/bin/python3`; `pydantic`, `imutils`, and `pupil-apriltags` were not found in that interpreter. Installing or changing these packages is deferred. Confirm student environments separately.
+- NVIDIA hardware was detected; GPU usability and driver status remain to be verified outside the sandbox. Copilot sign-in reported an invalid token; resolution remains unconfirmed. Generative AI blocking is deferred.
+
+---
+
 ## 2. Resilience — Server Down or Network Unreliable
 
 Two subsystems fail differently. Authentication degrades gracefully; home directories do not.
@@ -850,37 +860,11 @@ The limit is that the cache is **per-machine**. A student who has used master07 
 
 **NFS has no offline mode.** There is no local replica on the master; every read and write is a network round-trip. When the server is unreachable there is nothing local to fall back to.
 
-What actually happens at login:
+An initial mount or a running session can block while the server is unreachable. Cached SSSD credentials do not provide an offline copy of the student's home, and graphical login may fail or hang without it. Do not assume a fixed failure timeout. Test outage behavior on the actual hardware and keep the local rescue account available.
 
-1. autofs attempts the mount, gets no response, gives up after ~6 seconds
-2. `/home/students/<uid>` does not exist
-3. `pam_mkhomedir` tries to create it from `/etc/skel` — and fails, because `/home/students` is an autofs-managed mount point where `mkdir` is not permitted
+### Mid-session failure and recovery
 
-That third step failing is fortunate. If `/home/students` were an ordinary directory, `pam_mkhomedir` would succeed and the student would get a *local* home directory shadowing their NFS one — they would work in it all period, and when the server returned, autofs could not mount over the now-occupied path. Fourteen masters would each hold a divergent local copy. autofs prevents this, but by side effect rather than design.
-
-The result: `$HOME` points at a path that does not exist. Text console and SSH sessions start but land in `/` with no `.bashrc`, so no ROS environment, no aliases, no `ccbuild`. **Graphical login typically fails outright**, since GNOME needs a writable `$HOME` for dconf and D-Bus — expect a bounce back to the GDM login screen.
-
-> Verify this behavior on your hardware before you need it. On the server: `sudo systemctl stop nfs-kernel-server`. Then try both a graphical and an SSH login on a master, and note which works. This determines whether students can reach the rescue account from the login screen or need `Ctrl+Alt+F3`.
-
-### Mid-session failure
-
-If the server dies while students are working, `soft` mounts return `EIO` after ~6 seconds rather than hanging:
-
-- `colcon build` fails partway, possibly leaving a corrupt `build/` or `install/` tree
-- Editor saves fail; unsaved work is lost
-- An interrupted write can truncate a file without an obvious error
-
-Tell students that `Input/output error` means **stop and wait**, not retry.
-
-### When the server returns
-
-**Nothing syncs back.** There is no local copy and no queued writes — the writes never landed anywhere. Students see exactly the state the server had when it went down; anything attempted during the outage is gone.
-
-autofs recovers on next access. A stale mount occasionally needs a nudge:
-
-```bash
-sudo systemctl restart autofs
-```
+With `hard` mounts, NFS requests retry while the server is unavailable; an editor, shell, or build can appear stuck. Avoid forcibly unmounting an active home or assuming that an interrupted save completed. Requests may resume after the server returns, but NFS is not an offline synchronization system. Verify files and commit work to Git regularly.
 
 ### Recovery procedure for students
 
@@ -912,7 +896,7 @@ source install/setup.bash
 git add -A && git commit -m "work from <date>" && git push
 ```
 
-> **Git is the actual safety net.** SSSD caching and `soft` mounts limit the damage; only a pushed commit preserves the work. Make an end-of-lab commit and push a graded habit early in the term, not an emergency procedure students read for the first time during an outage.
+> **Git is the actual safety net.** SSSD caching supports previously used accounts, but only a pushed commit provides an independent copy of the work. Make an end-of-lab commit and push a graded habit early in the term, not an emergency procedure students read for the first time during an outage.
 
 ### Checking status during an outage
 
@@ -1051,11 +1035,11 @@ Student `.bashrc` and `.inputrc` live on the login server, not here. See [login-
 | Login slow (~30s) | `journalctl -u sssd` | Check LDAP URI is reachable: `ping 10.99.1.50` |
 | Can't reach a master by hostname | `ping masterNN.local` | Check `avahi-daemon` on both machines |
 | **Lab network dies when connecting to robot** | `ip route \| grep default` | Default route was taken by the robot AP — apply `ipv4.never-default yes` (Section 1.8) |
-| **Robot unreachable after `nmcli up`** | `nmcli device status` | Confirm the profile is bound to `wlo1`, not `wlan1` |
+| **Robot unreachable after `nmcli up`** | `nmcli device status` | Confirm the profile uses the designated robot adapter, not the lab adapter |
 | **Dongle not named `wlan1`** | `ip addr` | Re-run `udevadm` commands and replug; confirm `10-usb-wifi.link` exists |
 | **Graphical login bounces to GDM** | `journalctl -b -u gdm` | Usually a missing `$HOME` — check NFS; use rescue account meanwhile |
-| **`Input/output error` in a student session** | `mount \| grep students` | NFS server unreachable; `soft` mount timed out. Stop work, see Section 2 |
+| **Student session hangs** | `findmnt -t nfs,nfs4` | A hard NFS mount may be waiting for the server; restore connectivity and see Section 2 |
 | `sudo` stops working for students | `sudo visudo -c` | Check `/etc/sudoers.d/ece387-students` is mode 440 and syntactically valid |
-| ROS 2 nodes not discovered | `ros2 topic list` on both ends | Confirm matching `ROS_DOMAIN_ID`, and that `wlo1` is connected to the right robot |
+| ROS 2 nodes not discovered | `ros2 topic list` on both ends | Confirm matching `ROS_DOMAIN_ID`, and that the robot adapter is connected to the right robot |
 
 For server-side symptoms (student account issues, LDAP connection refused), see the troubleshooting table in [login-server.md](login-server.md).

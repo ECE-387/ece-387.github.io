@@ -22,7 +22,7 @@ A login server (OpenLDAP + SSSD + NFS) is only worth the setup effort in one spe
 - Students each have their own laptop or a personal workstation they always use. In that case there is nothing to "roam" between — a local Ubuntu account already gives each student a persistent home directory, and centralized authentication just adds an extra server to install, patch, and keep running (plus a single point of failure if it goes down). Use [Master Setup - Standalone](MasterSetupJazzy.md) instead — it sets up the same ROS 2 environment with a normal local account and no LDAP/NFS dependency.
 - You only have a handful of machines and can simply assign one student (or a fixed pair) per machine for the term.
 
-**The trade-off:** a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in [Master (Client) Setup](login-client.md) with SSSD credential caching and soft NFS mounts). For ECE 387's AFA lab — a fixed set of 14 dedicated login clients used by a rotating roster of 34 student accounts across sections — that trade-off is worth it.
+**The trade-off:** a login server buys you station-independence and central account management, at the cost of standing up and maintaining an extra server, plus a dependency on the network (mitigated in [Master (Client) Setup](login-client.md) with SSSD credential caching; hard NFS mounts protect data integrity but can block during outages). For ECE 387's AFA lab — a fixed set of 14 dedicated login clients used by a rotating roster of 34 student accounts across sections — that trade-off is worth it.
 
 ## Architecture Overview
 
@@ -67,7 +67,7 @@ Assign static IPs on your lab's network before starting. All machines must be on
 
 | Host | Hostname | IP |
 |------|----------|----|
-| Login Server | `ece387server` | `10.99.1.50` |
+| Login Server (current) | `phoenix` | `10.99.1.50` |
 | Master 01 | `master01` | `10.99.1.101` |
 | Master 02 | `master02` | `10.99.1.102` |
 | ... | ... | ... |
@@ -75,38 +75,11 @@ Assign static IPs on your lab's network before starting. All machines must be on
 
 > The login server IP (`10.99.1.50`) is the AFA lab address, reachable over the `ECE387` WiFi network at `10.99.1.1`. Master IPs above (`10.99.1.101`–`150`) are a suggested continuation of that range — adjust if you assign them differently. This guide uses the domain `ece387.local`.
 
-### Second Server (`phoenix`)
+### Current server: `phoenix`
 
-There are two near-identical login servers. The commands in this guide show the lab server. When building `phoenix`, substitute the values below; everything else, including the LDAP domain, accounts, and UIDs, is the same.
+On 2026-11-19, `phoenix` was confirmed at `10.99.1.50/24` on `enp113s0`, serving `dc=ece387,dc=local`. Its WiFi was separately connected. Older notes described `phoenix` at `192.168.0.151`; verify addresses and routing before using those instructions. Do not assign the same IP to another login server on the same subnet.
 
-| Setting | Lab server | `phoenix` |
-|---------|------------|-----------|
-| Hostname | `ece387server` | `phoenix` |
-| IP | `10.99.1.50` | `192.168.0.151` |
-| Gateway | `10.99.1.1` | `192.168.0.1` |
-| Subnet (NFS export, firewall) | `10.99.1.0/24` | `192.168.0.0/24` |
-| Interface | Ethernet | Wi-Fi (`wlp4s0`) |
-
-`phoenix` uses Wi-Fi, so its static address goes under `wifis:` and keeps the existing `access-points:` block:
-
-```yaml
-network:
-  version: 2
-  wifis:
-    wlp4s0:
-      dhcp4: false
-      addresses: [192.168.0.151/24]
-      routes:
-        - to: default
-          via: 192.168.0.1
-      nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]
-      access-points:
-        "YOUR_SSID":
-          password: "YOUR_WIFI_PASSWORD"
-```
-
-> Changing the IP drops any SSH session connected to the old address. Do it last, and reserve the address on the router so DHCP does not hand it to another device.
+The client configuration below uses `ldap://10.99.1.50` with **required StartTLS**. Certificate identity verification succeeds for that IP, `phoenix`, and `ece387server`. The server still accepts legacy unencrypted LDAP for other clients; migrate and test those clients before changing server-wide policy.
 
 ---
 
@@ -253,6 +226,42 @@ ldapsearch -x -H ldap://localhost -b "dc=ece387,dc=local" -D "cn=admin,dc=ece387
 > EOF
 > sudo DEBIAN_FRONTEND=noninteractive apt-get install -y slapd ldap-utils ldapscripts
 > ```
+
+### 1.3a Enable StartTLS on `phoenix`
+
+The server was configured on 2026-11-19 with a dedicated ECE387 CA and a server certificate. Its active OpenLDAP configuration is:
+
+```ldif
+dn: cn=config
+olcTLSCACertificateFile: /etc/ssl/certs/ece387-ldap-ca.crt
+olcTLSCertificateFile: /etc/ssl/certs/ece387-ldap-server.crt
+olcTLSCertificateKeyFile: /etc/ldap/ece387-tls/server.key
+```
+
+The server key is `root:openldap` mode `640`, in a directory traversable by `openldap`. `/etc/ssl/private` on this machine is `root:root` mode `700`, so placing an otherwise group-readable server key there does **not** make it readable by slapd. AppArmor remained enabled. The CA private key `/etc/ssl/private/ece387-ldap-ca.key` is root-only: never distribute it to clients; back it up securely for certificate renewal.
+
+The server certificate SANs are `DNS:phoenix`, `DNS:ece387server`, and `IP:10.99.1.50`; it expires **2029-02-21 22:51:03 UTC**. The CA expires **2036-11-16 22:51:02 UTC**. Its public certificate SHA-256 fingerprint is:
+
+```text
+6E:18:D0:BF:8E:09:09:8C:03:08:8B:A0:B3:A3:23:58:71:1F:90:D2:02:B7:F2:B5:73:2E:3E:03:C9:55:34:00
+```
+
+Verify the fingerprint through an independent trusted channel before installing the public CA on a client. Replace this recorded fingerprint when the CA is deliberately rotated. Do not regenerate or overwrite an existing CA merely to add a client.
+
+```bash
+# On phoenix: inspect the live settings and public certificate.
+sudo ldapsearch -Q -Y EXTERNAL -H ldapi:/// -b cn=config -s base \
+  olcTLSCertificateFile olcTLSCertificateKeyFile olcTLSCACertificateFile
+openssl x509 -in /etc/ssl/certs/ece387-ldap-ca.crt -noout -fingerprint -sha256 -dates
+openssl x509 -in /etc/ssl/certs/ece387-ldap-server.crt -noout -ext subjectAltName -dates
+LDAPTLS_CACERT=/etc/ssl/certs/ece387-ldap-ca.crt LDAPTLS_REQCERT=demand \
+  ldapwhoami -x -ZZ -H ldap://10.99.1.50
+LDAPTLS_CACERT=/etc/ssl/certs/ece387-ldap-ca.crt LDAPTLS_REQCERT=demand \
+  ldapsearch -LLL -x -ZZ -H ldap://10.99.1.50 \
+  -b "ou=students,dc=ece387,dc=local" "(uid=m3a)" uid uidNumber gidNumber
+```
+
+TLS 1.3 and anonymous student lookup were verified on `phoenix`; a student password login was also verified from `master99`. Client setup and additional verification are in [Master (Client) Setup](login-client.md#13-configure-sssd-for-encrypted-ldap-authentication). The fingerprint is public; the CA and server private keys are not.
 
 ### 1.4 Create LDAP Structure
 
@@ -735,7 +744,7 @@ Once the server is up, continue to [login-client.md](login-client.md) to configu
 
 **Authentication (SSSD):** Handled on the client side — after a student logs in once, SSSD on each master caches their credentials locally so they can still log in if the login server goes down. See [login-client.md](login-client.md).
 
-**Home directories (NFS):** If the NFS server is unreachable, students lose access to `.bashrc`, SSH keys, and their ROS workspace on any master. Mitigations (GitHub as a safety net, soft NFS mounts) are configured on the client side — see [login-client.md](login-client.md).
+**Home directories (NFS):** If the NFS server is unreachable, students lose access to `.bashrc`, SSH keys, and their ROS workspace on any master. Mitigations (GitHub as a safety net, hard NFS mounts) are configured on the client side — see [login-client.md](login-client.md).
 
 ---
 
