@@ -836,6 +836,8 @@ ssh_robot
 
 ### Current status: `master99` (2026-11-19)
 
+For a home-server and client continuation prompt, see [ECE387 Home Setup Handoff](HomeSetupHandoff.md).
+
 - Hostname `master99`, local admin `stanbaek`; Ubuntu 24.04, ROS 2 Jazzy, TurtleBot3, VS Code, and local `ece387rescue` exist.
 - `phoenix` at `10.99.1.50`: verified StartTLS and an online `m3a` password login. SSSD uses anonymous lookup and verified TLS.
 - NFS map changed to `hard` and autofs reloaded. An existing `m3a` mount still showed `soft`; verify a new mount after the old one expires before claiming completion.
