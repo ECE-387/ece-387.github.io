@@ -75,7 +75,7 @@ sudo apt install -y python3-pip python3-venv
 sudo apt install -y tree
 sudo apt install -y terminator
 sudo apt install -y jstest-gtk
-sudo apt install -y obs-studio qtwayland5
+sudo apt install -y qtwayland5
 ```
 
 Create a ROS workspace:

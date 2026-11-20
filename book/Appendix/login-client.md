@@ -174,7 +174,7 @@ sudo apt install -y ros-jazzy-usb-cam ros-jazzy-image-proc \
 sudo apt install -y ros-jazzy-joy ros-jazzy-teleop-twist-joy jstest-gtk
 
 # Utilities
-sudo apt install -y tree terminator python3-pip obs-studio qtwayland5
+sudo apt install -y tree terminator python3-pip qtwayland5
 ```
 
 > This list must stay in step with [MasterSetupJazzy.md](MasterSetupJazzy.md), which covers the standalone master. Students run identical labs on both, so a package present on one and missing on the other produces a lab that works at one bench and not another.
